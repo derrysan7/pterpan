@@ -1,12 +1,9 @@
-<?php
-?>
-
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <title>Personal Finance</title>
-  
+
   <link rel="stylesheet" href="style/bootstrap/css/bootstrap.min.css">
   <script src="style/bootstrap/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">

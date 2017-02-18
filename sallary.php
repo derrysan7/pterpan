@@ -1,6 +1,27 @@
 <?php
-require_once "views/header.php";
 require_once "core/init.php";
+
+if ( isset($_POST['submit']) ) {
+  $tanggal_penghasilan = trim($_POST['tanggal_penghasilan']);
+  $nominal_penghasilan = trim($_POST['nominal_penghasilan']);
+  $nama_penghasilan    = trim($_POST['nama_penghasilan']);
+
+  if ( !empty($nama_penghasilan) && !empty($nominal_penghasilan) && filter_var($nominal_penghasilan,FILTER_VALIDATE_INT) && !empty($tanggal_penghasilan) ) {
+    if ( insert_sallary($nama_penghasilan, $tanggal_penghasilan, $nominal_penghasilan) ) {
+      // header('Location: sallary.php');
+      $result = "<div class= 'alert alert-success'>Daftar penghasilan berhasil ditambahkan!</div>";
+    }else {
+      die("Gagal");
+    }
+  }else {
+    // echo "Masukkan data dengan lengkap!";
+    $result = "<div class= 'alert alert-danger'>Masukkan data dengan lengkap!</div>";
+
+  }
+}
+
+require_once "views/header.php";
+
 ?>
 
 
@@ -43,8 +64,8 @@ require_once "core/init.php";
     <div class="form-group">
       <div class="col-md-4"></div>
       <div class="col-md-8 input-group">
-        <input type="submit" class="btn btn-primary" name="submit" value="Simpan">
-
+        <input type="submit" class="btn btn-primary" name="submit" value="Simpan"><br><br>
+        <?php echo $result; ?>
       </div>
     </div>
 
