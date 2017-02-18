@@ -4,7 +4,7 @@ require_once "core/init.php";
 if ( isset($_POST['submit']) ) {
   $tanggal_penghasilan = trim($_POST['tanggal_penghasilan']);
   $nominal_penghasilan = trim($_POST['nominal_penghasilan']);
-  $nama_penghasilan    = trim($_POST['nama_penghasilan']);
+  $nama_penghasilan    = strip_tags(trim($_POST['nama_penghasilan']));
 
   if ( !empty($nama_penghasilan) && !empty($nominal_penghasilan) && validateDate($tanggal_penghasilan) &&
   filter_var($nominal_penghasilan,FILTER_VALIDATE_INT) && !empty($tanggal_penghasilan) ) {
@@ -30,7 +30,7 @@ require_once "views/header.php";
 </div>
 
 <div class="col-md-6">
-  <form class="form-horizontal" action="sallary.php" method="post">
+  <form class="form-horizontal" action="add_sallary.php" method="post">
 
     <div class="form-group">
       <label class="col-sm-4 control-label" for="tanggal_penghasilan">Tanggal penghasilan</label>
