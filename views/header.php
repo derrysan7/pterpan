@@ -27,8 +27,8 @@
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">Pemasukan
                 <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#">Daftar pemasukan saya</a></li>
-                  <li><a href="sallary.php">Tambahkan data pemasukan</a></li>
+                  <li><a href="view_sallary.php">Daftar pemasukan saya</a></li>
+                  <li><a href="add_sallary.php">Tambahkan data pemasukan</a></li>
                 </ul>
               </li>
               <li><a href="#">Page 2</a></li>
