@@ -1,9 +1,4 @@
 <?php
-$int = "asdasd";
-
-if (filter_var($int, FILTER_VALIDATE_INT)) {
-    echo("Variable is an integer");
-} else {
-    echo("Variable is not an integer");
-}
- ?>
+include_once "functions/validation_func.php";
+echo validateDate("0202922007") ;
+?>

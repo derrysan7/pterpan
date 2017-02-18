@@ -6,7 +6,8 @@ if ( isset($_POST['submit']) ) {
   $nominal_penghasilan = trim($_POST['nominal_penghasilan']);
   $nama_penghasilan    = trim($_POST['nama_penghasilan']);
 
-  if ( !empty($nama_penghasilan) && !empty($nominal_penghasilan) && filter_var($nominal_penghasilan,FILTER_VALIDATE_INT) && !empty($tanggal_penghasilan) ) {
+  if ( !empty($nama_penghasilan) && !empty($nominal_penghasilan) && validateDate($tanggal_penghasilan) &&
+  filter_var($nominal_penghasilan,FILTER_VALIDATE_INT) && !empty($tanggal_penghasilan) ) {
     if ( insert_sallary($nama_penghasilan, $tanggal_penghasilan, $nominal_penghasilan) ) {
       // header('Location: sallary.php');
       $result = "<div class= 'alert alert-success'>Daftar penghasilan berhasil ditambahkan!</div>";
