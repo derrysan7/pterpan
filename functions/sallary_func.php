@@ -19,4 +19,21 @@ function insert_sallary($nama_penghasilan, $tanggal_penghasilan, $nominal_pengha
 
 }
 
+function retrieve_sallary(){
+  global $db_connect;
+
+  $query = "SELECT * FROM penghasilan ORDER BY tanggal_penghasilan DESC";
+
+  if ( $result = mysqli_query($db_connect,$query) ) {
+    if ( mysqli_num_rows($result) > 0 ) {
+      while ( $data = mysqli_fetch_assoc($result) ) {
+        echo $data['nama_penghasilan']." ".$data['tanggal_penghasilan']."<br>";
+      }
+    }else {
+      return false;
+    }
+  }
+
+}
+
  ?>
