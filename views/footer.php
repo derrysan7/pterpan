@@ -1,6 +1,7 @@
 
 <footer>
   <div class="col-md-12">
+    <hr>
     ©<?php echo date("Y")." Derry-Edwin"; ?>
   </div>
 </footer>
