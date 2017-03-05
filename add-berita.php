@@ -1,3 +1,4 @@
+<?php include_once 'header_admin.php'; ?>
 <?php
 include_once 'classes/class.crud.berita.php';
 $crud = new crud();
@@ -56,8 +57,6 @@ if(isset($_POST['btn-save']))
     } 
 }
 ?>
-
-<?php include_once 'header_admin.php'; ?>
 
 <div class="clearfix"></div>
 

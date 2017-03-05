@@ -21,7 +21,7 @@
 	     <th colspan="2" align="center" class="col-sm-1">Actions</th>
 	     </tr>
 		    <?php
-			  $query = "SELECT * FROM berita ORDER BY tanggaldib DESC";       
+			  $query = "SELECT * FROM berita WHERE userId='".$userRow['userId']."' ORDER BY tanggaldib DESC ";       
 			  $records_per_page=5;
 			  $newquery = $crud->paging($query,$records_per_page);
 			  $crud->dataview($newquery);

@@ -12,7 +12,7 @@ body{
 	//margin-top:90px;
     background-color: #fff;
 			
-	font-family:Tahoma, Geneva, sans-serif;
+	font-family:Roboto, Arial, sans-serif;
 	color:#7f8c8d;
 	font-weight:lighter;
 }
@@ -36,16 +36,10 @@ body{
 	margin-top:110px;
 }
 .navbar-brand{
-	font-family: 'Roboto', sans-serif;
+	font-family: Roboto, Arial, sans-serif;
 }
 #btn-submit{
 	height:45px;
-}
-.h5{
-	font-family:Verdana, Geneva, sans-serif;
-}
-h1{
-	font-family:Verdana, Geneva, sans-serif;
 }
 
 .col-xs-8 {
@@ -90,5 +84,4 @@ h1{
     .w3-container {
         margin-top:10px;
     }
-
 }
