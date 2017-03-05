@@ -34,7 +34,7 @@
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">Pemasukan
                 <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="view_penghasilan.php">Daftar penghasilan saya</a></li>
+                  <li><a href="view-penghasilan.php">Daftar penghasilan saya</a></li>
                   <li><a href="add-penghasilan.php">Tambahkan data penghasilan</a></li>
                 </ul>
               </li>

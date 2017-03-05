@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="08c21ca5-7d5d-4bf8-92f5-c9addbb45948" name="Default" comment="" />
+    <list default="true" id="08c21ca5-7d5d-4bf8-92f5-c9addbb45948" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/views/view_penghasilan.php" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/add-penghasilan.php" afterPath="$PROJECT_DIR$/views/add-penghasilan.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/header.php" afterPath="$PROJECT_DIR$/views/header.php" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -26,11 +30,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Penghasilan.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Penghasilan.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/classes/Penghasilan.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="334">
-              <caret line="85" column="9" lean-forward="false" selection-start-line="85" selection-start-column="9" selection-end-line="85" selection-end-column="9" />
+            <state relative-caret-position="212">
+              <caret line="79" column="28" lean-forward="false" selection-start-line="79" selection-start-column="28" selection-end-line="79" selection-end-column="28" />
               <folding>
                 <marker date="1488723204000" expanded="true" signature="385:506" ph="INSERT INTO penghasilan... " />
                 <marker date="1488723204000" expanded="true" signature="969:1018" ph="SELECT * FRO... penghasilan" />
@@ -42,27 +46,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="view_penghasilan.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/view_penghasilan.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="20" column="19" lean-forward="false" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
-              <folding>
-                <marker date="1488723204000" expanded="true" signature="419:441" ph="..." />
-                <marker date="1488723204000" expanded="true" signature="498:688" ph="..." />
-                <marker date="1488723204000" expanded="true" signature="779:804" ph="SELECT * FRO... penghasilan" />
-                <marker date="1488723204000" expanded="true" signature="779:834" ph="SELECT * FRO... penghasilan" />
-                <marker date="1488723204000" expanded="true" signature="1019:1048" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="add-penghasilan.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/add-penghasilan.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="424">
-              <caret line="89" column="81" lean-forward="false" selection-start-line="89" selection-start-column="81" selection-end-line="89" selection-end-column="81" />
+            <state relative-caret-position="212">
+              <caret line="30" column="92" lean-forward="false" selection-start-line="30" selection-start-column="92" selection-end-line="30" selection-end-column="92" />
               <folding>
                 <element signature="e#3079#3085#0#HTML" expanded="true" />
                 <element signature="e#3233#3239#0#HTML" expanded="true" />
@@ -82,11 +70,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="header.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="header.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/views/header.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="364">
-              <caret line="32" column="33" lean-forward="false" selection-start-line="32" selection-start-column="33" selection-end-line="32" selection-end-column="33" />
+            <state relative-caret-position="397">
+              <caret line="36" column="36" lean-forward="false" selection-start-line="36" selection-start-column="36" selection-end-line="36" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -94,16 +82,6 @@
       </file>
       <file leaf-file-name="footer.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/footer.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="view_sallary.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/view_sallary.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -121,6 +99,7 @@
       <find>result</find>
       <find>action</find>
       <find>tambah</find>
+      <find>view_</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -137,10 +116,10 @@
         <option value="$PROJECT_DIR$/routes/db_config.php" />
         <option value="$PROJECT_DIR$/routes/dbconfig.php" />
         <option value="$PROJECT_DIR$/views/tambah.php" />
-        <option value="$PROJECT_DIR$/views/header.php" />
-        <option value="$PROJECT_DIR$/views/add-penghasilan.php" />
         <option value="$PROJECT_DIR$/views/view_penghasilan.php" />
         <option value="$PROJECT_DIR$/classes/Penghasilan.php" />
+        <option value="$PROJECT_DIR$/views/add-penghasilan.php" />
+        <option value="$PROJECT_DIR$/views/header.php" />
       </list>
     </option>
   </component>
@@ -186,6 +165,10 @@
               <option name="myItemId" value="pterpan" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -194,10 +177,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="pterpan" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -343,12 +322,12 @@
       <option name="presentableId" value="Default" />
       <updated>1488631766129</updated>
       <workItem from="1488631769383" duration="5781000" />
-      <workItem from="1488715542275" duration="5744000" />
+      <workItem from="1488715542275" duration="5968000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11525000" />
+    <option name="totallyTimeSpent" value="11749000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -420,13 +399,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="14" lean-forward="false" selection-start-line="2" selection-start-column="14" selection-end-line="2" selection-end-column="14" />
-          <folding>
-            <marker date="1488723204000" expanded="true" signature="419:441" ph="..." />
-            <marker date="1488723204000" expanded="true" signature="498:688" ph="..." />
-            <marker date="1488723204000" expanded="true" signature="779:804" ph="SELECT * FRO... penghasilan" />
-            <marker date="1488723204000" expanded="true" signature="779:834" ph="SELECT * FRO... penghasilan" />
-            <marker date="1488723204000" expanded="true" signature="1019:1048" ph="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -535,37 +508,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/header.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="32" column="33" lean-forward="false" selection-start-line="32" selection-start-column="33" selection-end-line="32" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/add-penghasilan.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="424">
-          <caret line="89" column="81" lean-forward="false" selection-start-line="89" selection-start-column="81" selection-end-line="89" selection-end-column="81" />
-          <folding>
-            <element signature="e#3079#3085#0#HTML" expanded="true" />
-            <element signature="e#3233#3239#0#HTML" expanded="true" />
-            <element signature="e#3364#3370#0#HTML" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/view_penghasilan.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="20" column="19" lean-forward="false" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
-          <folding>
-            <marker date="1488723204000" expanded="true" signature="419:441" ph="..." />
-            <marker date="1488723204000" expanded="true" signature="498:688" ph="..." />
-            <marker date="1488723204000" expanded="true" signature="779:804" ph="SELECT * FRO... penghasilan" />
-            <marker date="1488723204000" expanded="true" signature="779:834" ph="SELECT * FRO... penghasilan" />
-            <marker date="1488723204000" expanded="true" signature="1019:1048" ph="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -579,8 +526,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/classes/Penghasilan.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="85" column="9" lean-forward="false" selection-start-line="85" selection-start-column="9" selection-end-line="85" selection-end-column="9" />
+        <state relative-caret-position="212">
+          <caret line="79" column="28" lean-forward="false" selection-start-line="79" selection-start-column="28" selection-end-line="79" selection-end-column="28" />
           <folding>
             <marker date="1488723204000" expanded="true" signature="385:506" ph="INSERT INTO penghasilan... " />
             <marker date="1488723204000" expanded="true" signature="969:1018" ph="SELECT * FRO... penghasilan" />
@@ -588,6 +535,26 @@
             <marker date="1488723204000" expanded="true" signature="1888:1953" ph="UPDATE pengh... " />
             <marker date="1488723204000" expanded="true" signature="4731:4741" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/add-penghasilan.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="30" column="92" lean-forward="false" selection-start-line="30" selection-start-column="92" selection-end-line="30" selection-end-column="92" />
+          <folding>
+            <element signature="e#3079#3085#0#HTML" expanded="true" />
+            <element signature="e#3233#3239#0#HTML" expanded="true" />
+            <element signature="e#3364#3370#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/header.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="397">
+          <caret line="36" column="36" lean-forward="false" selection-start-line="36" selection-start-column="36" selection-end-line="36" selection-end-column="36" />
+          <folding />
         </state>
       </provider>
     </entry>

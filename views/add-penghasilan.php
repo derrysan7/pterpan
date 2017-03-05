@@ -28,7 +28,7 @@ if(isset($_GET['inserted']))
     ?>
     <div class="container">
         <div class="alert alert-info">
-            <strong>Berhasil!</strong> Data penghasilan berhasil ditambahkan. <a href="view_penghasilan.php">Lihat daftar penghasilan</a>!
+            <strong>Berhasil!</strong> Data penghasilan berhasil ditambahkan. <a href="view-penghasilan.php">Lihat daftar penghasilan</a>!
         </div>
     </div>
     <?php
@@ -90,7 +90,7 @@ else if(isset($_GET['failure']))
                             <span class="glyphicon glyphicon-plus"></span> &nbsp; Simpan
                         </button>
 <!--                        <input type="submit" class="btn btn-primary" name="submit" value="Simpan">--> &nbsp;
-                        <a href="view_penghasilan.php" class="btn btn-success"><i class="glyphicon glyphicon-backward"></i> &nbsp; Kembali ke daftar penghasilan.</a>
+                        <a href="view-penghasilan.php" class="btn btn-success"><i class="glyphicon glyphicon-backward"></i> &nbsp; Kembali ke daftar penghasilan.</a>
                     </div>
                 </div>
 
