@@ -15,14 +15,14 @@ if(isset($_GET['id']) && isset($_GET['code']))
 	$statusY = "Y";
 	$statusN = "N";
 	
-	$stmt = $user->runQuery("SELECT userId,userStatus FROM users WHERE userId=:uID AND tokenCode=:code LIMIT 1");
+	$stmt = $user->runQuery("SELECT userId,verifikasiUser FROM users WHERE userId=:uID AND tokenCode=:code LIMIT 1");
 	$stmt->execute(array(":uID"=>$id,":code"=>$code));
 	$row=$stmt->fetch(PDO::FETCH_ASSOC);
 	if($stmt->rowCount() > 0)
 	{
-		if($row['userStatus']==$statusN)
+		if($row['verifikasiUser']==$statusN)
 		{
-			$stmt = $user->runQuery("UPDATE users SET userStatus=:status WHERE userID=:uID");
+			$stmt = $user->runQuery("UPDATE users SET verifikasiUser=:status WHERE userID=:uID");
 			$stmt->bindparam(":status",$statusY);
 			$stmt->bindparam(":uID",$id);
 			$stmt->execute();
@@ -63,9 +63,9 @@ if(isset($_GET['id']) && isset($_GET['code']))
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>HMSI : Login</title>
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
-<link rel="stylesheet" href="css/style.css" type="text/css"  />
+<link href="style/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="style/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+<link rel="stylesheet" href="style/css/style.css" type="text/css"  />
 </head>
 <body>
 
@@ -73,8 +73,8 @@ if(isset($_GET['id']) && isset($_GET['code']))
 	<?php if(isset($msg)) { echo $msg; } ?>
 </div> <!-- /container -->
 
-<script src="bootstrap/js/jquery-1.11.3-jquery.min.js"></script>
-<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="style/bootstrap/js/jquery-1.11.3-jquery.min.js"></script>
+<script src="style/bootstrap/js/bootstrap.min.js"></script>
 
 </body>
 </html>

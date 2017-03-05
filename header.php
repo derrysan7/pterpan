@@ -27,12 +27,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <script type="text/javascript" src="bootstrap/js/jquery-1.11.3-jquery.min.js"></script>
-    <link href="css/font-face.css" rel="stylesheet" type="text/css">
-
-  <link rel="stylesheet" href="css/monthly.css">
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+    <link href="style/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <script type="text/javascript" src="style/bootstrap/js/jquery-1.11.3-jquery.min.js"></script>
+    <link href="style/css/font-face.css" rel="stylesheet" type="text/css">
     
     <script src="js/tinymce/tinymce.min.js"></script>
     <script>tinymce.init({ selector:'textarea', 
@@ -44,7 +42,7 @@
                               }
 
                           });</script>
-    <link rel="stylesheet" href="css/style.css" type="text/css"  />
+    <link rel="stylesheet" href="style/css/style.css" type="text/css"  />
     <title>Peterpan</title>
 </head>
 

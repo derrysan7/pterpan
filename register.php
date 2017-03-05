@@ -59,25 +59,7 @@ if(isset($_POST['btn-save']))
             else
             {
                 if($user->register($uname,$umail,$upass,$ufullname,$ualamat,$usumber_peng,$unohp,$unpwp,$uktp,$ustatus,$ujumlah_tang,$code))
-                 {
-                    $autoid = $user->lastID();    
-                    $key = base64_encode($autoid);
-                    $autoid = $key;
-                    
-                    $message = "          
-                          Hello $uname,
-                          <br /><br />
-                          Welcome to HMSI<br/>
-                          To complete your registration  please , just click the following link<br/>
-                          <br /><br />
-                          <a href='localhost/peterpan/verify.php?id=$autoid&code=$code'>Click HERE to Activate</a>
-                          <br /><br />
-                          Thanks,";
-                          
-                    $subject = "Confirm Registration";
-                          
-                    $user->send_mail($umail,$message,$subject); 
-
+                 {                   
                     header("Location: register.php?inserted");
                  }
                  else
@@ -101,9 +83,9 @@ if(isset($_POST['btn-save']))
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Peterpan : Register</title>
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
-<link rel="stylesheet" href="css/style.css" type="text/css"  />
+<link href="style/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="style/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+<link rel="stylesheet" href="style/css/style.css" type="text/css"  />
 <script>
   function isNumberKey(evt){
       var charCode = (evt.which) ? evt.which : event.keyCode
@@ -111,6 +93,14 @@ if(isset($_POST['btn-save']))
           return false;
       return true;
   }
+
+  function isNumberKey2(evt){
+      var charCode = (evt.which) ? evt.which : event.Keycode
+      if (charCode == 32)
+        return false;
+      return true;
+  }
+
 </script>
 </head>
 <body>
@@ -139,7 +129,7 @@ if(isset($_POST['btn-save']))
             {
                  ?>
                  <div class="alert alert-info">
-                      <i class="glyphicon glyphicon-log-in"></i> &nbsp; Successfully registered <a href='login.php'>login</a> here
+                      <i class="glyphicon glyphicon-log-in"></i> &nbsp; Berhasil Register! Anda akan Menerima Email Konfirmasi dari Admin Paling Lama 48 jam.
                  </div>
                  <?php
             }
@@ -147,17 +137,17 @@ if(isset($_POST['btn-save']))
           
           <div class="form-group">
             <h5>Username</h5>
-            <input type='text' name='txt_uname' class='form-control' value="<?php if(isset($error)){echo $uname;}?>" maxlength="30" required>
+            <input type='text' name='txt_uname' onkeypress="return isNumberKey2(event)" class='form-control' value="<?php if(isset($error)){echo $uname;}?>" maxlength="30" required>
           </div>
           
           <div class="form-group">
             <h5>Email</h5>
-            <input type='text' name='txt_umail' class='form-control' value="<?php if(isset($error)){echo $umail;}?>" maxlength="60" required>
+            <input type='text' name='txt_umail' onkeypress="return isNumberKey2(event)" class='form-control' value="<?php if(isset($error)){echo $umail;}?>" maxlength="60" required>
           </div>
 
           <div class="form-group">
           <h5>Password</h5>
-            <input type='password' name='txt_upass' class='form-control' required>
+            <input type='password' name='txt_upass' onkeypress="return isNumberKey2(event)" class='form-control' required>
           </div>
 
           <div class="form-group">
@@ -201,7 +191,7 @@ if(isset($_POST['btn-save']))
 
           <div class="form-group">
             <h5>Jumlah Tanggungan</h5>
-            <input type='number' onkeypress="return isNumberKey(event)" name='txt_ujumlah_tang' class='form-control' min="0" max="99999999999999999999" value="<?php if(isset($error)){echo $ujumlah_tang;}?>" required>
+            <input type='number' onkeypress="return isNumberKey(event)" name='txt_ujumlah_tang' class='form-control' min="0" max="99" value="<?php if(isset($error)){echo $ujumlah_tang;}?>" required>
           </div>
          
         <hr />
@@ -211,11 +201,12 @@ if(isset($_POST['btn-save']))
                 Register
              </button>  
           </div>
-          <a href="fpass.php">Forgot your Password ? </a>  
+          <a href="fpass.php">Lupa Password ? </a>  
           <br />
           <br/>
 
-              <label><a href="index.php">Back to Home</a></label>
+              <label>Sudah Punya Akun? <a href="login.php">Login</a></label> <br>
+              <label><a href="index.php">Kembali ke Beranda</a></label>
     </form>
 
   </div>

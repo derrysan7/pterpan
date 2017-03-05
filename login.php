@@ -29,9 +29,9 @@ if(isset($_POST['btn-login']))
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>HMSI : Login</title>
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
-<link rel="stylesheet" href="css/style.css" type="text/css"  />
+<link href="style/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="style/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+<link rel="stylesheet" href="style/css/style.css" type="text/css"  />
 </head>
 <body>
 
@@ -46,7 +46,7 @@ if(isset($_POST['btn-login']))
         <?php
             if(isset($_GET['inactive']))
             {
-                $error = "This Account is not Activated Go to your Inbox and Activate it.";
+                $error = "Akun Belum diaktifkan";
             }
         ?>
         
@@ -80,11 +80,11 @@ if(isset($_POST['btn-login']))
                 	<i class="glyphicon glyphicon-log-in"></i> &nbsp; SIGN IN
             </button>
         </div>
-        <a href="fpass.php">Forgot your Password ? </a>  
+        <a href="fpass.php">Lupa Password ? </a>  
       	<br />
         <br/>
-
-            <label><a href="index.php">Back to Home</a></label>
+            <label>Belum Punya Akun? <a href="register.php">Register</a></label> <br>
+            <label><a href="index.php">Kembali ke Beranda</a></label>
       </form>
 
     </div>

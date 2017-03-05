@@ -77,9 +77,9 @@ if(isset($_GET['id']) && isset($_GET['code']))
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>HMSI : Login</title>
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
-<link rel="stylesheet" href="css/style.css" type="text/css"  />
+<link href="style/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="style/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+<link rel="stylesheet" href="style/css/style.css" type="text/css"  />
 </head>
 <body id="login">
     <div class="container">
@@ -102,7 +102,7 @@ if(isset($_GET['id']) && isset($_GET['code']))
       </form>
 
     </div> <!-- /container -->
-    <script src="bootstrap/js/jquery-1.11.3-jquery.min.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="style/bootstrap/js/jquery-1.11.3-jquery.min.js"></script>
+    <script src="style/bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>
