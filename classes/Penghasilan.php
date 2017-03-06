@@ -4,7 +4,7 @@ require_once $_SERVER['DOCUMENT_ROOT']."/pterpan/routes/dbconfig.php";
 
 class Penghasilan{
 
-    private $db;
+    public $db;
 
     function __construct()
     {
@@ -58,8 +58,9 @@ class Penghasilan{
     }
 
 
-    public function delete($id,$flag)
+    public function delete($id)
     {
+        $flag = '1';
         try{
             $stmt=$this->db->prepare("UPDATE penghasilan SET flag=:flag
         WHERE penghasilanId=:id ");
@@ -93,10 +94,10 @@ class Penghasilan{
                     <td><?php print($row['tglPghs']); ?></td>
                     <td align="right"><?php print("Rp ".$row['nominalPghs']); ?></td>
                     <td align="center">
-                        <a href="edit-penghasilan.php?edit_id=<?php print($row['id']); ?>"><i class="glyphicon glyphicon-edit"></i></a>
+                        <a href="edit-penghasilan.php?edit_id=<?php print($row['penghasilanId']); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                     </td>
                     <td align="center">
-                        <a href="delete-penghasilan.php?delete_id=<?php print($row['id']); ?>"><i class="glyphicon glyphicon-remove-circle"></i></a>
+                        <a href="delete-penghasilan.php?delete_id=<?php print($row['penghasilanId']); ?>"><i class="glyphicon glyphicon-remove-circle"></i></a>
                     </td>
                 </tr>
                 <?php

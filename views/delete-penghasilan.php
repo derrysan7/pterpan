@@ -6,7 +6,7 @@ if(isset($_POST['btn-del']))
 {
     $id = $_GET['delete_id'];
     $penghasilan->delete($id);
-    header("Location: delete.php?deleted");
+    header("Location: delete-penghasilan.php?deleted");
 }
 
 ?>
@@ -53,7 +53,7 @@ if(isset($_POST['btn-del']))
                     <th>Nominal Penghasilan</th>
                 </tr>
                 <?php
-                $stmt = $DB_con->prepare("SELECT * FROM penghasilan WHERE penghasilanId=:id");
+                $stmt = $penghasilan->db->prepare("SELECT * FROM penghasilan WHERE penghasilanId=:id");
                 $stmt->execute(array(":id"=>$_GET['delete_id']));
                 while($row=$stmt->fetch(PDO::FETCH_BOTH))
                 {
