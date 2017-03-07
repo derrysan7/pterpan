@@ -1,15 +1,12 @@
 <?php
 class Database
-
 {
-
     private $host = "localhost";
     private $db_name = "dbpeterpan";
     private $username = "root";
     private $password = "";
     private $db_port = "";
     public $conn;
-
      
     public function dbConnection()
 	{
@@ -29,4 +26,3 @@ class Database
     }
 }
 ?>
-
