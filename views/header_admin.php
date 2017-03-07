@@ -1,6 +1,6 @@
 <?php
   require_once("session_admin.php");
-	require_once("classes\class.user.php");
+	require_once("classes/class.user.php");
 	$auth_user = new USER();
   //error_reporting(0);
 

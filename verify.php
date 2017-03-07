@@ -1,5 +1,5 @@
 <?php
-require_once 'classes\class.user.php';
+require_once 'classes/class.user.php';
 $user = new USER();
 
 if(empty($_GET['id']) && empty($_GET['code']))
