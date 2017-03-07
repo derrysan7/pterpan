@@ -1,7 +1,6 @@
-
 <?php
-  require_once $_SERVER['DOCUMENT_ROOT']."/pterpan/session.php";
-	require_once("classes/class.user.php");
+  require_once ("session.php");
+	require_once ("classes/class.user.php");
 	$auth_user = new USER();
   //error_reporting(0);
 
