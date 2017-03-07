@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once 'dbconfig.php';
+include_once 'routes/dbconfig.php';
 require_once('classes/class.user.php');
 $user = new USER();
 
