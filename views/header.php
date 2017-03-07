@@ -65,7 +65,7 @@
           <ul class="nav navbar-nav">
 
             <li><a href="index.php">Dashboard</a></li>
-            <li><a href="kegiatan.php">Pemasukan</a></li>
+            <li><a href="view-penghasilan.php">Penghasilan</a></li>
             <li><a href="visimisi?visimisi_id=1.php">Pengeluaran</a></li>
             <li><a href="struktur.php">Detail Laporan</a></li>
           </ul>
