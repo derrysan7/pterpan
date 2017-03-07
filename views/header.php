@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-  <script src="style/js/datepicker.js"></script>
+  <script src="../style/js/datepicker.js"></script>
 
 </head>
 <body>
@@ -34,8 +34,8 @@
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">Pemasukan
                 <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="view-penghasilan.php">Daftar penghasilan saya</a></li>
-                  <li><a href="add-penghasilan.php">Tambahkan data penghasilan</a></li>
+                  <li><a href="../view-penghasilan.php">Daftar penghasilan saya</a></li>
+                  <li><a href="../add-penghasilan.php">Tambahkan data penghasilan</a></li>
                 </ul>
               </li>
               <li><a href="#">Page 2</a></li>

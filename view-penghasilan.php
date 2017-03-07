@@ -1,6 +1,6 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT']."/pterpan/classes/Penghasilan.php";
-include_once "header.php";
+include_once "classes/Penghasilan.php";
+include_once "views/header.php";
 $penghasilan = new Penghasilan();
 ?>
 
@@ -40,4 +40,4 @@ $penghasilan = new Penghasilan();
 
     </div>
 
-<?php include_once 'footer.php'; ?>
+<?php include_once 'views/footer.php'; ?>

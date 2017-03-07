@@ -1,54 +1,42 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT']."/pterpan/classes/Penghasilan.php";
+require_once "classes/Penghasilan.php";
 $penghasilan = new Penghasilan();
 
 if(isset($_POST['submit']))
 {
-    $userId = '1';
+    $penghasilanId = $_GET['edit_id'];
     $tglPghs = $_POST['tglPghs'];
     $sumberPghs = $_POST['sumberPghs'];
     $nominalPghs = $_POST['nominalPghs'];
 
-    if($penghasilan->create($userId,$sumberPghs,$tglPghs,$nominalPghs))
+    if($penghasilan->update($penghasilanId,$sumberPghs,$tglPghs,$nominalPghs))
     {
-        header("Location: add-penghasilan.php?inserted");
+        $msg= "<div class='alert alert-info'><strong>Berhasil!</strong> Data penghasilan berhasil diperbaharui. <a href='view-penghasilan.php'>Lihat daftar penghasilan</a>!</div>";
     }
     else
     {
-        header("Location: add-penghasilan.php?failure");
+        $msg="<div class='alert alert-warning'>
+            <strong>Maaf</strong>, terjadi kesalahan saat memperbaharui data.
+        </div>";
     }
 }
-?>
-<?php include_once $_SERVER['DOCUMENT_ROOT']."/pterpan/views/header.php"; ?>
-    <div class="clearfix"></div>
-
-<?php
-if(isset($_GET['inserted']))
+if(isset($_GET['edit_id']))
 {
-    ?>
-    <div class="container">
-        <div class="alert alert-info">
-            <strong>Berhasil!</strong> Data penghasilan berhasil ditambahkan. <a href="view-penghasilan.php">Lihat daftar penghasilan</a>!
-        </div>
-    </div>
-    <?php
-}
-else if(isset($_GET['failure']))
-{
-    ?>
-    <div class="container">
-        <div class="alert alert-warning">
-            <strong>Maaf</strong>, terjadi kesalahan saat menambahkan data.
-        </div>
-    </div>
-    <?php
+    $id = $_GET['edit_id'];
+    extract($penghasilan->getID($id));
 }
 ?>
 
-    <div class="clearfix"></div><br />
+<?php include_once "views/header.php"; ?>
+
 
     <div class="container">
 
+        <?php
+        if (isset($msg)){
+            echo $msg;
+        }
+        ?>
 
         <div class="col-md-6">
             <form class="form-horizontal" method="post">
@@ -56,7 +44,7 @@ else if(isset($_GET['failure']))
                 <div class="form-group">
                     <label class="col-sm-4 control-label" for="tglPghs">Tanggal penghasilan</label>
                     <div class="col-sm-8 input-group">
-                        <input class="form-control" id="datepicker" name="tglPghs" type="date" required>
+                        <input class="form-control" id="datepicker" name="tglPghs" type="date" value="<?php echo $tglPghs?>" required>
                         <span class="input-group-addon">
           <span class="glyphicon glyphicon-calendar"></span>
         </span>
@@ -67,7 +55,7 @@ else if(isset($_GET['failure']))
                 <div class="form-group">
                     <label class="col-sm-4 control-label" for="sumberPghs">Sumber penghasilan</label>
                     <div class="col-sm-8 input-group">
-                        <input class="form-control" name="sumberPghs" type="text" placeholder="Contoh: Gaji kantor" required>
+                        <input class="form-control" name="sumberPghs" type="text" placeholder="Contoh: Gaji kantor" value="<?php echo $sumberPghs?>" required>
                         <span class="input-group-addon">
           <span class="glyphicon glyphicon-list"></span>
         </span>
@@ -79,7 +67,7 @@ else if(isset($_GET['failure']))
                     <div class="col-sm-8 input-group">
                         <span class="input-group-addon">Rp</span>
                         <input class="form-control" name="nominalPghs" type="number"
-                               placeholder="Contoh: 2500000" pattern="\d*" required>
+                               placeholder="Contoh: 2500000" pattern="\d*" value="<?php echo $nominalPghs?>" required>
                     </div>
                 </div>
 
@@ -89,7 +77,7 @@ else if(isset($_GET['failure']))
                         <button class="btn btn-primary" name="submit" type="submit">
                             <span class="glyphicon glyphicon-plus"></span> &nbsp; Simpan
                         </button>
-<!--                        <input type="submit" class="btn btn-primary" name="submit" value="Simpan">--> &nbsp;
+                        <!--                        <input type="submit" class="btn btn-primary" name="submit" value="Simpan">--> &nbsp;
                         <a href="view-penghasilan.php" class="btn btn-success"><i class="glyphicon glyphicon-backward"></i> &nbsp; Kembali ke daftar penghasilan.</a>
                     </div>
                 </div>
@@ -100,4 +88,4 @@ else if(isset($_GET['failure']))
 
     </div>
 
-<?php include_once 'footer.php'; ?>
+<?php include_once 'views/footer.php'; ?>
