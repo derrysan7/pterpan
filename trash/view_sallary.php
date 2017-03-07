@@ -14,8 +14,8 @@ require_once "views/header.php";
   <table class="table table-hover">
     <thead>
       <tr>
-        <th>Nama Penghasilan</th>
-        <th>Tanggal Penghasilan</th>
+        <th>Nama Pemasukan</th>
+        <th>Tanggal Pemasukan</th>
       </tr>
     </thead>
     <tbody>

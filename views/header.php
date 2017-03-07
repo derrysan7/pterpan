@@ -1,3 +1,4 @@
+
 <?php
   require_once("session.php");
 	require_once("classes\class.user.php");
@@ -19,6 +20,7 @@
       $userinfo="none";
       $signinbutton="yes";
       }
+
 
 
 
@@ -61,6 +63,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
+
             <li><a href="index.php">Dashboard</a></li>
             <li><a href="kegiatan.php">Pemasukan</a></li>
             <li><a href="visimisi?visimisi_id=1.php">Pengeluaran</a></li>
@@ -71,8 +74,9 @@
                 <li><a href="" style="display:<?php echo $userinfo ?>;"><span class="glyphicon glyphicon-user"></span>&nbsp;Hi' <?php echo $userRow['userEmail']; ?></a></li>
                 <li><a href="logout.php?logout=true" style="display:<?php echo $userinfo ?>;"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Sign Out</a></li>
                 <li><a href="login.php" style="display:<?php echo $signinbutton ?>;"><span class="glyphicon glyphicon-log-in"></span>&nbsp;Sign In</a></li>
-            </li>
+
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
+
