@@ -4,8 +4,8 @@ class Database
 
     private $host = "localhost";
     private $db_name = "dbpeterpan";
-    private $username = "pterpanuser";
-    private $password = "123456";
+    private $username = "root";
+    private $password = "";
     private $db_port = "";
     public $conn;
 
