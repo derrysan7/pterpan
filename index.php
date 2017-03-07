@@ -1,4 +1,3 @@
-<?php
-require_once "header.php";
-?>
-Tes
+
+<?php include_once 'header.php'; ?>
+
