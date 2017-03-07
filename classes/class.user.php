@@ -1,6 +1,6 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT']."/pterpan/routes/dbconfig.php";
+require_once ('routes/dbconfig.php');
 
 class USER
 {	
