@@ -28,12 +28,12 @@ if(isset($_POST['btn-save']))
                 
             // allow valid image file formats
             if(in_array($imgExt, $valid_extensions)){           
-                // Check file size '5MB'
-                if($imgSize < 5000000)              {
+                // Check file size '2MB'
+                if($imgSize < 2000000)              {
                     move_uploaded_file($tmp_dir,$upload_dir.$userpic);
                 }
                 else{
-                    $errMSG = "Sorry, your file is too large.";
+                    $errMSG = "Sorry, your file is too large it should be less then 2MB";
                 }
             }
             else{

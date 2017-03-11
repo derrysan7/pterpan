@@ -24,7 +24,7 @@ if(isset($_POST['btn-update']))
                 $userpic = uniqid('', true).".".$imgExt;
                 if(in_array($imgExt, $valid_extensions))
                 {           
-                    if($imgSize < 5000000)
+                    if($imgSize < 2000000)
                     {
                         if ($gambar != 'placeholder.png'){
                         unlink($upload_dir.$gambar);
@@ -33,7 +33,7 @@ if(isset($_POST['btn-update']))
                     }
                     else
                     {
-                        $errMSG = "Sorry, your file is too large it should be less then 5MB";
+                        $errMSG = "Sorry, your file is too large it should be less then 2MB";
                     }
                 }
                 else
@@ -81,12 +81,12 @@ if(isset($_GET['edit_id']))
 
 <div class="container">
 
-<?php
-	if(isset($msg))
-	{
-	 echo $msg;
-	}
-?>
+    <?php
+    	if(isset($msg))
+    	{
+    	 echo $msg;
+    	}
+    ?>
 
 </div>
 
