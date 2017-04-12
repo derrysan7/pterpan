@@ -1,10 +1,11 @@
 <?php
 require_once "classes/Penghasilan.php";
+include_once "views/header.php";
 $penghasilan = new Penghasilan();
 
 if(isset($_POST['submit']))
 {
-    $userId = '1';
+    $userId = $userRow['userId'];
     $tglPghs = $_POST['tglPghs'];
     $sumberPghs = $_POST['sumberPghs'];
     $nominalPghs = $_POST['nominalPghs'];
@@ -19,7 +20,7 @@ if(isset($_POST['submit']))
     }
 }
 ?>
-<?php include_once "views/header.php"; ?>
+
     <div class="clearfix"></div>
 
 <?php
