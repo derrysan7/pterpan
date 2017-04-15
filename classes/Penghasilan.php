@@ -1,5 +1,6 @@
 <?php
 require_once ('routes/dbconfig.php');
+//setlocale(LC_MONETARY, 'id_ID');
 
 class Penghasilan{
 
@@ -90,8 +91,8 @@ class Penghasilan{
                 <tr>
                     <td><?php print($row['penghasilanId']); ?></td>
                     <td><?php print($row['sumberPghs']); ?></td>
-                    <td><?php print($row['tglPghs']); ?></td>
-                    <td align="right"><?php print("Rp ".$row['nominalPghs']); ?></td>
+                    <td><?php $tgl = new DateTime($row['tglPghs']); print date_format($tgl,"d F Y"); ?></td>
+                    <td align="right"><?php print 'Rp &nbsp;'.number_format($row['nominalPghs'],0,',','.'); ?></td>
                     <td align="center">
                         <a href="edit-penghasilan.php?edit_id=<?php print($row['penghasilanId']); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                     </td>
