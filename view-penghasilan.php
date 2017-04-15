@@ -7,6 +7,8 @@ $penghasilan = new Penghasilan();
     <div class="clearfix"></div>
 
     <div class="container">
+        <h1>Daftar Penghasilan</h1>
+        <hr>
         <a href="add-penghasilan.php" class="btn btn-large btn-info"><i class="glyphicon glyphicon-plus"></i> &nbsp; Add Records</a>
     </div>
 

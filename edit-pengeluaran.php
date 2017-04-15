@@ -31,7 +31,8 @@ if(isset($_GET['edit_id']))
 
 
     <div class="container">
-
+        <h1>Ubah Data Komponen Pengeluaran</h1>
+        <hr>
         <?php
         if (isset($msg)){
             echo $msg;

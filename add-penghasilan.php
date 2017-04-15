@@ -49,7 +49,8 @@ else if(isset($_GET['failure']))
     <div class="clearfix"></div><br />
 
     <div class="container">
-
+        <h1>Tambah Penghasilan</h1>
+        <hr>
 
         <div class="col-md-6">
             <form class="form-horizontal" method="post">

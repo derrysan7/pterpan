@@ -7,6 +7,8 @@ $pengeluaran = new Pengeluaran();
     <div class="clearfix"></div>
 
     <div class="container">
+        <h1>Komponen Pengeluaran</h1>
+        <hr>
         <a href="add-pengeluaran.php" class="btn btn-large btn-info"><i class="glyphicon glyphicon-plus"></i> &nbsp; Add Records</a>
     </div>
 

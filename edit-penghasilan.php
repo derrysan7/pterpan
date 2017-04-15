@@ -31,12 +31,15 @@ if(isset($_GET['edit_id']))
 
 
     <div class="container">
-
+        <h1>Ubah Data Penghasilan</h1>
+        <hr>
         <?php
         if (isset($msg)){
             echo $msg;
         }
         ?>
+
+
 
         <div class="col-md-6">
             <form class="form-horizontal" method="post">
