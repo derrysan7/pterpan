@@ -44,6 +44,8 @@ else
 
         });</script>
     <link rel="stylesheet" href="style/css/style.css" type="text/css"  />
+    <script type="text/javascript" src="style/jquery/relCopy.jquery.js"></script>
+    <script type="text/javascript" src="style/js/app.js"></script>
     <title>Peterpan</title>
 </head>
 
@@ -65,7 +67,7 @@ else
 
                 <li><a href="index.php">Dashboard</a></li>
                 <li><a href="view-penghasilan.php">Penghasilan</a></li>
-                <li><a href="visimisi?visimisi_id=1.php">Pengeluaran</a></li>
+                <li><a href="view-pengeluaran.php">Pengeluaran</a></li>
                 <li><a href="struktur.php">Detail Laporan</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
