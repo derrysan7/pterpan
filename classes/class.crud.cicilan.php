@@ -82,7 +82,7 @@ public function lastID()
     return $stmt;
   }
 
- public function create_detail($ccicilanId,$tglCicilan)
+ public function create_detail($ccicilanId,$ctglCicilan)
  {
   try
   {
@@ -100,6 +100,30 @@ public function lastID()
   }
   
  }
+
+public function add_month($date_str,$months)
+  {
+      $date = new DateTime($date_str);
+
+      // We extract the day of the month as $start_day
+      $start_day = $date->format('j');
+
+      // We add 1 month to the given date
+      $date->modify("+{$months} month");
+
+      // We extract the day of the month again so we can compare
+      $end_day = $date->format('j');
+
+      if ($start_day != $end_day)
+      {
+          // The day of the month isn't the same anymore, so we correct the date
+          $date->modify('last day of last month');
+      }
+
+      $result = $date->format('Y-m-d');
+
+      return $result;
+  }
 
  public function delete_detail($cicilanId)
  {

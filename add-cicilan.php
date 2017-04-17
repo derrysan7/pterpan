@@ -7,20 +7,33 @@ if(isset($_POST['btn-save']))
 {
     $cuserid = $userRow['userId'];
     $cnamaCicilan = htmlspecialchars($_POST['txt_namacicilan']);
-    $ctglMulai = strtotime($_POST['txt_tglMulai']);
-    $ctglSelesai = strtotime($_POST['txt_tglSelesai']);
+    $ctglMulai = $_POST['txt_tglMulai'];
+    $ctglSelesai = $_POST['txt_tglSelesai'];
     $cjmlCicilan = $_POST['txt_jmlCicilan'];
-    if($ctglMulai > $ctglSelesai)  {
+    if(strtotime($ctglMulai) > strtotime($ctglSelesai))  
+    {
         $error[] = "Tanggal Selesai harus lebih besar dari Tanggal Mulai";    
+    }
+    elseif (strtotime($ctglMulai) == strtotime($ctglSelesai))
+    {
+        $error[] = "Tanggal Selesai tidak boleh sama dengan Tanggal Mulai";  
     }
     else
     {
         try
         {
-            $ctglMulai2 = date("Y-m-d", $ctglMulai);
-            $ctglSelesai2 = date("Y-m-d", $ctglSelesai);
+            $ctglMulai2 = date("Y-m-d", strtotime($ctglMulai));
+            $ctglSelesai2 = date("Y-m-d", strtotime($ctglSelesai));
             if($crud->create($cuserid,$cnamaCicilan,$ctglMulai2,$ctglSelesai2,$cjmlCicilan))
-             {                   
+             {
+                $autoid = $crud->lastID();
+                $month = 1;
+                while (strtotime($ctglMulai2) <= strtotime($ctglSelesai2))
+                {
+                    $crud->create_detail($autoid,$ctglMulai2);
+                    $ctglMulai2 = $crud->add_month($ctglMulai,$month);
+                    $month = $month + 1;
+                }
                 header("Location: add-cicilan.php?inserted");
              }
              else
@@ -55,7 +68,7 @@ if(isset($_POST['btn-save']))
             {
                  ?>
                  <div class="alert alert-info">
-                      <strong>SUCCESS!</strong>cicilan berhasil ditambahkan <a href="view-cicilan.php">HOME</a>!
+                      <strong>SUCCESS!</strong> Cicilan berhasil ditambahkan <a href="view-cicilan.php">HOME</a>!
                  </div>
                  <?php
             }
