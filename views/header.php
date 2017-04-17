@@ -63,10 +63,11 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
 
-            <li><a href="index.php">Dashboard</a></li>
+            <li><a href="index.php">Beranda</a></li>
             <li><a href="view-penghasilan.php">Penghasilan</a></li>
-            <li><a href="visimisi?visimisi_id=1.php">Pengeluaran</a></li>
-            <li><a href="struktur.php">Detail Laporan</a></li>
+            <li><a href="">Pengeluaran</a></li>
+            <li><a href="">Cicilan</a></li>
+            <li><a href="">Laporan</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
               
