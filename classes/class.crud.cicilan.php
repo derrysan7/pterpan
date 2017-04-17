@@ -37,7 +37,7 @@ class crud
  
  public function getID($id)
  {
-  $stmt = $this->db->prepare("SELECT * FROM berita WHERE id=:id");
+  $stmt = $this->db->prepare("SELECT * FROM cicilan WHERE id=:id");
   $stmt->execute(array(":id"=>$id));
   $editRow=$stmt->fetch(PDO::FETCH_ASSOC);
   return $editRow;
@@ -47,7 +47,7 @@ class crud
  {
   try
   {
-   $stmt=$this->db->prepare("UPDATE berita SET namaCicilan=:cnamaCicilan,  
+   $stmt=$this->db->prepare("UPDATE cicilan SET namaCicilan=:cnamaCicilan,  
                                               tglMulai=:ctglMulai,
                                               tglSelesai=:ctglSelesai,
                                               jmlCicilan=:cjmlCicilan
@@ -127,12 +127,12 @@ public function lastID()
                 <td><?php print($row['namaCicilan']); ?></td>
                 <td><?php print($row['tglMulai']); ?></td>
                 <td><?php print($row['tglSelesai']); ?></td>
-                <td><?php print($row['jmlCicilan']); ?></td>
+                <td style="text-align:right"><?php print("Rp ". number_format($row['jmlCicilan'],2,',','.')); ?></td>
                 <td align="center">
-                <a href="edit-berita.php?edit_id=<?php print($row['id']); ?>"><i class="glyphicon glyphicon-edit"></i></a>
+                <a href="edit-cicilan.php?edit_id=<?php print($row['id']); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 </td>
                 <td align="center">
-                <a href="delete-berita.php?delete_id=<?php print($row['id']); ?>"><i class="glyphicon glyphicon-remove-circle"></i></a>
+                <a href="delete-cicilan.php?delete_id=<?php print($row['id']); ?>"><i class="glyphicon glyphicon-remove-circle"></i></a>
                 </td>
                 </tr>
                 <?php
