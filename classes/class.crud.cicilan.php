@@ -13,17 +13,17 @@ class crud
     $this->db = $db;
  }
  
- public function create($buserid,$bjudul,$bdeskripsi,$userpic,$bnamapen)
+ public function create($cuserid,$cnamaCicilan,$ctglMulai,$ctglSelesai,$cjmlCicilan)
  {
   try
   {
-   $stmt = $this->db->prepare("INSERT INTO berita(userId,tanggaldib,judul,deskripsi,gambar,namapen) 
-                                                   VALUES(:buserid,CURRENT_TIMESTAMP(),:bjudul,:bdeskripsi,:bgambar,:bnamapen)");
-   $stmt->bindparam(":buserid", $buserid);
-   $stmt->bindparam(":bjudul", $bjudul);
-   $stmt->bindparam(":bdeskripsi", $bdeskripsi);
-   $stmt->bindparam(":bgambar", $userpic);
-   $stmt->bindparam(":bnamapen", $bnamapen);
+   $stmt = $this->db->prepare("INSERT INTO cicilan(userId,tglDibuat,namaCicilan,tglMulai,tglSelesai,jmlCicilan) 
+                                                   VALUES(:cuserid,CURRENT_TIMESTAMP(),:cnamaCicilan,:ctglMulai,:ctglSelesai,:cjmlCicilan)");
+   $stmt->bindparam(":cuserid", $cuserid);
+   $stmt->bindparam(":cnamaCicilan", $cnamaCicilan);
+   $stmt->bindparam(":ctglMulai", $ctglMulai);
+   $stmt->bindparam(":ctglSelesai", $ctglSelesai);
+   $stmt->bindparam(":cjmlCicilan", $cjmlCicilan);
    $stmt->execute();
    return true;
   }
@@ -43,20 +43,20 @@ class crud
   return $editRow;
  }
  
- public function update($id,$bjudul,$bdeskripsi,$userpic,$bnamapen)
+ public function update($id,$cnamaCicilan,$ctglMulai,$ctglSelesai,$cjmlCicilan)
  {
   try
   {
-   $stmt=$this->db->prepare("UPDATE berita SET judul=:bjudul,  
-                                              deskripsi=:bdeskripsi,
-                                              gambar=:bgambar,
-                                              namapen=:bnamapen
-             WHERE id=:id ");
+   $stmt=$this->db->prepare("UPDATE berita SET namaCicilan=:cnamaCicilan,  
+                                              tglMulai=:ctglMulai,
+                                              tglSelesai=:ctglSelesai,
+                                              jmlCicilan=:cjmlCicilan
+             WHERE cicilanId=:id ");
    $stmt->bindparam(":id",$id);
-   $stmt->bindparam(":bjudul", $bjudul);
-   $stmt->bindparam(":bdeskripsi", $bdeskripsi);
-   $stmt->bindparam(":bgambar", $userpic);
-   $stmt->bindparam(":bnamapen", $bnamapen);  
+   $stmt->bindparam(":cnamaCicilan", $cnamaCicilan);
+   $stmt->bindparam(":ctglMulai", $ctglMulai);
+   $stmt->bindparam(":ctglSelesai", $ctglSelesai);
+   $stmt->bindparam(":cjmlCicilan", $cjmlCicilan);  
    $stmt->execute();
    
    return true; 
@@ -70,8 +70,41 @@ class crud
  
  public function delete($id)
  {
-  $stmt = $this->db->prepare("DELETE FROM berita WHERE id=:id");
+  $stmt = $this->db->prepare("DELETE FROM cicilan WHERE cicilanId=:id");
   $stmt->bindparam(":id",$id);
+  $stmt->execute();
+  return true;
+ }
+
+public function lastID()
+  {
+    $stmt = $this->db->lastInsertId();
+    return $stmt;
+  }
+
+ public function create_detail($ccicilanId,$tglCicilan)
+ {
+  try
+  {
+   $stmt = $this->db->prepare("INSERT INTO detailcicilan(cicilanId,tglCicilan) 
+                                                   VALUES(:ccicilanId,:ctglCicilan)");
+   $stmt->bindparam(":ccicilanId", $ccicilanId);
+   $stmt->bindparam(":ctglCicilan", $ctglCicilan);
+   $stmt->execute();
+   return true;
+  }
+  catch(PDOException $e)
+  {
+   echo $e->getMessage(); 
+   return false;
+  }
+  
+ }
+
+ public function delete_detail($cicilanId)
+ {
+  $stmt = $this->db->prepare("DELETE FROM detailcicilan WHERE cicilanId=:cicilanId");
+  $stmt->bindparam(":cicilanId",$cicilanId);
   $stmt->execute();
   return true;
  }
@@ -90,10 +123,11 @@ class crud
     
     ?>
                 <tr>
-                <td><?php print($row['id']); ?></td>
-                <td><?php print($row['tanggaldib']); ?></td>
-                <td><?php print($row['judul']); ?></td>
-                <td><?php print($row['namapen']); ?></td>
+                <td><?php print($row['cicilanId']); ?></td>
+                <td><?php print($row['namaCicilan']); ?></td>
+                <td><?php print($row['tglMulai']); ?></td>
+                <td><?php print($row['tglSelesai']); ?></td>
+                <td><?php print($row['jmlCicilan']); ?></td>
                 <td align="center">
                 <a href="edit-berita.php?edit_id=<?php print($row['id']); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                 </td>

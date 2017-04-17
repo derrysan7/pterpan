@@ -31,6 +31,7 @@
     <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
     <link href="style/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <script type="text/javascript" src="style/bootstrap/js/jquery-1.11.3-jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
     <link href="style/css/font-face.css" rel="stylesheet" type="text/css">
     
     <script src="js/tinymce/tinymce.min.js"></script>
@@ -66,7 +67,7 @@
             <li><a href="index.php">Beranda</a></li>
             <li><a href="view-penghasilan.php">Penghasilan</a></li>
             <li><a href="">Pengeluaran</a></li>
-            <li><a href="">Cicilan</a></li>
+            <li><a href="view-cicilan.php">Cicilan</a></li>
             <li><a href="">Laporan</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
