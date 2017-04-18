@@ -67,6 +67,14 @@ elseif(isset($_GET['edit_id']))
 {
     $id = $_GET['edit_id'];
     extract($crud->getID($id)); 
+    if ($namaCicilan === NULL)
+    {
+        exit("Page not Found");
+    } 
+    elseif ($userId != $userRow['userId'])
+    {
+        exit("Page not Found");
+    }
 }
 
 
