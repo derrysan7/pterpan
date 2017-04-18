@@ -37,7 +37,7 @@ class crud
  
  public function getID($id)
  {
-  $stmt = $this->db->prepare("SELECT * FROM cicilan WHERE id=:id");
+  $stmt = $this->db->prepare("SELECT * FROM cicilan WHERE cicilanId=:id");
   $stmt->execute(array(":id"=>$id));
   $editRow=$stmt->fetch(PDO::FETCH_ASSOC);
   return $editRow;
@@ -145,30 +145,30 @@ public function add_month($date_str,$months)
    while($row=$stmt->fetch(PDO::FETCH_ASSOC))
    {
     
-    ?>
-                <tr>
-                <td><?php print($row['cicilanId']); ?></td>
-                <td><?php print($row['namaCicilan']); ?></td>
-                <td><?php print($row['tglMulai']); ?></td>
-                <td><?php print($row['tglSelesai']); ?></td>
-                <td style="text-align:right"><?php print("Rp ". number_format($row['jmlCicilan'],2,',','.')); ?></td>
-                <td align="center">
-                <a href="edit-cicilan.php?edit_id=<?php print($row['id']); ?>"><i class="glyphicon glyphicon-edit"></i></a>
-                </td>
-                <td align="center">
-                <a href="delete-cicilan.php?delete_id=<?php print($row['id']); ?>"><i class="glyphicon glyphicon-remove-circle"></i></a>
-                </td>
-                </tr>
-                <?php
+      ?>
+            <tr>
+            <td><?php print($row['cicilanId']); ?></td>
+            <td><?php print($row['namaCicilan']); ?></td>
+            <td><?php $tglMulaiPrint = date("d/m/Y", strtotime($row['tglMulai'])); print($tglMulaiPrint); ?></td>
+            <td><?php $tglSelesaiPrint = date("d/m/Y", strtotime($row['tglSelesai'])); print($tglSelesaiPrint); ?></td>
+            <td style="text-align:right"><?php print("Rp ". number_format($row['jmlCicilan'],2,',','.')); ?></td>
+            <td align="center">
+            <a href="edit-cicilan.php?edit_id=<?php print($row['cicilanId']); ?>"><i class="glyphicon glyphicon-edit"></i></a>
+            </td>
+            <td align="center">
+            <a href="delete-cicilan.php?delete_id=<?php print($row['cicilanId']); ?>"><i class="glyphicon glyphicon-remove-circle"></i></a>
+            </td>
+            </tr>
+      <?php
    }
   }
   else
   {
-   ?>
+      ?>
             <tr>
             <td>Nothing here...</td>
             </tr>
-            <?php
+      <?php
   }
   
  }

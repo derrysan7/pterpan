@@ -3,8 +3,10 @@
 include_once 'classes/class.crud.cicilan.php';
 $crud = new crud();
 
-if(isset($_POST['btn-save']))
+if(isset($_POST['btn-update']))
 {
+    $id = $_GET['edit_id'];
+    extract($crud->getID($id));
     $cuserid = $userRow['userId'];
     $cnamaCicilan = htmlspecialchars($_POST['txt_namacicilan']);
     $ctglMulai = $_POST['txt_tglMulai'];
@@ -24,21 +26,25 @@ if(isset($_POST['btn-save']))
         {
             $ctglMulai2 = date("Y-m-d", strtotime($ctglMulai));
             $ctglSelesai2 = date("Y-m-d", strtotime($ctglSelesai));
-            if($crud->create($cuserid,$cnamaCicilan,$ctglMulai2,$ctglSelesai2,$cjmlCicilan))
+            if($crud->update($id,$cnamaCicilan,$ctglMulai2,$ctglSelesai2,$cjmlCicilan))
              {
-                $autoid = $crud->lastID();
+                $crud->delete_detail($id);
                 $month = 1;
                 while (strtotime($ctglMulai2) <= strtotime($ctglSelesai2))
                 {
-                    $crud->create_detail($autoid,$ctglMulai2);
+                    $crud->create_detail($id,$ctglMulai2);
                     $ctglMulai2 = $crud->add_month($ctglMulai,$month);
                     $month = $month + 1;
                 }
-                header("Location: add-cicilan.php?inserted");
+                $msg = "<div class='alert alert-info'>
+                    <strong>Success!</strong> Cicilan berhasil diedit <a href='view-cicilan.php'> HOME</a>!
+                    </div>";
              }
              else
              {
-                header("Location: add-cicilan.php?failure");
+                $msg = "<div class='alert alert-warning'>
+                    <strong>Failed!</strong> Cicilan gagal diedit !
+                    </div>";
              }
         }
         catch(PDOException $e)
@@ -47,7 +53,37 @@ if(isset($_POST['btn-save']))
         }
     }   
 }
+
+
+if(isset($_GET['edit_id']) == "")
+{
+    exit("Page not Found");
+}
+elseif(empty($_GET['edit_id'])) 
+{ 
+  exit("Page not Found");
+}
+elseif(isset($_GET['edit_id']))
+{
+    $id = $_GET['edit_id'];
+    extract($crud->getID($id)); 
+}
+
+
+$tglMulai = date("m/d/Y", strtotime($tglMulai));
+$tglSelesai = date("m/d/Y", strtotime($tglSelesai));
 ?>
+
+<div class="clearfix"></div>
+
+    <div class="container">
+        <?php
+            if(isset($msg))
+            {
+             echo $msg;
+            }
+        ?>
+    </div>
 
 <div class="clearfix"></div><br />
 
@@ -64,14 +100,7 @@ if(isset($_POST['btn-save']))
                      <?php
                 }
             }
-            else if(isset($_GET['inserted']))
-            {
-                 ?>
-                 <div class="alert alert-info">
-                      <strong>SUCCESS!</strong> Cicilan berhasil ditambahkan <a href="view-cicilan.php">HOME</a>!
-                 </div>
-                 <?php
-            }
+            
         ?>
     <div class="col-md-6">          
         <form class="form-horizontal" method="post">
@@ -80,7 +109,7 @@ if(isset($_POST['btn-save']))
                     <label>Nama Cicilan</label>          
                 </div>
                 <div class="col-sm-8">
-                    <input type='text' name='txt_namacicilan' class='form-control' maxlength="80" required>
+                    <input type='text' name='txt_namacicilan' class='form-control' maxlength="80" value="<?php echo $namaCicilan ?>" required>
                 </div>
             </div>
 
@@ -89,7 +118,7 @@ if(isset($_POST['btn-save']))
                     <label>Tanggal Mulai</label>          
                 </div>
                 <div class="col-sm-8">
-                    <input id='datepicker' type='text' name='txt_tglMulai' class='form-control' readonly='true' required>
+                    <input id='datepicker' type='text' name='txt_tglMulai' class='form-control' value="<?php echo $tglMulai ?>" readonly='true' required>
                 </div>
             </div>
 
@@ -98,7 +127,7 @@ if(isset($_POST['btn-save']))
                     <label>Tanggal Selesai</label>          
                 </div>
                 <div class="col-sm-8">
-                    <input id='datepicker2' type='text' name='txt_tglSelesai' class='form-control' readonly='true' required>
+                    <input id='datepicker2' type='text' name='txt_tglSelesai' class='form-control' value="<?php echo $tglSelesai ?>" readonly='true' required>
                 </div>
             </div>
 
@@ -107,7 +136,7 @@ if(isset($_POST['btn-save']))
                     <label>Jumlah Cicilan / bln</label>          
                 </div>
                 <div class="col-sm-8">
-                    <input type='text' name='txt_jmlCicilan' class='form-control' maxlength="30" onkeypress="return isNumberKey(event)" required>
+                    <input type='text' name='txt_jmlCicilan' class='form-control' maxlength="30" onkeypress="return isNumberKey(event)" value="<?php echo $jmlCicilan ?>" required>
                 </div>
             </div>
 
@@ -115,10 +144,10 @@ if(isset($_POST['btn-save']))
                 <div class="col-sm-4">
                 </div>
                 <div class="col-sm-8">
-                    <button type="submit" class="btn btn-primary" name="btn-save">
-                        <span class="glyphicon glyphicon-plus"></span> Create New Record
+                    <button type="submit" class="btn btn-primary" name="btn-update">
+                        <span class="glyphicon glyphicon-edit"></span>  Update this Record
                     </button>  
-                    <a href="cicilan.php" class="btn btn-large btn-success"><i class="glyphicon glyphicon-backward"></i> &nbsp; Back to index</a>
+                    <a href="view-cicilan.php" class="btn btn-large btn-success"><i class="glyphicon glyphicon-backward"></i> &nbsp; Back to index</a>
                 </div>
             </div>
 
