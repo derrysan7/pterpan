@@ -22,7 +22,7 @@
 	     <th colspan="2" align="center" class="col-sm-1">Actions</th>
 	     </tr>
 		    <?php
-			  $query = "SELECT * FROM cicilan WHERE userId='".$userRow['userId']."' ORDER BY tglDibuat DESC ";       
+			  $query = "SELECT * FROM cicilan WHERE userId='".$userRow['userId']."' AND flag='0' ORDER BY tglDibuat DESC ";       
 			  $records_per_page=5;
 			  $newquery = $crud->paging($query,$records_per_page);
 			  $crud->dataview($newquery);

@@ -70,7 +70,7 @@ class crud
  
  public function delete($id)
  {
-  $stmt = $this->db->prepare("DELETE FROM cicilan WHERE cicilanId=:id");
+  $stmt = $this->db->prepare("UPDATE cicilan SET flag='1' WHERE cicilanId=:id");
   $stmt->bindparam(":id",$id);
   $stmt->execute();
   return true;
