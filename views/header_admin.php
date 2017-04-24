@@ -30,6 +30,7 @@
     <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
     <link href="style/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <script type="text/javascript" src="style/bootstrap/js/jquery-1.11.3-jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="style/css/font-face.css" rel="stylesheet" type="text/css">
     
     <script src="js/tinymce/tinymce.min.js"></script>
@@ -63,6 +64,7 @@
       <ul class="nav navbar-nav">
         <li><a href="indexadmin.php">Daftar User</a></li>
         <li><a href="berita.php">Berita</a></li>
+        <li><a href="notifikasi.php">Notifikasi</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
           
