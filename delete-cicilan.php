@@ -3,16 +3,6 @@
 include_once 'classes/class.crud.cicilan.php';
 $crud = new crud();
 
-if(isset($_GET['delete_id']))
-{
-    $id = $_GET['delete_id'];
-    extract($crud->getID($id)); 
-	if ($userId != $userRow['userId'])
-    {
-        exit("Page not Found");
-    }
-}
-
 if(isset($_POST['btn-del']))
 {
   if ($userRow['userId'] == $userId)
@@ -42,13 +32,23 @@ if(isset($_POST['btn-del']))
 	  	</div>
 	<?php
 		}
-		else
+		elseif(isset($_GET['delete_id']) && !empty($_GET['delete_id']))
 		{
+			$id = $_GET['delete_id'];
+    		extract($crud->getID($id));
+    		if ($userId != $userRow['userId'] OR $namaCicilan === NULL OR isset($_GET['delete_id']) == "")
+		    {
+		        exit("Page not Found");
+		    }
 	?>
 	    <div class="alert alert-danger">
 	     	<strong>Warning !</strong> remove the following record ? 
 	  	</div>
 	<?php
+		}
+		else
+		{
+			exit("Page not found");
 		}
 	?> 
 </div>
