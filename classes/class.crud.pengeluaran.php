@@ -81,25 +81,56 @@ class Pengeluaran{
         $stmt = $this->db->prepare($query);
         $stmt->execute();
 
+
+
         if($stmt->rowCount()>0)
         {
             while($row=$stmt->fetch(PDO::FETCH_ASSOC))
             {
+
                 ?>
-                <div class="grid col-md-4" style=" padding: 10px 5px 0px 0px;">
-                    <!--                    <div class="row" style="border: 1px solid lightgrey; margin: 20px 2px 0px 0px; padding: 10px;">-->
-                    <div class=" text-center col-md-12" style="font-size: 60px; background-color: #e8ecf2; border-top-left-radius: 5px;border-top-right-radius: 5px;">
-                        <?php print($row['persenKomp']."%");  ?>
+
+                <div class="grid col-md-3" style=" padding: 10px 5px 0px 0px;">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <?php print(strtoupper($row['namaKomp'])); ?>
+                        </div>
+                        <div class="panel-body">
+
+                            <div style="font-size: 60px; text-align: center;">
+                                <?php print($row['persenKomp']."%");  ?>
+                            </div>
+                            <span><hr></span>
+                            <div style="text-align: center;">
+
+                                <?php
+
+                                        $stmt2 = $this->db->prepare("SELECT anggaranPngl FROM pengeluaran WHERE flag='0' AND kompId='".$row['kompId']."'");
+                                        $stmt2->execute();
+
+                                $row2=$stmt2->fetch(PDO::FETCH_ASSOC);
+                                if(isset($row2['anggaranPngl'])){
+
+                                    echo "Rp &nbsp". number_format($row2['anggaranPngl'],2,',','.');
+
+
+                                }else{
+                                    echo "Anda belum mengatur anggaran.";
+                                }
+                                ?>
+                            </div>
+
+                        </div>
+                        <div class="panel-footer">
+                            <div align="center">
+                                <a href="add-anggaran.php?kom_id=<?php print($row['kompId']); ?>" class="btn btn-success btn-xs">Atur Anggaran</a>&nbsp;
+                                <a href="edit-pengeluaran.php?edit_id=<?php print($row['kompId']); ?>" class="btn btn-warning btn-xs">Ubah</a>&nbsp;
+                                <!--                                <a href="edit-pengeluaran.php?delete_id=--><?php //print($row['kompId']); ?><!--" class="btn btn-danger btn-xs">Hapus</a>-->
+                            </div>
+                        </div>
                     </div>
 
-                    <div class=" text-center col-md-12" style="font-size: 20px; background-color: #f2f4f7; padding: 5px;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;">
-                        <?php print(strtoupper($row['namaKomp'])); ?>
-                        <div align="center">
-                            <a href="edit-pengeluaran.php?edit_id=<?php print($row['kompId']); ?>" class="btn btn-warning btn-xs">Ubah</a>&nbsp;
-                            <a href="edit-pengeluaran.php?delete_id=<?php print($row['kompId']); ?>" class="btn btn-danger btn-xs">Hapus</a>
-                        </div>
-                        <!--                        </div>-->
-                    </div>
+
                 </div>
                 <!--                <tr>-->
                 <!---->
