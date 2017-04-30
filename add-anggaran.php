@@ -3,11 +3,7 @@ require_once "classes/class.crud.anggaran.php";
 include_once "views/header.php";
 $anggaran = new Anggaran();
 
-if(isset($_GET['kom_id']))
-{
-    $id = $_GET['kom_id'];
-    //extract($anggaran->getID($id));
-}
+
 
 if(isset($_POST['submit']))
 {
@@ -24,6 +20,13 @@ if(isset($_POST['submit']))
         header("Location: add-anggaran.php?failure");
     }
 }
+
+if(isset($_GET['kom_id']))
+{
+    $id = $_GET['kom_id'];
+    extract($anggaran->getID($id));
+}
+
 
 
 ?>
@@ -56,7 +59,7 @@ else if(isset($_GET['failure']))
     <div class="clearfix"></div><br />
 
     <div class="container">
-        <h1>Atur Anggaran </h1>
+        <h1>Atur Anggaran <?php echo $namaKomp; ?></h1>
         <hr>
 
         <div class="col-md-6">
@@ -89,7 +92,7 @@ else if(isset($_GET['failure']))
                             <span class="glyphicon glyphicon-plus"></span> &nbsp; Simpan
                         </button>
                         <!--                        <input type="submit" class="btn btn-primary" name="submit" value="Simpan">--> &nbsp;
-                        <a href="view-penghasilan.php" class="btn btn-success"><i class="glyphicon glyphicon-backward"></i> &nbsp; Kembali ke daftar penghasilan.</a>
+                        <a href="view-pengeluaran.php" class="btn btn-success"><i class="glyphicon glyphicon-backward"></i> &nbsp; Komponen pengeluaran.</a>
                     </div>
                 </div>
 
