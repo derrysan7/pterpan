@@ -32,7 +32,10 @@ else
     <link href="style/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <script type="text/javascript" src="style/bootstrap/js/jquery-1.11.3-jquery.min.js"></script>
     <link href="style/css/font-face.css" rel="stylesheet" type="text/css">
-
+    <link href="style/css/month-picker.css" rel="stylesheet" type="text/css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
     <script src="js/tinymce/tinymce.min.js"></script>
     <script>tinymce.init({ selector:'textarea',
             plugins: "table advlist link image",
@@ -46,6 +49,7 @@ else
     <link rel="stylesheet" href="style/css/style.css" type="text/css"  />
     <script type="text/javascript" src="style/jquery/relCopy.jquery.js"></script>
     <script type="text/javascript" src="style/js/app.js"></script>
+    <script type="text/javascript" src="style/js/month-picker.js"></script>
     <title>Peterpan</title>
 </head>
 
