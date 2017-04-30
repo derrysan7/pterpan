@@ -2,6 +2,16 @@
 include_once "classes/class.crud.pengeluaran.php";
 include_once "views/header.php";
 $pengeluaran = new Pengeluaran();
+
+if (isset($_POST['btn-add'])){
+    if ($pengeluaran->Pghsisset($userRow['userId'])){
+        header("Location: add-pengeluaran.php");
+    }else{
+        header("Location: index.php");
+    }
+}
+
+
 ?>
 
     <div class="clearfix"></div>
@@ -9,34 +19,24 @@ $pengeluaran = new Pengeluaran();
     <div class="container">
         <h1>Komponen Pengeluaran</h1>
         <hr>
-        <a href="add-pengeluaran.php" class="btn btn-large btn-info"><i class="glyphicon glyphicon-plus"></i> &nbsp; Add Records</a>
+
+    <form method="post">
+        <button class="btn btn-large btn-info" name="btn-add" type="submit"><i class="glyphicon glyphicon-plus"></i> &nbsp; Add Records </button>
+
+    </form>
     </div>
 
     <div class="clearfix"></div><br />
 
     <div class="container">
-<!--        <table class='table table-bordered table-responsive'>-->
-<!--            <tr>-->
-<!---->
-<!--                <th>Komponen Pengeluaran</th>-->
-<!--                <th>Batas Anggaran</th>-->
-<!--                <th colspan="2" align="center">Actions</th>-->
-<!--            </tr>-->
+
             <?php
             $query = "SELECT * FROM kompPengeluaran WHERE flag='0' AND userId='".$userRow['userId']."'ORDER BY namaKomp ASC";
             $records_per_page=5;
             $newquery = $pengeluaran->paging($query,$records_per_page);
-            $pengeluaran->dataview($newquery);
+            $pengeluaran->dataview($query);
             ?>
-<!--            <tr>-->
-<!--                <td colspan="7" align="center">-->
-<!--                    <div class="pagination-wrap">-->
-<!--                        --><?php //$pengeluaran->paginglink($query,$records_per_page); ?>
-<!--                    </div>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!---->
-<!--        </table>-->
+
 
 
     </div>
