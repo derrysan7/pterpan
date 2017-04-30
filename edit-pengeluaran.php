@@ -1,15 +1,24 @@
 <?php
 require_once "classes/class.crud.pengeluaran.php";
+include_once "views/header.php";
 $pengeluaran = new Pengeluaran();
+
+
 
 if(isset($_POST['submit']))
 {
+    $tgl = explode("/",$_POST['tglKomp']);
+    $tglFormat = $tgl[0]."/01/".$tgl[1];
+    $tglFormat=date('Y-m-d',strtotime($tglFormat));
+    $tipePngl = $_POST['tipePngl'];
+    $tglKomp = $tglFormat;
     $kompId = $_GET['edit_id'];
     $namaKomp = $_POST['namaKomp'];
     $persenKomp = $_POST['persenKomp'];
+    $tglKomp = $tglFormat;
 
 
-    if($pengeluaran->update($kompId,$namaKomp,$persenKomp))
+    if($pengeluaran->update($kompId,$namaKomp,$tipePngl,$tglKomp,$persenKomp))
     {
         $msg= "<div class='alert alert-info'><strong>Berhasil!</strong> Data pengeluaran berhasil diperbaharui. <a href='view-pengeluaran.php'>Lihat daftar pengeluaran</a>!</div>";
     }
@@ -20,14 +29,33 @@ if(isset($_POST['submit']))
         </div>";
     }
 }
+
+if(empty($_GET['edit_id'])){
+    exit("Page not found!");
+}elseif (isset($_GET['edit_id'])){
+    $id = $_GET['edit_id'];
+    extract($pengeluaran->getID($id));
+    if($namaKomp===null){
+        exit("Page not found!");
+    }elseif ($userId != $userRow['userId']){
+        exit("Page not found!");
+    }
+}
+
 if(isset($_GET['edit_id']))
 {
     $id = $_GET['edit_id'];
     extract($pengeluaran->getID($id));
 }
+
+if ($tipePngl=="cicilan"){
+    $tipe="checked";
+}else{
+    $tipe="";
+}
 ?>
 
-<?php include_once "views/header.php"; ?>
+
 
 
     <div class="container">
@@ -60,6 +88,28 @@ if(isset($_GET['edit_id']))
                             <input class="form-control" name="persenKomp" type="number" value="<?php echo $persenKomp ?>" placeholder="Contoh: 10" required>
                             <span class="input-group-addon">%</span>
                             </span>
+                        </div>
+                    </div>
+                    <?php
+                    $tglKomp=explode("-",$tglKomp);
+                    $tglKomp = $tglKomp[1]."/".$tglKomp[0];
+                    ?>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="tglKomp">Periode</label>
+                        <div class="col-sm-8 input-group">
+                            <input class="form-control date-picker" name="tglKomp" value="<?php echo $tglKomp?>" required>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-4"></div>
+                        <div class="col-sm-8 input-group checkbox">
+                            <label><input name="tipePngl" type="checkbox" value=true <?php echo $tipe?> >
+                                Cicilan</label>
                         </div>
                     </div>
                 </fieldset>

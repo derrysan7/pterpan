@@ -5,11 +5,16 @@ $pengeluaran = new Pengeluaran();
 
 if(isset($_POST['submit']))
 {
+    $tgl = explode("/",$_POST['tglKomp'][0]);
+    $tglFormat = $tgl[0]."/01/".$tgl[1];
+    $tglFormat=date('Y-m-d',strtotime($tglFormat));
     $userId = $userRow['userId'];
     $namaKomp = $_POST['namaKomp'];
     $persenKomp = $_POST['persenKomp'];
+    $tipePngl = $_POST['tipePngl'];
+    $tglKomp = $tglFormat;
 
-    if($pengeluaran->create($userId,$namaKomp, $persenKomp))
+    if($pengeluaran->create($userId,$namaKomp,$tipePngl,$tglKomp,$persenKomp))
     {
         header("Location: add-pengeluaran.php?inserted");
     }
@@ -73,12 +78,30 @@ else if(isset($_GET['failure']))
                             </span>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="tglKomp">Periode</label>
+                        <div class="col-sm-8 input-group">
+                            <input class="form-control date-picker" name="tglKomp[]"  required>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-4"></div>
+                        <div class="col-sm-8 input-group checkbox">
+                            <label><input name="tipePngl[]" type="checkbox" value=true>
+                                Cicilan</label>
+                        </div>
+                    </div>
                 </fieldset>
 
                 <div class="form-group">
                     <div class="col-md-4"></div>
                     <div class="col-md-8 input-group">
-                        <a href="#" class="btn btn-info copy" rel=".grouped">Tambah Komponen</a> &nbsp;
+<!--                        <a href="#" class="btn btn-info copy" rel=".grouped">Tambah Komponen</a> &nbsp;-->
                         <button class="btn btn-primary" name="submit" type="submit">
                             <span class="glyphicon glyphicon-plus"></span> &nbsp; Simpan
                         </button>
