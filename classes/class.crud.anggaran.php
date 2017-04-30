@@ -31,7 +31,8 @@ class Anggaran{
     }
 
     public function getID($id){
-        $stmt = $this->db->prepare("SELECT * FROM pengeluaran WHERE pengeluaranId=:id");
+        $stmt = $this->db->prepare("SELECT komppengeluaran.namaKomp, komppengeluaran.userId FROM pengeluaran , komppengeluaran 
+                                              WHERE komppengeluaran.kompId=:id");
         $stmt->execute(array(":id"=>$id));
         $editRow=$stmt->fetch(PDO::FETCH_ASSOC);
         return $editRow;
