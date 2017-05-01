@@ -44,17 +44,9 @@
       $( "#datepicker2" ).datepicker();
     } );
     </script>
-    
-    <script src="js/tinymce/tinymce.min.js"></script>
-    <script>tinymce.init({ selector:'textarea', 
-                            plugins: "table advlist link image",
-                              setup: function (editor) {
-                              editor.on('change', function () {
-                              editor.save();
-                                    });
-                              }
 
-                          });</script>
+    <script src="js/highcharts.js"></script>
+
     <script>
         function isNumberKey(evt){
             var charCode = (evt.which) ? evt.which : event.keyCode
