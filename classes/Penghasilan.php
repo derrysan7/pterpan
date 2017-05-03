@@ -14,7 +14,7 @@ class Penghasilan{
 
     public function json_chart($userId)
     {
-        $stmt = $this->db->prepare("SELECT sumberPghs,nominalPghs FROM penghasilan WHERE flag='0' AND userId='2'");
+        $stmt = $this->db->prepare("SELECT sumberPghs,nominalPghs FROM penghasilan WHERE flag='0' AND userId=:userId");
         $stmt->bindparam(":userId",$userId);
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_NUM);
