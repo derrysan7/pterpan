@@ -14,10 +14,6 @@ $penghasilan = new Penghasilan();
     <div class="clearfix"></div><br />
 
     <div class="container">
-        <?php
-        $results = $penghasilan->json_chart($userId);
-        print_r($results);
-        ?>
         <script type="text/javascript">
             $(document).ready(function() {               
 
@@ -45,22 +41,25 @@ $penghasilan = new Penghasilan();
                         },
                         yAxis: {
                             title: {
-                            text: 'Nominal'
+                            text: 'Nominal (Rp)'
                             }
                         },
                         legend: {
                             enabled: false
+                        },
+                        plotOptions: {
+                            column: {
+                                dataLabels: {
+                                    enabled: true
+                                },
+                                enableMouseTracking: false
+                            }
                         },
                         series: [{
                                 name: 'Nominal',
                                 data: seriesOptions
                             }]
                     };
-                    
-                    // options.series[0].name = ("Nominal");
-                    // options.series[0].data = data;
-                    // options.series[0].setData([30000,400000,50000,60000]);
-                    // options.series[1].setData([20000,300000,40000,50000]);
                     var chart = new Highcharts.Chart(options);
                 });
 

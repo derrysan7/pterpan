@@ -82,7 +82,7 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
 
-            <li><a href="index.php">Beranda</a></li>
+            <li><a href="index.php">Dashboard</a></li>
             <li><a href="view-penghasilan.php">Penghasilan</a></li>
             <li><a href="">Pengeluaran</a></li>
             <li><a href="view-cicilan.php">Cicilan</a></li>
