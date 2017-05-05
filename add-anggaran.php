@@ -59,7 +59,7 @@ else if(isset($_GET['failure']))
     <div class="clearfix"></div><br />
 
     <div class="container">
-        <h1>Atur Anggaran <?php echo $namaKomp; ?></h1>
+        <h1>Anggaran <?php echo ucwords($namaKomp); ?></h1>
         <hr>
 
         <div class="col-md-6">
