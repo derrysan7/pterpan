@@ -14,38 +14,53 @@ $penghasilan = new Penghasilan();
     <div class="clearfix"></div><br />
 
     <div class="container">
+        <?php
+        $results = $penghasilan->json_chart($userId);
+        print_r($results);
+        ?>
         <script type="text/javascript">
-            $(document).ready(function() {
-
-                var options = {
-                    chart: {
-                        renderTo: 'container',
-                        type: 'column'
-                    },
-                    title: {
-                        text: 'Penghasilan Bulan Ini',
-                    },
-                    xAxis: {
-                        categories: []
-                    },
-                    yAxis: {
-                        title: {
-                        text: 'Nominal'
-                        }
-                    },
-                    legend: {
-                        enabled: false
-                    },
-                    series: [{}]
-                };
+            $(document).ready(function() {               
 
                 $.getJSON('data_penghasilan.php', function(data) {
+                    var seriesOptions = [];
+                    seriesOptions = data;
+                    var seriesLabel = [];
                     var arrayLength = data.length;
                     for (var i = 0; i < arrayLength; i++){
-                        options.xAxis.categories[i] = data[i][0];
+                        seriesLabel[i] = "'"+data[i][0]+"'";
                     }
-                    options.series[0].name = "Nominal";
-                    options.series[0].data = data;
+                    for (var i = 0; i < arrayLength; i++){
+                        seriesOptions[i] = data[i][1];
+                    }
+                    var options = {
+                        chart: {
+                            renderTo: 'container',
+                            type: 'column'
+                        },
+                        title: {
+                            text: 'Penghasilan Bulan Ini',
+                        },
+                        xAxis: {
+                            categories: seriesLabel
+                        },
+                        yAxis: {
+                            title: {
+                            text: 'Nominal'
+                            }
+                        },
+                        legend: {
+                            enabled: false
+                        },
+                        series: [{
+                                name: 'Nominal',
+                                data: seriesOptions
+                            }]
+                    };
+                    
+                    // options.series[0].name = ("Nominal");
+                    // options.series[0].data = data;
+                    // options.series[0].setData([30000,400000,50000,60000]);
+                    // options.series[1].setData([20000,300000,40000,50000]);
                     var chart = new Highcharts.Chart(options);
                 });
 
