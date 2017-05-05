@@ -14,58 +14,6 @@ $penghasilan = new Penghasilan();
     <div class="clearfix"></div><br />
 
     <div class="container">
-        <script type="text/javascript">
-            $(document).ready(function() {               
-
-                $.getJSON('data_penghasilan.php', function(data) {
-                    var seriesOptions = [];
-                    seriesOptions = data;
-                    var seriesLabel = [];
-                    var arrayLength = data.length;
-                    for (var i = 0; i < arrayLength; i++){
-                        seriesLabel[i] = "'"+data[i][0]+"'";
-                    }
-                    for (var i = 0; i < arrayLength; i++){
-                        seriesOptions[i] = data[i][1];
-                    }
-                    var options = {
-                        chart: {
-                            renderTo: 'container',
-                            type: 'column'
-                        },
-                        title: {
-                            text: 'Penghasilan Bulan Ini',
-                        },
-                        xAxis: {
-                            categories: seriesLabel
-                        },
-                        yAxis: {
-                            title: {
-                            text: 'Nominal (Rp)'
-                            }
-                        },
-                        legend: {
-                            enabled: false
-                        },
-                        plotOptions: {
-                            column: {
-                                dataLabels: {
-                                    enabled: true
-                                },
-                                enableMouseTracking: false
-                            }
-                        },
-                        series: [{
-                                name: 'Nominal',
-                                data: seriesOptions
-                            }]
-                    };
-                    var chart = new Highcharts.Chart(options);
-                });
-
-            });
-        </script>
-        <div id="container" style="width:100%; height:400px; margin-bottom:60px;"></div>
         <table class='table table-bordered table-responsive'>
             <tr>
                 <th>#</th>
