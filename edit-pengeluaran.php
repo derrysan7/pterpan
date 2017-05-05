@@ -42,11 +42,11 @@ if(empty($_GET['edit_id'])){
     }
 }
 
-if(isset($_GET['edit_id']))
-{
-    $id = $_GET['edit_id'];
-    extract($pengeluaran->getID($id));
-}
+//if(isset($_GET['edit_id']))
+//{
+//    $id = $_GET['edit_id'];
+//    extract($pengeluaran->getID($id));
+//}
 
 if ($tipePngl=="cicilan"){
     $tipe="checked";
