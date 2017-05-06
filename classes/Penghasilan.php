@@ -12,6 +12,15 @@ class Penghasilan{
         $this->db = $db;
     }
 
+    public function tot_penghasilan($userId)
+    {
+        $stmt = $this->db->prepare("SELECT SUM(nominalPghs) nomPenghasilan FROM penghasilan WHERE userId=:userId AND flag='0'");
+        $stmt->bindparam(":userId",$userId);
+        $stmt->execute();
+        $tot_peng = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $tot_peng;
+    }
+
     public function json_chart($userId)
     {
         $stmt = $this->db->prepare("SELECT sumberPghs,nominalPghs FROM penghasilan WHERE flag='0' AND userId=:userId");

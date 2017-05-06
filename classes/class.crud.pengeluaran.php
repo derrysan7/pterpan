@@ -29,6 +29,24 @@ class Pengeluaran{
         return $results;
     }
 
+    public function json_chart_persen($userId,$nomPenghasilan)
+    {
+        $stmt = $this->db->prepare("SELECT komppengeluaran.kompId,namaKomp,persenKomp,FORMAT((anggaranPngl/:nomPenghasilan*100),0) Anggaran,FORMAT((SUM(jmlDtlPngl)/:nomPenghasilan*100),0) Realisasi
+                                    FROM komppengeluaran,pengeluaran,detailpengeluaran
+                                    WHERE userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND pengeluaran.pengeluaranId=detailpengeluaran.pengeluaranId AND detailpengeluaran.flag='0' AND komppengeluaran.flag='0'
+                                    GROUP BY kompId
+                                    UNION
+                                    SELECT komppengeluaran.kompId,namaKomp,persenKomp,FORMAT((anggaranPngl/:nomPenghasilan*100),0) Anggaran,FORMAT((SUM(jmlCicilan)/:nomPenghasilan*100),0) Realisasi
+                                    FROM komppengeluaran,pengeluaran,cicilan
+                                    WHERE komppengeluaran.userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND komppengeluaran.kompId = cicilan.kompId AND cicilan.flag='0' AND komppengeluaran.flag='0'
+                                    GROUP BY kompId");
+        $stmt->bindparam(":userId",$userId);
+        $stmt->bindparam(":nomPenghasilan",$nomPenghasilan);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_NUM);
+        return $results;
+    }
+
     public function Pghsisset($userId){
         $stmt = $this->db->prepare("SELECT * FROM penghasilan WHERE flag='0' AND userId=:userId AND MONTH(tglPghs) = MONTH(CURRENT_DATE ())");
         $stmt->bindParam(":userId",$userId);

@@ -68,19 +68,19 @@ $pengeluaran = new Pengeluaran();
         <script type="text/javascript">
             $(document).ready(function() {               
 
-                $.getJSON('data_pengeluaran.php', function(data2) {
+                $.getJSON('data_pengeluaran.php', function(data) {
                     var seriesOptions = [];
                     var seriesOptions2 = [];
                     var seriesLabel = [];
-                    var arrayLength = data2.length;
+                    var arrayLength = data.length;
                     for (var i = 0; i < arrayLength; i++){
-                        seriesLabel[i] = data2[i][1];
+                        seriesLabel[i] = data[i][1];
                     }
                     for (var i = 0; i < arrayLength; i++){
-                        seriesOptions[i] = data2[i][3];
+                        seriesOptions[i] = data[i][3];
                     }
                     for (var i = 0; i < arrayLength; i++){
-                        seriesOptions2[i] = data2[i][4];
+                        seriesOptions2[i] = data[i][4];
                     }
                     var options = {
                         chart: {
@@ -126,16 +126,19 @@ $pengeluaran = new Pengeluaran();
         <script type="text/javascript">
             $(document).ready(function() {               
 
-                $.getJSON('data_penghasilan.php', function(data) {
+                $.getJSON('data_pengeluaran_persen.php', function(data) {
                     var seriesOptions = [];
-                    seriesOptions = data;
+                    var seriesOptions2 = [];
                     var seriesLabel = [];
                     var arrayLength = data.length;
                     for (var i = 0; i < arrayLength; i++){
-                        seriesLabel[i] = "'"+data[i][0]+"'";
+                        seriesLabel[i] = data[i][1];
                     }
                     for (var i = 0; i < arrayLength; i++){
-                        seriesOptions[i] = data[i][1];
+                        seriesOptions[i] = data[i][3];
+                    }
+                    for (var i = 0; i < arrayLength; i++){
+                        seriesOptions2[i] = data[i][4];
                     }
                     var options = {
                         chart: {
@@ -150,11 +153,11 @@ $pengeluaran = new Pengeluaran();
                         },
                         yAxis: {
                             title: {
-                            text: 'Nominal (Rp)'
+                            text: 'Nominal (%)'
                             }
                         },
                         legend: {
-                            enabled: false
+                            enabled: true
                         },
                         plotOptions: {
                             column: {
@@ -170,7 +173,7 @@ $pengeluaran = new Pengeluaran();
                             	},
                             	{
                                 name: 'Realisasi',
-                                data: seriesOptions
+                                data: seriesOptions2
                             	}]
                     };
                     var chart = new Highcharts.Chart(options);
@@ -178,11 +181,7 @@ $pengeluaran = new Pengeluaran();
 
             });
         </script>
-        <?php   
-	    $userId = $_SESSION['user_session'];
-	    $results = $pengeluaran->json_chart($userId);
-	    print json_encode($results,JSON_NUMERIC_CHECK);
-	    ?>
+
         <div class="row">
 	        <div class="col-md-6">
 		        <div class="panel panel-default">
