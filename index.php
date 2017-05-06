@@ -153,7 +153,7 @@ $pengeluaran = new Pengeluaran();
                         },
                         yAxis: {
                             title: {
-                            text: 'Nominal (%)'
+                            text: 'Persen (%) dari Total Penghasilan'
                             }
                         },
                         legend: {
