@@ -10,7 +10,7 @@ if(isset($_POST['submit']))
     $tgl = explode("/",$_POST['tglKomp']);
     $tglFormat = $tgl[0]."/01/".$tgl[1];
     $tglFormat=date('Y-m-d',strtotime($tglFormat));
-    $tipePngl = $_POST['tipePngl'];
+    $tipePngl = isset($_POST['tipePngl']);
     $tglKomp = $tglFormat;
     $kompId = $_GET['edit_id'];
     $namaKomp = $_POST['namaKomp'];
@@ -18,14 +18,15 @@ if(isset($_POST['submit']))
     $tglKomp = $tglFormat;
 
 
-    if($pengeluaran->update($kompId,$namaKomp,$tipePngl,$tglKomp,$persenKomp))
+    if($pengeluaran->update($userRow['userId'],$kompId,$namaKomp,$tipePngl,$tglKomp,$persenKomp))
     {
         $msg= "<div class='alert alert-info'><strong>Berhasil!</strong> Data pengeluaran berhasil diperbaharui. <a href='view-pengeluaran.php'>Lihat daftar pengeluaran</a>!</div>";
     }
     else
     {
         $msg="<div class='alert alert-warning'>
-            <strong>Maaf</strong>, terjadi kesalahan saat memperbaharui data.
+            <strong>Maaf</strong>, data Anda tidak dapat diperbarui karena persentase komponen yang Anda masukkan 
+            menyebabkan total persentase pengeluaran Anda menjadi > 100%.
         </div>";
     }
 }

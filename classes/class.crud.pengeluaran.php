@@ -41,6 +41,27 @@ class Pengeluaran{
         }
     }
 
+    public function cekPersenEdit($userId,$tglKomp,$persenKomp,$kompId){
+
+        $stmt = $this->db->prepare("SELECT SUM(persenKomp) total FROM komppengeluaran 
+                                    WHERE MONTH(tglKomp)=MONTH(:tglKomp) AND
+                                    userId=:userId AND
+                                    flag='0' AND 
+                                    kompId != :kompId");
+        $stmt->bindParam(":tglKomp",$tglKomp);
+        $stmt->bindParam(":userId",$userId);
+        $stmt->bindParam(":kompId",$kompId);
+        $stmt->execute();
+        if ($stmt->rowCount()>0){
+            $results=$stmt->fetch(PDO::FETCH_ASSOC);
+            if(($results['total'] + $persenKomp)>100){
+                return false;
+            }else{
+                return true;
+            }
+        }
+    }
+
     public function create($userId,$namaKomp,$tipePngl,$tglKomp,$persenKomp){
         try{
 
@@ -119,8 +140,21 @@ class Pengeluaran{
                                               flag='0'");
         $stmt->bindParam(":id",$userId);
         $stmt->execute();
-        $result=$stmt->fetch(PDO::FETCH_ASSOC);
-        return $result['uang'];
+        $row=$stmt->fetch(PDO::FETCH_ASSOC);
+
+        $stmt2 = $this->db->prepare("SELECT SUM(jmlDtlPngl) spent 
+FROM komppengeluaran,detailpengeluaran,pengeluaran 
+WHERE komppengeluaran.userId=:id
+	AND MONTH(komppengeluaran.tglKomp)=MONTH(CURRENT_DATE())
+    AND komppengeluaran.kompId = pengeluaran.kompId
+    AND pengeluaran.pengeluaranId = detailpengeluaran.pengeluaranId
+    AND detailpengeluaran.flag='0'");
+        $stmt2->bindParam(":id",$userId);
+        $stmt2->execute();
+        $row2=$stmt2->fetch(PDO::FETCH_ASSOC);
+
+        $result = $row['uang'] - $row2['spent'];
+        return $result;
     }
 
     public function getID($id){
@@ -166,7 +200,8 @@ class Pengeluaran{
         $stmt = $this->db->prepare("SELECT * FROM pengeluaran , komppengeluaran , detailpengeluaran 
                                       WHERE komppengeluaran.kompId=pengeluaran.kompId AND 
                                       pengeluaran.pengeluaranId=detailpengeluaran.pengeluaranId AND 
-                                      detailpengeluaran.detailPnglId=:id");
+                                      pengeluaran.pengeluaranId=:id");
+        $stmt->bindParam(":id",$id);
         $stmt->execute(array(":id"=>$id));
         $editRow=$stmt->fetch(PDO::FETCH_ASSOC);
         if($stmt->rowCount()>0) {
@@ -176,25 +211,31 @@ class Pengeluaran{
         }
     }
 
-    public function update($id,$namaKomp,$tipePngl,$tglKomp,$persenKomp){
+    public function update($userId,$id,$namaKomp,$tipePngl,$tglKomp,$persenKomp){
         try{
-            if ($tipePngl=="true"){
+            if ($tipePngl == "true") {
                 $tipe = "cicilan";
-            }else{
-                $tipe="detil";
+            } else {
+                $tipe = "detil";
             }
 
-            $stmt=$this->db->prepare("UPDATE komppengeluaran SET namaKomp=:namaKomp,
+            if($this->cekPersenEdit($userId,$tglKomp,$persenKomp,$id)){
+
+
+                $stmt = $this->db->prepare("UPDATE komppengeluaran SET namaKomp=:namaKomp,
         persenKomp=:persenKomp,tipePngl=:tipePngl,tglKomp=:tglKomp
         WHERE kompId=:id ");
-            $stmt->bindparam(":namaKomp",$namaKomp);
-            $stmt->bindparam(":persenKomp",$persenKomp);
-            $stmt->bindparam(":tipePngl",$tipe);
-            $stmt->bindparam(":tglKomp",$tglKomp);
-            $stmt->bindparam(":id",$id);
-            $stmt->execute();
+                $stmt->bindparam(":namaKomp", $namaKomp);
+                $stmt->bindparam(":persenKomp", $persenKomp);
+                $stmt->bindparam(":tipePngl", $tipe);
+                $stmt->bindparam(":tglKomp", $tglKomp);
+                $stmt->bindparam(":id", $id);
+                $stmt->execute();
 
-            return true;
+                return true;
+            }else{
+                return false;
+            }
         }
         catch(PDOException $e){
             echo $e->getMessage();
