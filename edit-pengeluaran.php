@@ -74,7 +74,7 @@ if ($tipePngl=="cicilan"){
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="namaKomp">Komponen Pengeluaran</label>
                         <div class="col-sm-8 input-group">
-                            <input class="form-control" name="namaKomp" type="text" value="<?php echo $namaKomp ?>" placeholder="Contoh: Transportasi" required>
+                            <input class="form-control" name="namaKomp" type="text" value="<?php echo $namaKomp ?>" placeholder="Contoh: Transportasi" maxlength="15" required>
                             <span class="input-group-addon">
           <span class="glyphicon glyphicon-list"></span>
         </span>
