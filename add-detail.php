@@ -65,7 +65,7 @@ else if(isset($_GET['failure']))
     <div class="clearfix"></div><br />
 
     <div class="container">
-        <h1>Tambah Pengeluaran Harian <?php echo $namaKomp?></h1>
+        <h1>Tambah Pengeluaran Harian <?php echo ucfirst($namaKomp)?></h1>
         <hr>
 
         <div class="col-md-6">

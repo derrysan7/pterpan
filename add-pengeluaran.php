@@ -11,7 +11,7 @@ if(isset($_POST['submit']))
     $userId = $userRow['userId'];
     $namaKomp = $_POST['namaKomp'];
     $persenKomp = $_POST['persenKomp'];
-    $tipePngl = $_POST['tipePngl'];
+    $tipePngl = isset($_POST['tipePngl']);
     $tglKomp = $tglFormat;
 
 
