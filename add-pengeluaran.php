@@ -5,7 +5,7 @@ $pengeluaran = new Pengeluaran();
 
 if(isset($_POST['submit']))
 {
-    $tgl = explode("/",$_POST['tglKomp'][0]);
+    $tgl = explode("/",$_POST['tglKomp']);
     $tglFormat = $tgl[0]."/01/".$tgl[1];
     $tglFormat=date('Y-m-d',strtotime($tglFormat));
     $userId = $userRow['userId'];
@@ -14,13 +14,13 @@ if(isset($_POST['submit']))
     $tipePngl = $_POST['tipePngl'];
     $tglKomp = $tglFormat;
 
-    if($pengeluaran->create($userId,$namaKomp,$tipePngl,$tglKomp,$persenKomp))
-    {
+
+
+
+    if($pengeluaran->create($userId,$namaKomp,$tipePngl,$tglKomp,$persenKomp)){
         header("Location: add-pengeluaran.php?inserted");
-    }
-    else
-    {
-        header("Location: add-pengeluaran.php?failure");
+    } else {
+        header("Location: add-pengeluaran.php?full");
     }
 }
 ?>
@@ -34,6 +34,16 @@ if(isset($_GET['inserted']))
     <div class="container">
         <div class="alert alert-info">
             <strong>Berhasil!</strong> Data komponen pengeluaran berhasil ditambahkan. <a href="view-pengeluaran.php">Lihat daftar komponen pengeluaran</a>!
+        </div>
+    </div>
+    <?php
+}
+else if(isset($_GET['full']))
+{
+    ?>
+    <div class="container">
+        <div class="alert alert-warning">
+            <strong>Maaf</strong>, anda memasukkan data persen yang menyebabkan total persentase komponen pengeluaran anda lebih dari 100%.
         </div>
     </div>
     <?php
@@ -62,7 +72,7 @@ else if(isset($_GET['failure']))
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="namaKomp">Komponen Pengeluaran</label>
                         <div class="col-sm-8 input-group">
-                            <input class="form-control" name="namaKomp[]" type="text" placeholder="Contoh: Transportasi" required>
+                            <input class="form-control" name="namaKomp" type="text" placeholder="Contoh: Transportasi" maxlength="15" required>
                             <span class="input-group-addon">
           <span class="glyphicon glyphicon-list"></span>
         </span>
@@ -73,7 +83,7 @@ else if(isset($_GET['failure']))
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="persenKomp">Batas Anggaran</label>
                         <div class="col-sm-8 input-group">
-                            <input class="form-control" name="persenKomp[]" type="number" placeholder="Contoh: 10" required>
+                            <input class="form-control" name="persenKomp" type="number" placeholder="Contoh: 10" required>
                             <span class="input-group-addon">%</span>
                             </span>
                         </div>
@@ -82,7 +92,7 @@ else if(isset($_GET['failure']))
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="tglKomp">Periode</label>
                         <div class="col-sm-8 input-group">
-                            <input class="form-control date-picker" name="tglKomp[]"  required>
+                            <input class="form-control date-picker" name="tglKomp"  required>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -92,7 +102,7 @@ else if(isset($_GET['failure']))
                     <div class="form-group">
                         <div class="col-md-4"></div>
                         <div class="col-sm-8 input-group checkbox">
-                            <label><input name="tipePngl[]" type="checkbox" value=true>
+                            <label><input name="tipePngl" type="checkbox" value=true>
                                 Cicilan</label>
                         </div>
                     </div>
