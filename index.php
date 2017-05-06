@@ -2,6 +2,8 @@
 include_once "classes/Penghasilan.php";
 include_once "views/header.php";
 $penghasilan = new Penghasilan();
+include_once "classes/class.crud.pengeluaran.php";
+$pengeluaran = new Pengeluaran();
 ?>
     
     <div class="clearfix"></div>
@@ -18,11 +20,10 @@ $penghasilan = new Penghasilan();
 
                 $.getJSON('data_penghasilan.php', function(data) {
                     var seriesOptions = [];
-                    seriesOptions = data;
                     var seriesLabel = [];
                     var arrayLength = data.length;
                     for (var i = 0; i < arrayLength; i++){
-                        seriesLabel[i] = "'"+data[i][0]+"'";
+                        seriesLabel[i] = data[i][0];
                     }
                     for (var i = 0; i < arrayLength; i++){
                         seriesOptions[i] = data[i][1];
@@ -67,16 +68,19 @@ $penghasilan = new Penghasilan();
         <script type="text/javascript">
             $(document).ready(function() {               
 
-                $.getJSON('data_penghasilan.php', function(data) {
+                $.getJSON('data_pengeluaran.php', function(data2) {
                     var seriesOptions = [];
-                    seriesOptions = data;
+                    var seriesOptions2 = [];
                     var seriesLabel = [];
-                    var arrayLength = data.length;
+                    var arrayLength = data2.length;
                     for (var i = 0; i < arrayLength; i++){
-                        seriesLabel[i] = "'"+data[i][0]+"'";
+                        seriesLabel[i] = data2[i][1];
                     }
                     for (var i = 0; i < arrayLength; i++){
-                        seriesOptions[i] = data[i][1];
+                        seriesOptions[i] = data2[i][3];
+                    }
+                    for (var i = 0; i < arrayLength; i++){
+                        seriesOptions2[i] = data2[i][4];
                     }
                     var options = {
                         chart: {
@@ -111,7 +115,7 @@ $penghasilan = new Penghasilan();
                             	},
                             	{
                                 name: 'Realisasi',
-                                data: [10000,20000,90000,100000]
+                                data: seriesOptions2
                             	}]
                     };
                     var chart = new Highcharts.Chart(options);
@@ -174,6 +178,11 @@ $penghasilan = new Penghasilan();
 
             });
         </script>
+        <?php   
+	    $userId = $_SESSION['user_session'];
+	    $results = $pengeluaran->json_chart($userId);
+	    print json_encode($results,JSON_NUMERIC_CHECK);
+	    ?>
         <div class="row">
 	        <div class="col-md-6">
 		        <div class="panel panel-default">

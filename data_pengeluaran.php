@@ -1,8 +1,8 @@
 <?php
 require_once ("session.php");
-include_once "classes/Penghasilan.php";
-$penghasilan = new Penghasilan();
+include_once "classes/class.crud.pengeluaran.php";
+$pengeluaran = new Pengeluaran();
 $userId = $_SESSION['user_session'];
-$results = $penghasilan->json_chart($userId);
+$results = $pengeluaran->json_chart($userId);
 print json_encode($results,JSON_NUMERIC_CHECK);
 ?>
