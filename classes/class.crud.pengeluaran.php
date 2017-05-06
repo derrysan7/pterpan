@@ -23,44 +23,69 @@ class Pengeluaran{
         }
     }
 
+    public function cekPersen($userId,$tglKomp,$persenKomp){
+        $stmt = $this->db->prepare("SELECT SUM(persenKomp) total FROM komppengeluaran 
+                                    WHERE MONTH(tglKomp)=MONTH(:tglKomp) AND
+                                    userId=:userId AND
+                                    flag='0'");
+        $stmt->bindParam(":tglKomp",$tglKomp);
+        $stmt->bindParam(":userId",$userId);
+        $stmt->execute();
+        if ($stmt->rowCount()>0){
+            $results=$stmt->fetch(PDO::FETCH_ASSOC);
+            if(($results['total'] + $persenKomp)>100){
+                return false;
+            }else{
+                return true;
+            }
+        }
+    }
+
     public function create($userId,$namaKomp,$tipePngl,$tglKomp,$persenKomp){
         try{
-            for ($i = 0; $i < sizeof($namaKomp);$i++) {
 
-                if ($tipePngl[$i]=="true"){
+
+                if ($tipePngl=="true"){
                     $tipe = "cicilan";
                 }else{
                     $tipe="detil";
                 }
 
+                if($this->cekPersen($userId,$tglKomp,$persenKomp)){
 
-                $stmt = $this->db->prepare("INSERT INTO komppengeluaran(userId,namaKomp,tipePngl,tglKomp,persenKomp)
+                    $stmt = $this->db->prepare("INSERT INTO komppengeluaran(userId,namaKomp,tipePngl,tglKomp,persenKomp)
                   VALUES(:userId, :namaKomp,:tipePngl,:tglKomp,:persenKomp )");
-                $stmt->bindparam(":userId", $userId);
-                $stmt->bindparam(":namaKomp", $namaKomp[$i]);
-                $stmt->bindparam(":tipePngl", $tipe);
-                $stmt->bindparam(":tglKomp", $tglKomp);
-                $stmt->bindparam(":persenKomp", $persenKomp[$i]);
-                $stmt->execute();
+                    $stmt->bindparam(":userId", $userId);
+                    $stmt->bindparam(":namaKomp", $namaKomp);
+                    $stmt->bindparam(":tipePngl", $tipe);
+                    $stmt->bindparam(":tglKomp", $tglKomp);
+                    $stmt->bindparam(":persenKomp", $persenKomp);
+                    $stmt->execute();
 
-                $getKomp = $this->db->prepare("SELECT kompId,persenKomp FROM komppengeluaran ORDER BY kompId DESC LIMIT 1");
-                $getKomp->execute();
-                $currentKomp = $getKomp->fetch(PDO::FETCH_ASSOC);
+                    $getKomp = $this->db->prepare("SELECT kompId,persenKomp FROM komppengeluaran ORDER BY kompId DESC LIMIT 1");
+                    $getKomp->execute();
+                    $currentKomp = $getKomp->fetch(PDO::FETCH_ASSOC);
 
-                $getPenghasilan = $this->db->prepare("SELECT SUM(nominalPghs) total FROM penghasilan WHERE userId = :userId AND MONTH(tglPghs)=MONTH(CURRENT_DATE())");
-                $getPenghasilan->bindparam(":userId",$userId);
-                $getPenghasilan->execute();
-                $currentPenghasilan = $getPenghasilan->fetch(PDO::FETCH_ASSOC);
+                    $getPenghasilan = $this->db->prepare("SELECT SUM(nominalPghs) total FROM penghasilan WHERE userId = :userId AND MONTH(tglPghs)=MONTH(CURRENT_DATE()) AND flag='0'");
+                    $getPenghasilan->bindparam(":userId",$userId);
+                    $getPenghasilan->execute();
+                    $currentPenghasilan = $getPenghasilan->fetch(PDO::FETCH_ASSOC);
 
-                $anggaranPngl = (($currentKomp['persenKomp']/100) * $currentPenghasilan['total']);
+                    $anggaranPngl = (($currentKomp['persenKomp']/100) * $currentPenghasilan['total']);
 
-                $stmt2 = $this->db->prepare("INSERT INTO pengeluaran(kompId,anggaranPngl)
+                    $stmt2 = $this->db->prepare("INSERT INTO pengeluaran(kompId,anggaranPngl)
                   VALUES(:kompId, :anggaranPngl )");
-                $stmt2->bindparam(":kompId", $currentKomp['kompId']);
-                $stmt2->bindparam(":anggaranPngl", $anggaranPngl);
-                $stmt2->execute();
-            }
-            return true;
+                    $stmt2->bindparam(":kompId", $currentKomp['kompId']);
+                    $stmt2->bindparam(":anggaranPngl", $anggaranPngl);
+                    $stmt2->execute();
+
+                    return true;
+
+                }else{
+                    return false;
+                }
+
+
         }
         catch(PDOException $e){
             echo $e->getMessage();
@@ -85,6 +110,17 @@ class Pengeluaran{
             echo $e->getMessage();
             return false;
         }
+    }
+
+    public function currentBalance($userId){
+        $stmt = $this->db->prepare("SELECT SUM(nominalPghs) uang FROM penghasilan
+                                              WHERE MONTH(tglPghs)=MONTH(CURRENT_DATE ) AND 
+                                              userId=:id AND 
+                                              flag='0'");
+        $stmt->bindParam(":id",$userId);
+        $stmt->execute();
+        $result=$stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['uang'];
     }
 
     public function getID($id){
@@ -258,10 +294,10 @@ class Pengeluaran{
                     <div class="panel panel-primary">
                         <div class="panel-heading col-md-12">
                             <!--                            <div class="row">-->
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <?php print(strtoupper($row['namaKomp'])); ?>
                             </div>
-                            <div class="col-md-6" style="text-align: right;">
+                            <div class="col-md-4" style="text-align: right;">
                                 <strong><?php print($row['persenKomp']."%");  ?></strong>
                             </div>
                             <!--                            </div>-->
