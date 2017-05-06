@@ -14,8 +14,6 @@ if (isset($_POST['btn-add'])){
     }
 }
 
-
-
 ?>
 
     <div class="clearfix"></div>
@@ -44,6 +42,12 @@ if (isset($_POST['btn-add'])){
     <div class="clearfix"></div><br />
 
     <div class="container">
+
+
+
+            <h4>Sisa saldo Anda bulan ini =  <span style="color: #4bc32b;"><?php echo "Rp &nbsp;".number_format($pengeluaran->currentBalance($userRow['userId']),2,'.',','); ?></span></h4>
+
+        <div class="clearfix"></div>
 
         <?php
         $query = "SELECT * FROM kompPengeluaran WHERE flag='0' AND MONTH(tglKomp) = MONTH(CURRENT_DATE) AND userId='".$userRow['userId']."'ORDER BY namaKomp ASC";
