@@ -18,19 +18,19 @@ if(empty($_GET['edit_id'])){
 
 if(isset($_POST['submit']))
 {
-    $pengeluaranId = $_GET['edit_id'];
+    $detailPnglId = $_GET['edit_id'];
     $namaDtlPngl   = $_POST['namaDtlPngl'];
     $jmlDtlPngl    = $_POST['jmlDtlPngl'];
     $tglDtlPngl    = $_POST['tglDtlPngl'];
 
-    if($pengeluaran->updateDetail($pengeluaranId,$namaDtlPngl,$jmlDtlPngl,$tglDtlPngl))
+    if($pengeluaran->updateDetail($userRow['userId'],$detailPnglId,$namaDtlPngl,$jmlDtlPngl,$tglDtlPngl))
     {
         $msg= "<div class='alert alert-info'><strong>Berhasil!</strong> Data pengeluaran harian berhasil diperbaharui. <a href='view-anggaran.php?kom_id=$kompId'>Kembali</a>!</div>";
     }
     else
     {
         $msg="<div class='alert alert-warning'>
-            <strong>Maaf</strong>, terjadi kesalahan saat memperbaharui data.
+            <strong>Maaf</strong>, terjadi kesalahan saat menambahkan data. Saldo Anda tidak mencukupi.
         </div>";    }
 }
 
@@ -59,7 +59,7 @@ if(isset($_POST['submit']))
                     <label class="col-sm-4 control-label" for="namaDtlPngl">Nama Pengeluaran</label>
                     <div class="col-sm-8 input-group">
                         <input class="form-control" name="namaDtlPngl" type="text" placeholder="Contoh: Makan siang"
-                              value="<?php echo $namaDtlPngl ?>" required>
+                              value="<?php echo $namaDtlPngl ?>" required maxlength="15">
                         <span class="input-group-addon">
           <span class="glyphicon glyphicon-list"></span>
         </span>

@@ -41,6 +41,25 @@ class Pengeluaran{
         }
     }
 
+    public function cekDtlPnglEdit($userId,$detailPnglId,$tglDtlPngl){
+        $stmt = $this->db->prepare("SELECT SUM(jmlDtlPngl) total FROM komppengeluaran,pengeluaran,detailpengeluaran 
+                                    WHERE MONTH(komppengeluaran.tglKomp)=MONTH(:tglDtlPngl) 
+                                    AND komppengeluaran.kompId = pengeluaran.kompId
+                                    AND pengeluaran.pengeluaranId = detailpengeluaran.pengeluaranId
+                                    AND detailpengeluaran.detailPnglId != :detailId
+                                    AND komppengeluaran.userId=:userId
+                                    AND detailpengeluaran.flag='0'");
+        $stmt->bindParam(":tglDtlPngl",$tglDtlPngl);
+        $stmt->bindParam(":userId",$userId);
+        $stmt->bindParam(":detailId",$detailPnglId);
+        $stmt->execute();
+        if ($stmt->rowCount()>0){
+            $results=$stmt->fetch(PDO::FETCH_ASSOC);
+            return $results['total'];
+
+        }
+    }
+
     public function cekPersenEdit($userId,$tglKomp,$persenKomp,$kompId){
 
         $stmt = $this->db->prepare("SELECT SUM(persenKomp) total FROM komppengeluaran 
@@ -114,9 +133,11 @@ class Pengeluaran{
         }
     }
 
-    public function createDetail($pengeluaranId,$namaDtlPngl,$jmlDtlPngl,$tglDtlPngl)
+    public function createDetail($userId,$pengeluaranId,$namaDtlPngl,$jmlDtlPngl,$tglDtlPngl)
     {
         try {
+
+            if (($this->currentBalance($userId))-$jmlDtlPngl>=0){
 
             $stmt = $this->db->prepare("INSERT INTO detailpengeluaran(pengeluaranId,namaDtlPngl,jmlDtlPngl,tglDtlPngl)
                   VALUES(:pengeluaranId,:namaDtlPngl,:jmlDtlPngl,:tglDtlPngl)");
@@ -126,6 +147,9 @@ class Pengeluaran{
             $stmt->bindparam(":tglDtlPngl", $tglDtlPngl);
             $stmt->execute();
             return true;
+            }else{
+                return false;
+            }
         }
         catch(PDOException $e){
             echo $e->getMessage();
@@ -200,7 +224,7 @@ WHERE komppengeluaran.userId=:id
         $stmt = $this->db->prepare("SELECT * FROM pengeluaran , komppengeluaran , detailpengeluaran 
                                       WHERE komppengeluaran.kompId=pengeluaran.kompId AND 
                                       pengeluaran.pengeluaranId=detailpengeluaran.pengeluaranId AND 
-                                      pengeluaran.pengeluaranId=:id");
+                                      detailpengeluaran.detailPnglId=:id");
         $stmt->bindParam(":id",$id);
         $stmt->execute(array(":id"=>$id));
         $editRow=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -259,18 +283,27 @@ WHERE komppengeluaran.userId=:id
         }
     }
 
-    public function updatedetail($id,$namaDetailPngl,$jmlDtlPngl,$tglDtlPngl){
+    public function updatedetail($userId,$id,$namaDetailPngl,$jmlDtlPngl,$tglDtlPngl){
         try{
-            $stmt=$this->db->prepare("UPDATE detailpengeluaran SET namaDtlPngl=:namaDtlPngl,
+            $getPenghasilan = $this->db->prepare("SELECT SUM(nominalPghs) total FROM penghasilan WHERE flag='0' AND userId = :userId AND MONTH(tglPghs)=MONTH(CURRENT_DATE()) AND flag='0'");
+            $getPenghasilan->bindparam(":userId",$userId);
+            $getPenghasilan->execute();
+            $currentPenghasilan = $getPenghasilan->fetch(PDO::FETCH_ASSOC);
+            if (($currentPenghasilan['total']-(($this->cekDtlPnglEdit($userId,$id,$tglDtlPngl))+$jmlDtlPngl))>=0) {
+
+                $stmt = $this->db->prepare("UPDATE detailpengeluaran SET namaDtlPngl=:namaDtlPngl,
         jmlDtlPngl=:jmlDtlPngl,tglDtlPngl=:tglDtlPngl
         WHERE detailPnglId=:id ");
-            $stmt->bindparam(":namaDtlPngl",$namaDetailPngl);
-            $stmt->bindparam(":jmlDtlPngl",$jmlDtlPngl);
-            $stmt->bindparam(":tglDtlPngl",$tglDtlPngl);
-            $stmt->bindparam(":id",$id);
-            $stmt->execute();
+                $stmt->bindparam(":namaDtlPngl", $namaDetailPngl);
+                $stmt->bindparam(":jmlDtlPngl", $jmlDtlPngl);
+                $stmt->bindparam(":tglDtlPngl", $tglDtlPngl);
+                $stmt->bindparam(":id", $id);
+                $stmt->execute();
 
-            return true;
+                return true;
+            }else{
+                return false;
+            }
         }
         catch(PDOException $e){
             echo $e->getMessage();
@@ -356,7 +389,7 @@ WHERE komppengeluaran.userId=:id
 
                 <?php
                 extract($this->getID($row['kompId']));
-                
+
 
                 if($tipePngl=="detil"){
                     $linkupdate="pengeluaran";
