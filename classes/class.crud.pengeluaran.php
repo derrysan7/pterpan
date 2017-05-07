@@ -66,45 +66,45 @@ class Pengeluaran{
         try{
 
 
-                if ($tipePngl=="true"){
-                    $tipe = "cicilan";
-                }else{
-                    $tipe="detil";
-                }
+            if ($tipePngl=="true"){
+                $tipe = "cicilan";
+            }else{
+                $tipe="detil";
+            }
 
-                if($this->cekPersen($userId,$tglKomp,$persenKomp)){
+            if($this->cekPersen($userId,$tglKomp,$persenKomp)){
 
-                    $stmt = $this->db->prepare("INSERT INTO komppengeluaran(userId,namaKomp,tipePngl,tglKomp,persenKomp)
+                $stmt = $this->db->prepare("INSERT INTO komppengeluaran(userId,namaKomp,tipePngl,tglKomp,persenKomp)
                   VALUES(:userId, :namaKomp,:tipePngl,:tglKomp,:persenKomp )");
-                    $stmt->bindparam(":userId", $userId);
-                    $stmt->bindparam(":namaKomp", $namaKomp);
-                    $stmt->bindparam(":tipePngl", $tipe);
-                    $stmt->bindparam(":tglKomp", $tglKomp);
-                    $stmt->bindparam(":persenKomp", $persenKomp);
-                    $stmt->execute();
+                $stmt->bindparam(":userId", $userId);
+                $stmt->bindparam(":namaKomp", $namaKomp);
+                $stmt->bindparam(":tipePngl", $tipe);
+                $stmt->bindparam(":tglKomp", $tglKomp);
+                $stmt->bindparam(":persenKomp", $persenKomp);
+                $stmt->execute();
 
-                    $getKomp = $this->db->prepare("SELECT kompId,persenKomp FROM komppengeluaran ORDER BY kompId DESC LIMIT 1");
-                    $getKomp->execute();
-                    $currentKomp = $getKomp->fetch(PDO::FETCH_ASSOC);
+                $getKomp = $this->db->prepare("SELECT kompId,persenKomp FROM komppengeluaran ORDER BY kompId DESC LIMIT 1");
+                $getKomp->execute();
+                $currentKomp = $getKomp->fetch(PDO::FETCH_ASSOC);
 
-                    $getPenghasilan = $this->db->prepare("SELECT SUM(nominalPghs) total FROM penghasilan WHERE flag='0' AND userId = :userId AND MONTH(tglPghs)=MONTH(CURRENT_DATE()) AND flag='0'");
-                    $getPenghasilan->bindparam(":userId",$userId);
-                    $getPenghasilan->execute();
-                    $currentPenghasilan = $getPenghasilan->fetch(PDO::FETCH_ASSOC);
+                $getPenghasilan = $this->db->prepare("SELECT SUM(nominalPghs) total FROM penghasilan WHERE flag='0' AND userId = :userId AND MONTH(tglPghs)=MONTH(CURRENT_DATE()) AND flag='0'");
+                $getPenghasilan->bindparam(":userId",$userId);
+                $getPenghasilan->execute();
+                $currentPenghasilan = $getPenghasilan->fetch(PDO::FETCH_ASSOC);
 
-                    $anggaranPngl = (($currentKomp['persenKomp']/100) * $currentPenghasilan['total']);
+                $anggaranPngl = (($currentKomp['persenKomp']/100) * $currentPenghasilan['total']);
 
-                    $stmt2 = $this->db->prepare("INSERT INTO pengeluaran(kompId,anggaranPngl)
+                $stmt2 = $this->db->prepare("INSERT INTO pengeluaran(kompId,anggaranPngl)
                   VALUES(:kompId, :anggaranPngl )");
-                    $stmt2->bindparam(":kompId", $currentKomp['kompId']);
-                    $stmt2->bindparam(":anggaranPngl", $anggaranPngl);
-                    $stmt2->execute();
+                $stmt2->bindparam(":kompId", $currentKomp['kompId']);
+                $stmt2->bindparam(":anggaranPngl", $anggaranPngl);
+                $stmt2->execute();
 
-                    return true;
+                return true;
 
-                }else{
-                    return false;
-                }
+            }else{
+                return false;
+            }
 
 
         }
@@ -283,13 +283,30 @@ WHERE komppengeluaran.userId=:id
     {
         $flag = '1';
         try{
-            $stmt=$this->db->prepare("UPDATE komppengeluaran SET flag=:flag
-        WHERE kompId=:id ");
-            $stmt->bindparam(":flag",$flag);
-            $stmt->bindparam(":id",$id);
-            $stmt->execute();
+            $stmt = $this->db->prepare("SELECT * FROM pengeluaran , komppengeluaran , detailpengeluaran 
+                                      WHERE komppengeluaran.kompId=:id AND
+                                       pengeluaran.kompId=:id AND
+                                      pengeluaran.pengeluaranId=detailpengeluaran.pengeluaranId;");
+            $stmt->bindParam(":id",$id);
+            $stmt->execute(array(":id"=>$id));
 
-            return true;
+            if($stmt->rowCount()>0) {
+                $dodelete=false;
+            }else{
+                $dodelete=true;
+            }
+
+            if($dodelete){
+                $stmt=$this->db->prepare("UPDATE komppengeluaran SET flag=:flag
+        WHERE kompId=:id ");
+                $stmt->bindparam(":flag",$flag);
+                $stmt->bindparam(":id",$id);
+                $stmt->execute();
+
+                return true;
+            }else{
+                return false;
+            }
         }
         catch(PDOException $e){
             echo $e->getMessage();
@@ -371,7 +388,7 @@ WHERE komppengeluaran.userId=:id
                             <div align="center">
                                 <a href="view-anggaran.php?kom_id=<?php print($row['kompId']); ?>" class="btn btn-success btn-xs">Atur Anggaran</a>&nbsp;
                                 <a href="edit-pengeluaran.php?edit_id=<?php print($row['kompId']); ?>" class="btn btn-warning btn-xs">Ubah</a>&nbsp;
-                                <a href="edit-pengeluaran.php?delete_id=<?php print($row['kompId']); ?>" class="btn btn-danger btn-xs">Hapus</a>
+                                <a href="delete-pengeluaran.php?delete_id=<?php print($row['kompId']); ?>" class="btn btn-danger btn-xs">Hapus</a>
                             </div>
                         </div>
                     </div>
