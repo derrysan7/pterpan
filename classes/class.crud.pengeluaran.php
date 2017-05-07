@@ -356,7 +356,7 @@ WHERE komppengeluaran.userId=:id
 
                 <?php
                 extract($this->getID($row['kompId']));
-                $persenkomponen = $persenKomp;
+                
 
                 if($tipePngl=="detil"){
                     $linkupdate="pengeluaran";
@@ -376,8 +376,8 @@ WHERE komppengeluaran.userId=:id
                 $anggaran = ($row['persenKomp']/100 * $currentPenghasilan['total']);
 
                 extract($this->getAnggaranID($row['kompId']));
-                $anggaranPengeluaran = $anggaranPngl;
-                if($anggaranPengeluaran>$anggaran){
+
+                if($anggaranPngl>$anggaran){
                     $panelclr="danger";
                 }
 
