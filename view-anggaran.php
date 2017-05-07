@@ -81,7 +81,14 @@ $periodePngl = new DateTime($tglKomp);
     <div class="clearfix"></div><br />
 
     <div class="container">
-
+        <table class='table table-bordered table-responsive'>
+            <tr>
+                <th>#</th>
+                <th>Pengeluaran</th>
+                <th>Tanggal</th>
+                <th>Nominal</th>
+                <th colspan="2" align="center">Actions</th>
+            </tr>
         <?php
         $query = "SELECT * FROM komppengeluaran , detailpengeluaran , pengeluaran 
                                               WHERE komppengeluaran.kompId='".$kompId."' AND 
@@ -93,6 +100,7 @@ $periodePngl = new DateTime($tglKomp);
 
         $pengeluaran->datadetailanggaranview($query);
         ?>
+        </table>
 
 
 

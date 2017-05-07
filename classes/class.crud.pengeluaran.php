@@ -139,14 +139,14 @@ class Pengeluaran{
 
             if (($this->currentBalance($userId))-$jmlDtlPngl>=0){
 
-            $stmt = $this->db->prepare("INSERT INTO detailpengeluaran(pengeluaranId,namaDtlPngl,jmlDtlPngl,tglDtlPngl)
+                $stmt = $this->db->prepare("INSERT INTO detailpengeluaran(pengeluaranId,namaDtlPngl,jmlDtlPngl,tglDtlPngl)
                   VALUES(:pengeluaranId,:namaDtlPngl,:jmlDtlPngl,:tglDtlPngl)");
-            $stmt->bindparam(":pengeluaranId", $pengeluaranId);
-            $stmt->bindparam(":namaDtlPngl", $namaDtlPngl);
-            $stmt->bindparam(":jmlDtlPngl", $jmlDtlPngl);
-            $stmt->bindparam(":tglDtlPngl", $tglDtlPngl);
-            $stmt->execute();
-            return true;
+                $stmt->bindparam(":pengeluaranId", $pengeluaranId);
+                $stmt->bindparam(":namaDtlPngl", $namaDtlPngl);
+                $stmt->bindparam(":jmlDtlPngl", $jmlDtlPngl);
+                $stmt->bindparam(":tglDtlPngl", $tglDtlPngl);
+                $stmt->execute();
+                return true;
             }else{
                 return false;
             }
@@ -579,59 +579,27 @@ WHERE komppengeluaran.userId=:id
     {
         $stmt = $this->db->prepare($query);
         $stmt->execute();
-
+        $counter = 0;
         if($stmt->rowCount()>0)
         {
             while($row=$stmt->fetch(PDO::FETCH_ASSOC))
             {
-
+                $counter++;
                 ?>
 
-                <div class="grid col-md-3" style=" padding: 10px 5px 0px 0px;">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading col-md-12">
-                            <!--                            <div class="row">-->
-                            <div class="col-md-6">
-                                <?php print(strtoupper($row['namaDtlPngl'])); ?>
-                            </div>
-                            <!--                            <div class="col-md-6" style="text-align: right;">-->
-                            <!--                                <strong>--><?php //print($row['persenKomp']."%");  ?><!--</strong>-->
-                            <!--                            </div>-->
-                            <!--                            </div>-->
-                        </div>
-                        <div class="panel-body">
+                <tr>
+                    <td><?php print $counter;?></td>
+                    <td><?php print(strtoupper($row['namaDtlPngl'])); ?></td>
+                    <td><?php $tgl = new DateTime($row['tglDtlPngl']); print date_format($tgl,"d F Y");?></td>
+                    <td align="right"><?php
+                        echo "Rp &nbsp". number_format($row['jmlDtlPngl'],2,',','.');
+                        ?></td>
+                    <td align="center"><a href="edit-detail.php?edit_id=<?php print($row['detailPnglId']); ?>"><i class="glyphicon glyphicon-edit"></i></a>
+                    </td>
+                    <td align="center"><a href="delete-detail.php?delete_id=<?php print($row['detailPnglId']); ?>"><i class="glyphicon glyphicon-remove-circle"></i></a></td>
+                </tr>
 
 
-
-                            <div style="font-size: 20px;text-align: center; padding-top: 45px;">
-
-                                <?php
-                                echo "Rp &nbsp". number_format($row['jmlDtlPngl'],2,',','.');
-                                ?>
-                            </div>
-
-                        </div>
-                        <div class="panel-footer">
-                            <div align="center">
-                                <a href="edit-detail.php?edit_id=<?php print($row['detailPnglId']); ?>" class="btn btn-warning btn-xs">Ubah</a>&nbsp;
-                                <a href="delete-detail.php?delete_id=<?php print($row['detailPnglId']); ?>" class="btn btn-danger btn-xs">Hapus</a>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-                <!--                <tr>-->
-                <!---->
-                <!--                    <td>--><?php //print($row['namaKomp']); ?><!--</td>-->
-                <!--                    <td>--><?php //print($row['persenKomp']."%"); ?><!--</td>-->
-                <!--                    <td align="center">-->
-                <!--                                        <a href="edit-pengeluaran.php?edit_id=--><?php //print($row['kompId']); ?><!--"><i class="glyphicon glyphicon-edit"></i></a>-->
-                <!--                    </td>-->
-                <!--                    <td align="center">-->
-                <!--                        <a href="delete-pengeluaran.php?delete_id=--><?php //print($row['kompId']); ?><!--"><i class="glyphicon glyphicon-remove-circle"></i></a>-->
-                <!--                    </td>-->
-                <!--                </tr>-->
                 <?php
             }
         }
