@@ -380,14 +380,25 @@ WHERE komppengeluaran.userId=:id
                                 }else{
                                     echo "-";
                                 }
+
+
                                 ?>
                             </div>
 
                         </div>
+                        <?php
+                        extract($this->getID($row['kompId']));
+                        if($tipePngl=="detil"){
+                            $linkupdate="pengeluaran";
+                        }else
+                        {
+                            $linkupdate="cicilan";
+                        }
+                        ?>
                         <div class="panel-footer">
                             <div align="center">
                                 <a href="view-anggaran.php?kom_id=<?php print($row['kompId']); ?>" class="btn btn-success btn-xs">Atur Anggaran</a>&nbsp;
-                                <a href="edit-pengeluaran.php?edit_id=<?php print($row['kompId']); ?>" class="btn btn-warning btn-xs">Ubah</a>&nbsp;
+                                <a href="edit-<?php print $linkupdate ?>.php?edit_id=<?php print($row['kompId']); ?>" class="btn btn-warning btn-xs">Ubah</a>&nbsp;
                                 <a href="delete-pengeluaran.php?delete_id=<?php print($row['kompId']); ?>" class="btn btn-danger btn-xs">Hapus</a>
                             </div>
                         </div>
