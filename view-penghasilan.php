@@ -24,11 +24,16 @@ $penghasilan = new Penghasilan();
                 <th colspan="2" align="center">Actions</th>
             </tr>
             <?php
-            $query = "SELECT * FROM penghasilan WHERE flag='0' AND userId='".$userRow['userId']."'ORDER BY tglPghs DESC";
+            $query = "SELECT * FROM penghasilan WHERE flag='0' AND MONTH(tglPghs)=MONTH(CURRENT_DATE()) AND userId='".$userRow['userId']."'ORDER BY tglPghs DESC";
             $records_per_page=5;
             $newquery = $penghasilan->paging($query,$records_per_page);
             $penghasilan->dataview($newquery);
             ?>
+            <tr>
+                <td colspan="3" align="center"><strong>Total</strong></td>
+                <td align="right"><?php print "Rp &nbsp;".number_format($penghasilan->getTotalPenghasilan($userRow['userId']),2,'.',','); ?></td>
+                <td colspan="2"></td>
+            </tr>
             <tr>
                 <td colspan="7" align="center">
                     <div class="pagination-wrap">

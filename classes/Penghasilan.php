@@ -78,6 +78,17 @@ class Penghasilan{
 
     /* paging */
 
+    public function getTotalPenghasilan($userId){
+        $stmt = $this->db->prepare("SELECT SUM(nominalPghs) total from penghasilan
+                                    WHERE userId=:id AND MONTH(tglPghs)=MONTH(CURRENT_DATE()) AND flag='0';");
+        $stmt->bindParam(":id",$userId);
+        $stmt->execute();
+        $result=$stmt->fetch(PDO::FETCH_ASSOC);
+        if($stmt->rowCount()>0){
+            return $result['total'];
+        }
+    }
+
     public function dataview($query)
     {
         $stmt = $this->db->prepare($query);
@@ -85,14 +96,16 @@ class Penghasilan{
 
         if($stmt->rowCount()>0)
         {
+            $counter=1;
             while($row=$stmt->fetch(PDO::FETCH_ASSOC))
             {
                 ?>
+
                 <tr>
-                    <td><?php print($row['penghasilanId']); ?></td>
+                    <td><?php print($counter); ?></td>
                     <td><?php print($row['sumberPghs']); ?></td>
                     <td><?php $tgl = new DateTime($row['tglPghs']); print date_format($tgl,"d F Y"); ?></td>
-                    <td align="right"><?php print 'Rp &nbsp;'.number_format($row['nominalPghs'],0,',','.'); ?></td>
+                    <td align="right"><?php print 'Rp &nbsp;'.number_format($row['nominalPghs'],2,'.',','); ?></td>
                     <td align="center">
                         <a href="edit-penghasilan.php?edit_id=<?php print($row['penghasilanId']); ?>"><i class="glyphicon glyphicon-edit"></i></a>
                     </td>
@@ -100,7 +113,9 @@ class Penghasilan{
                         <a href="delete-penghasilan.php?delete_id=<?php print($row['penghasilanId']); ?>"><i class="glyphicon glyphicon-remove-circle"></i></a>
                     </td>
                 </tr>
+
                 <?php
+                $counter++;
             }
         }
         else
