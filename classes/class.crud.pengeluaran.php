@@ -87,7 +87,7 @@ class Pengeluaran{
                     $getKomp->execute();
                     $currentKomp = $getKomp->fetch(PDO::FETCH_ASSOC);
 
-                    $getPenghasilan = $this->db->prepare("SELECT SUM(nominalPghs) total FROM penghasilan WHERE userId = :userId AND MONTH(tglPghs)=MONTH(CURRENT_DATE()) AND flag='0'");
+                    $getPenghasilan = $this->db->prepare("SELECT SUM(nominalPghs) total FROM penghasilan WHERE flag='0' AND userId = :userId AND MONTH(tglPghs)=MONTH(CURRENT_DATE()) AND flag='0'");
                     $getPenghasilan->bindparam(":userId",$userId);
                     $getPenghasilan->execute();
                     $currentPenghasilan = $getPenghasilan->fetch(PDO::FETCH_ASSOC);
