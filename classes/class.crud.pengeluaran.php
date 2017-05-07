@@ -303,6 +303,12 @@ WHERE komppengeluaran.userId=:id
                 $stmt->bindparam(":id",$id);
                 $stmt->execute();
 
+                $stmt=$this->db->prepare("UPDATE pengeluaran SET flag=:flag
+        WHERE kompId=:id ");
+                $stmt->bindparam(":flag",$flag);
+                $stmt->bindparam(":id",$id);
+                $stmt->execute();
+
                 return true;
             }else{
                 return false;
@@ -348,8 +354,20 @@ WHERE komppengeluaran.userId=:id
 
                 ?>
 
+                <?php
+                extract($this->getID($row['kompId']));
+                if($tipePngl=="detil"){
+                    $linkupdate="pengeluaran";
+                    $panelclr="primary";
+                }else
+                {
+                    $linkupdate="cicilan";
+                    $panelclr="info";
+                }
+                ?>
+
                 <div class="grid col-md-3" style=" padding: 10px 5px 0px 0px;">
-                    <div class="panel panel-primary">
+                    <div class="panel panel-<?php print $panelclr;?>">
                         <div class="panel-heading col-md-12">
                             <!--                            <div class="row">-->
                             <div class="col-md-8">
@@ -386,15 +404,7 @@ WHERE komppengeluaran.userId=:id
                             </div>
 
                         </div>
-                        <?php
-                        extract($this->getID($row['kompId']));
-                        if($tipePngl=="detil"){
-                            $linkupdate="pengeluaran";
-                        }else
-                        {
-                            $linkupdate="cicilan";
-                        }
-                        ?>
+
                         <div class="panel-footer">
                             <div align="center">
                                 <a href="view-anggaran.php?kom_id=<?php print($row['kompId']); ?>" class="btn btn-success btn-xs">Atur Anggaran</a>&nbsp;
