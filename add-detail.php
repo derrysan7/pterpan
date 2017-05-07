@@ -7,7 +7,7 @@ if(empty($_GET['anggaran_id'])){
     exit("Page not found!");
 }elseif (isset($_GET['anggaran_id'])){
     $id = $_GET['anggaran_id'];
-    extract($pengeluaran->getdetaileditID($id));
+    extract($pengeluaran->getdetailID($id));
     if ($namaKomp === null) {
         exit("Page not found!");
     } elseif ($userId != $userRow['userId']) {
@@ -22,7 +22,7 @@ if(isset($_POST['submit']))
     $jmlDtlPngl    = $_POST['jmlDtlPngl'];
     $tglDtlPngl    = $_POST['tglDtlPngl'];
 
-    if($pengeluaran->createDetail($pengeluaranId,$namaDtlPngl,$jmlDtlPngl,$tglDtlPngl))
+    if($pengeluaran->createDetail($userRow['userId'],$pengeluaranId,$namaDtlPngl,$jmlDtlPngl,$tglDtlPngl))
     {
         header("Location: add-detail.php?anggaran_id=".$id."&inserted");
     }
@@ -55,7 +55,7 @@ else if(isset($_GET['failure']))
     ?>
     <div class="container">
         <div class="alert alert-warning">
-            <strong>Maaf</strong>, terjadi kesalahan saat menambahkan data.
+            <strong>Maaf</strong>, terjadi kesalahan saat menambahkan data. Saldo Anda tidak mencukupi.
         </div>
     </div>
     <?php
@@ -74,7 +74,7 @@ else if(isset($_GET['failure']))
                 <div class="form-group">
                     <label class="col-sm-4 control-label" for="namaDtlPngl">Nama Pengeluaran</label>
                     <div class="col-sm-8 input-group">
-                        <input class="form-control" name="namaDtlPngl" type="text" placeholder="Contoh: Makan siang" required>
+                        <input class="form-control" name="namaDtlPngl" type="text" placeholder="Contoh: Makan siang" maxlength="15" required>
                         <span class="input-group-addon">
           <span class="glyphicon glyphicon-list"></span>
         </span>
