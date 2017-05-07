@@ -340,7 +340,7 @@ WHERE komppengeluaran.userId=:id
 
     /* paging */
 
-    public function dataview($query)
+    public function dataview($query,$userId)
     {
         $stmt = $this->db->prepare($query);
         $stmt->execute();
@@ -356,6 +356,8 @@ WHERE komppengeluaran.userId=:id
 
                 <?php
                 extract($this->getID($row['kompId']));
+                $persenkomponen = $persenKomp;
+
                 if($tipePngl=="detil"){
                     $linkupdate="pengeluaran";
                     $panelclr="primary";
@@ -364,6 +366,21 @@ WHERE komppengeluaran.userId=:id
                     $linkupdate="cicilan";
                     $panelclr="info";
                 }
+
+
+                $getPenghasilan = $this->db->prepare("SELECT SUM(nominalPghs) total FROM penghasilan WHERE flag='0' AND userId = :userId AND MONTH(tglPghs)=MONTH(CURRENT_DATE())");
+                $getPenghasilan->bindparam(":userId",$userId);
+                $getPenghasilan->execute();
+                $currentPenghasilan = $getPenghasilan->fetch(PDO::FETCH_ASSOC);
+
+                $anggaran = ($row['persenKomp']/100 * $currentPenghasilan['total']);
+
+                extract($this->getAnggaranID($row['kompId']));
+                $anggaranPengeluaran = $anggaranPngl;
+                if($anggaranPengeluaran>$anggaran){
+                    $panelclr="danger";
+                }
+
                 ?>
 
                 <div class="grid col-md-3" style=" padding: 10px 5px 0px 0px;">

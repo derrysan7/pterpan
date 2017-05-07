@@ -53,7 +53,7 @@ if (isset($_POST['btn-add'])){
         $query = "SELECT * FROM kompPengeluaran WHERE flag='0' AND MONTH(tglKomp) = MONTH(CURRENT_DATE) AND userId='".$userRow['userId']."'ORDER BY namaKomp ASC";
         $records_per_page=5;
         $newquery = $pengeluaran->paging($query,$records_per_page);
-        $pengeluaran->dataview($query);
+        $pengeluaran->dataview($query,$userRow['userId']);
         ?>
 
 
