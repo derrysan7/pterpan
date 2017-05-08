@@ -22,7 +22,7 @@ class Penghasilan{
     }
 
     public function lap_penghasilan($userId){
-        $stmt = $this->db->prepare("SELECT sumberPghs,nominalPghs FROM penghasilan WHERE userId=:userId");
+        $stmt = $this->db->prepare("SELECT sumberPghs,nominalPghs FROM penghasilan WHERE userId=:userId AND flag='0'");
         $stmt->bindparam(":userId",$userId);
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_NUM);
