@@ -221,7 +221,11 @@ $berita = new crud();
 	        <div class="col-md-6">
 		        <div class="panel panel-default">
 		        <div class="panel-heading">Laporan Keuangan May 2017</div>
-
+		        	<?php
+		        	$laporan = $pengeluaran->lap_keuangan_pengeluaran($_SESSION['user_session']);
+		        	print_r($laporan);
+		        	
+		        	?>
 				</div>
 			</div>
 			<div class="col-md-6">
@@ -232,9 +236,9 @@ $berita = new crud();
 			              $berita->dataviewhomeberita($newquery);
 			          ?>
 			        	<div class="pagination-wrap">
-			                <?php $berita->paginglink($query,$records_per_page); ?>
-			          </div>
-			          
+				                <?php $berita->paginglink($query,$records_per_page); ?>
+						</div>
+
 			</div>
 		</div>
         

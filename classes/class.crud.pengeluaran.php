@@ -47,6 +47,21 @@ class Pengeluaran{
         return $results;
     }
 
+    public function lap_keuangan_pengeluaran($userId){
+        $stmt = $this->db->prepare("SELECT komppengeluaran.kompId,namaKomp,namaDtlPngl Nama_Detail,persenKomp,jmlDtlPngl Realisasi
+                                    FROM komppengeluaran,pengeluaran,detailpengeluaran
+                                    WHERE userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND pengeluaran.pengeluaranId=detailpengeluaran.pengeluaranId AND detailpengeluaran.flag='0' AND komppengeluaran.flag='0'
+                                    UNION
+                                    SELECT komppengeluaran.kompId,namaKomp,namaCicilan Nama_Detail,persenKomp,jmlCicilan Realisasi
+                                    FROM komppengeluaran,pengeluaran,cicilan
+                                    WHERE komppengeluaran.userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND komppengeluaran.kompId = cicilan.kompId AND cicilan.flag='0' AND komppengeluaran.flag='0'
+                                    ORDER BY kompId");
+        $stmt->bindparam(":userId",$userId);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_NUM);
+        return $results;
+    }
+
     public function Pghsisset($userId){
         $stmt = $this->db->prepare("SELECT * FROM penghasilan WHERE flag='0' AND userId=:userId AND MONTH(tglPghs) = MONTH(CURRENT_DATE ())");
         $stmt->bindParam(":userId",$userId);
