@@ -221,10 +221,21 @@ $berita = new crud();
 	        <div class="col-md-6">
 		        <div class="panel panel-default">
 		        <div class="panel-heading">Laporan Keuangan May 2017</div>
+		        	<h3><strong>Pengeluaran</strong></h3>
 		        	<?php
-		        	$laporan = $pengeluaran->lap_keuangan_pengeluaran($_SESSION['user_session']);
-		        	print_r($laporan);
-		        	
+		        	$laporan = $pengeluaran->lap_komp_pengeluaran($_SESSION['user_session']);
+		        	for ($i = 0; $i < count($laporan); $i++) {
+					    echo '<h4 style="padding-left:2em"><strong>'.$laporan[$i][1].'</strong><h4>';
+					    $laporan_det = $pengeluaran->lap_detail_pengeluaran($_SESSION['user_session'],$laporan[$i][0]);
+
+					    for ($d = 0; $d < count($laporan_det); $d++) {
+					    //echo '<h5>'.$laporan_det[$d][3].' = '.$laporan_det[$d][4].'<h5><br>';
+					    	echo '<h5 style="padding-left:4em">'.$laporan_det[$d][2].'  =  '.$laporan_det[$d][3].'<h5>';
+						}
+
+					}
+		        	print_r($laporan_det);
+
 		        	?>
 				</div>
 			</div>

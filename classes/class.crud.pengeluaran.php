@@ -47,16 +47,33 @@ class Pengeluaran{
         return $results;
     }
 
-    public function lap_keuangan_pengeluaran($userId){
-        $stmt = $this->db->prepare("SELECT komppengeluaran.kompId,namaKomp,namaDtlPngl Nama_Detail,persenKomp,jmlDtlPngl Realisasi
+    public function lap_komp_pengeluaran($userId){
+        $stmt = $this->db->prepare("SELECT komppengeluaran.kompId,namaKomp
                                     FROM komppengeluaran,pengeluaran,detailpengeluaran
                                     WHERE userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND pengeluaran.pengeluaranId=detailpengeluaran.pengeluaranId AND detailpengeluaran.flag='0' AND komppengeluaran.flag='0'
+                                    GROUP BY kompId
                                     UNION
-                                    SELECT komppengeluaran.kompId,namaKomp,namaCicilan Nama_Detail,persenKomp,jmlCicilan Realisasi
+                                    SELECT komppengeluaran.kompId,namaKomp
                                     FROM komppengeluaran,pengeluaran,cicilan
                                     WHERE komppengeluaran.userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND komppengeluaran.kompId = cicilan.kompId AND cicilan.flag='0' AND komppengeluaran.flag='0'
+                                    GROUP BY kompId
                                     ORDER BY kompId");
         $stmt->bindparam(":userId",$userId);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_NUM);
+        return $results;
+    }
+    public function lap_detail_pengeluaran($userId,$kompId){
+        $stmt = $this->db->prepare("SELECT komppengeluaran.kompId,namaKomp,namaDtlPngl Nama_Detail,jmlDtlPngl Realisasi
+                                    FROM komppengeluaran,pengeluaran,detailpengeluaran
+                                    WHERE userId='2' AND komppengeluaran.kompId=pengeluaran.kompId AND pengeluaran.pengeluaranId=detailpengeluaran.pengeluaranId AND detailpengeluaran.flag='0' AND komppengeluaran.flag='0' AND komppengeluaran.kompId=:kompId
+                                    UNION
+                                    SELECT komppengeluaran.kompId,namaKomp,namaCicilan Nama_Detail,jmlCicilan Realisasi
+                                    FROM komppengeluaran,pengeluaran,cicilan
+                                    WHERE komppengeluaran.userId='2' AND komppengeluaran.kompId=pengeluaran.kompId AND komppengeluaran.kompId = cicilan.kompId AND cicilan.flag='0' AND komppengeluaran.flag='0' AND komppengeluaran.kompId=:kompId
+                                    ORDER BY kompId");
+        $stmt->bindparam(":userId",$userId);
+        $stmt->bindparam(":kompId",$kompId);
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_NUM);
         return $results;
