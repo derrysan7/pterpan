@@ -86,7 +86,6 @@
             <li><a href="view-penghasilan.php">Penghasilan</a></li>
             <li><a href="">Pengeluaran</a></li>
             <li><a href="view-cicilan.php">Cicilan</a></li>
-            <li><a href="">Laporan</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
               

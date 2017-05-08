@@ -68,11 +68,26 @@ if(isset($_POST['btn-update']))
         exit("Edit Error! Wrong Author");
     }
 }
-
-if(isset($_GET['edit_id']))
+if(isset($_GET['edit_id']) == "")
 {
-	$id = $_GET['edit_id'];
-	extract($crud->getID($id)); 
+    exit("Page not Found");
+}
+elseif(empty($_GET['edit_id'])) 
+{ 
+  exit("Page not Found");
+}
+elseif(isset($_GET['edit_id']))
+{
+    $id = $_GET['edit_id'];
+    extract($crud->getID($id)); 
+    if ($judul === NULL)
+    {
+        exit("Page not Found");
+    } 
+    elseif ($userId != $userRow['userId'])
+    {
+        exit("Page not Found");
+    }
 }
 
 ?>
