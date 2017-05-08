@@ -90,7 +90,7 @@ $berita = new crud();
                     }
                     var options = {
                         chart: {
-                            renderTo: 'container2',
+                            renderTo: 'container_peng_rp',
                             type: 'column'
                         },
                         title: {
@@ -151,7 +151,7 @@ $berita = new crud();
                     }
                     var options = {
                         chart: {
-                            renderTo: 'container3',
+                            renderTo: 'container_peng_persen',
                             type: 'column'
                         },
                         title: {
@@ -204,7 +204,7 @@ $berita = new crud();
 			<div class="col-md-6">
 				<div class="panel panel-default">
 					<div class="panel-heading">Pengeluaran May 2017(%)</div>
-					<div class="panel-body" id="container3" style="width:100%; height:400px;"></div>
+					<div class="panel-body" id="container_peng_persen" style="width:100%; height:400px;"></div>
 				</div>
 			</div>
 		</div>
@@ -213,7 +213,7 @@ $berita = new crud();
 			<div class="col-md-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">Pengeluaran May 2017(Rp)</div>
-					<div class="panel-body" id="container2" style="width:100%; height:400px;"></div>
+					<div class="panel-body" id="container_peng_rp" style="width:100%; height:400px;"></div>
 				</div>
 			</div>
 		</div>
@@ -221,6 +221,16 @@ $berita = new crud();
 	        <div class="col-md-6">
 		        <div class="panel panel-default">
 		        <div class="panel-heading">Laporan Keuangan May 2017</div>
+
+		        	<h3><strong>Penghasilan</strong></h3>
+		        	<?php
+		        	$laporan_pghs = $penghasilan->lap_penghasilan($_SESSION['user_session']);
+		        	for ($i = 0; $i < count($laporan_pghs); $i++) {
+					    echo '<h5 style="padding-left:4em">'.$laporan_pghs[$i][0].'  =  '.number_format($laporan_pghs[$i][1],0,',','.').'<h5>';
+					}
+		        	?>
+		        	<h4 style="padding-left:2em"><strong>Total Penghasilan = <?php $total_pghs = $penghasilan->tot_penghasilan($_SESSION['user_session']); echo number_format($total_pghs['nomPenghasilan'],0,',','.'); ?></strong></h4>
+		        	
 		        	<h3><strong>Pengeluaran</strong></h3>
 		        	<?php
 		        	$laporan = $pengeluaran->lap_komp_pengeluaran($_SESSION['user_session']);
@@ -229,14 +239,22 @@ $berita = new crud();
 					    $laporan_det = $pengeluaran->lap_detail_pengeluaran($_SESSION['user_session'],$laporan[$i][0]);
 
 					    for ($d = 0; $d < count($laporan_det); $d++) {
-					    //echo '<h5>'.$laporan_det[$d][3].' = '.$laporan_det[$d][4].'<h5><br>';
-					    	echo '<h5 style="padding-left:4em">'.$laporan_det[$d][2].'  =  '.$laporan_det[$d][3].'<h5>';
+					    	echo '<h5 style="padding-left:4em">'.$laporan_det[$d][2].'  =  '.number_format($laporan_det[$d][3],0,',','.').'<h5>';
 						}
-
 					}
-		        	print_r($laporan_det);
-
 		        	?>
+		        	<h4 style="padding-left:2em"><strong>Total Pengeluaran = <?php $total_peng = $pengeluaran->tot_pengeluaran($_SESSION['user_session']); echo number_format($total_peng['Total_Realisasi'],0,',','.'); ?></strong></h4>	        	
+		        	
+		        	<?php 
+		        	$saldo = $total_pghs['nomPenghasilan'] - $total_peng['Total_Realisasi']; 
+		        	$saldo_formatted = number_format($saldo,0,',','.'); 
+		        	if($saldo_formatted < 0){
+		        		echo '<h3 style="color:red"><strong>Sisa Saldo = Rp. '.$saldo_formatted.'<h3>';
+		        	}else{
+		        		echo '<h3><strong>Sisa Saldo = Rp '.$saldo_formatted.'<h3>';
+		        	}
+		        	?>
+
 				</div>
 			</div>
 			<div class="col-md-6">
