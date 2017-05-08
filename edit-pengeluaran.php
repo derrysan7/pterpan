@@ -99,7 +99,7 @@ if ($tipePngl=="cicilan"){
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="tglKomp">Periode</label>
                         <div class="col-sm-8 input-group">
-                            <input class="form-control date-picker" name="tglKomp" value="<?php echo $tglKomp?>" required>
+                            <input class="form-control date-picker" name="tglKomp" value="<?php echo $tglKomp?>" readonly required>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>

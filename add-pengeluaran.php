@@ -92,7 +92,7 @@ else if(isset($_GET['failure']))
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="tglKomp">Periode</label>
                         <div class="col-sm-8 input-group">
-                            <input class="form-control date-picker" name="tglKomp"  required>
+                            <input class="form-control date-picker" name="tglKomp" readonly required>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
