@@ -12,6 +12,49 @@ class crud
     $db = $database->dbConnection();
     $this->db = $db;
  }
+
+ public function dataviewhomeberita($query)
+ {
+  $stmt = $this->db->prepare($query);
+  $stmt->execute();
+ 
+  if($stmt->rowCount()>0)
+  {
+   while($row=$stmt->fetch(PDO::FETCH_ASSOC))
+   {
+      $tanggalbaru = date_create($row['tanggaldib']);
+    ?>
+            <div class="panel panel-default">
+                <div class="panel-heading custom-berita-panel">
+                    <div>
+                    <a class="beritalinkcustom" href="detailberita.php?detail_id=<?php print($row['id']); ?>"><h2 style="font-size: 24px;"><?php print($row['judul']); ?></h2></a>
+                    </div>
+                    <h5 style="font-size: 13px;"> By <?php print($row['namapen']); ?></h5>
+                    <h5 style="font-size: 13px;">Published <?php echo date_format($tanggalbaru,"d/m/Y H:i:s") ?></h5>
+                </div>
+                <div class="panel-body fixed-panel" >
+                    <div class="container-fluid">
+                        <div class="row">
+                          <div class="col-md-3">
+                                <img class="imgberitacustom" src="user_images_berita/<?php echo ($row['gambar']) ?>" style="" />
+                          </div>
+                          <div class="col-md-9 module fadecustom"><p> <?php print($row['deskripsi']); ?></p>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <?php
+   }
+  }
+  else
+  {
+   ?>
+            
+            <p>Nothing here...</p>
+            <?php
+  } 
+ }
  
  public function create($buserid,$bjudul,$bdeskripsi,$userpic,$bnamapen)
  {

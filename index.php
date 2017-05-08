@@ -4,7 +4,10 @@ include_once "views/header.php";
 $penghasilan = new Penghasilan();
 include_once "classes/class.crud.pengeluaran.php";
 $pengeluaran = new Pengeluaran();
+include_once 'classes/class.crud.berita.php';
+$berita = new crud();
 ?>
+<link rel="stylesheet" href="style/css/homeberita.css" type="text/css"/>
     
     <div class="clearfix"></div>
 
@@ -55,6 +58,9 @@ $pengeluaran = new Pengeluaran();
                                 enableMouseTracking: false
                             }
                         },
+                        credits: {
+					    	enabled: false
+					  	},
                         series: [{
                                 name: 'Nominal',
                                 data: seriesOptions
@@ -109,6 +115,9 @@ $pengeluaran = new Pengeluaran();
                                 enableMouseTracking: false
                             }
                         },
+                        credits: {
+					    	enabled: false
+					  	},
                         series: [{
                                 name: 'Anggaran',
                                 data: seriesOptions
@@ -167,6 +176,9 @@ $pengeluaran = new Pengeluaran();
                                 enableMouseTracking: false
                             }
                         },
+                        credits: {
+					    	enabled: false
+					  	},
                         series: [{
                                 name: 'Anggaran',
                                 data: seriesOptions
@@ -185,13 +197,13 @@ $pengeluaran = new Pengeluaran();
         <div class="row">
 	        <div class="col-md-6">
 		        <div class="panel panel-default">
-					<div class="panel-heading">Pendapatan April 2017</div>
+					<div class="panel-heading">Pendapatan May 2017</div>
 					<div class="panel-body" id="container" style="width:100%; height:400px;"></div>
 				</div>
 			</div>
 			<div class="col-md-6">
 				<div class="panel panel-default">
-					<div class="panel-heading">Pengeluaran April 2017(%)</div>
+					<div class="panel-heading">Pengeluaran May 2017(%)</div>
 					<div class="panel-body" id="container3" style="width:100%; height:400px;"></div>
 				</div>
 			</div>
@@ -200,14 +212,31 @@ $pengeluaran = new Pengeluaran();
 		<div class="row">
 			<div class="col-md-12">
 				<div class="panel panel-default">
-					<div class="panel-heading">Pengeluaran April 2017(Rp)</div>
+					<div class="panel-heading">Pengeluaran May 2017(Rp)</div>
 					<div class="panel-body" id="container2" style="width:100%; height:400px;"></div>
 				</div>
 			</div>
 		</div>
-        
-        <div id="container" style="width:60%; height:400px; margin-bottom:60px;"></div>
-        <div id="container3" style="width:40%; height:400px; margin-bottom:60px;"></div>
+		<div class="row">
+	        <div class="col-md-6">
+		        <div class="panel panel-default">
+		        <div class="panel-heading">Laporan Keuangan May 2017</div>
+
+				</div>
+			</div>
+			<div class="col-md-6">
+					<?php
+			              $query = "SELECT * FROM berita ORDER BY tanggaldib DESC";
+			              $records_per_page=5;
+			              $newquery = $berita->paging($query,$records_per_page);
+			              $berita->dataviewhomeberita($newquery);
+			          ?>
+			        	<div class="pagination-wrap">
+			                <?php $berita->paginglink($query,$records_per_page); ?>
+			          </div>
+			          
+			</div>
+		</div>
         
     </div>
 
