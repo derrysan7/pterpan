@@ -29,13 +29,10 @@
     <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
     <link href="style/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <script type="text/javascript" src="style/bootstrap/js/jquery-1.11.3-jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link href="style/css/font-face.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-    <link rel="stylesheet" href="/resources/demos/style.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="style/bootstrap/js/bootstrap.min.js"></script>
+    <!-- <link rel="stylesheet" href="style/css/jquery-ui.css"> -->
+    <script src="style/js/jquery-1.12.4.js"></script>
+    <script src="style/js/jquery-ui.js"></script>
     <script>
     $( function() {
       $( "#datepicker" ).datepicker();
@@ -44,17 +41,9 @@
       $( "#datepicker2" ).datepicker();
     } );
     </script>
-    
-    <script src="js/tinymce/tinymce.min.js"></script>
-    <script>tinymce.init({ selector:'textarea', 
-                            plugins: "table advlist link image",
-                              setup: function (editor) {
-                              editor.on('change', function () {
-                              editor.save();
-                                    });
-                              }
 
-                          });</script>
+    <script src="js/highcharts.js"></script>
+
     <script>
         function isNumberKey(evt){
             var charCode = (evt.which) ? evt.which : event.keyCode
@@ -75,7 +64,7 @@
 </head>
 
 <body>
-
+<?php $date_header_dashboard = date("m-Y");?>
 <nav class="navbar navbar-default">
       <div class="container">
         <div class="navbar-header">
@@ -85,16 +74,15 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.php">Program Peterpan</a>
+          <a class="navbar-brand" href="index.php?selected_month=<?php echo $date_header_dashboard ?>">Program Peterpan</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
 
-            <li><a href="index.php">Beranda</a></li>
+            <li><a href="index.php?selected_month=<?php echo $date_header_dashboard ?>">Dashboard</a></li>
             <li><a href="view-penghasilan.php">Penghasilan</a></li>
             <li><a href="">Pengeluaran</a></li>
             <li><a href="view-cicilan.php">Cicilan</a></li>
-            <li><a href="">Laporan</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
               

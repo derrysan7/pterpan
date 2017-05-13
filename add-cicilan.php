@@ -1,3 +1,5 @@
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <?php include_once 'views/header.php'; ?>
 <?php
 include_once 'classes/class.crud.cicilan.php';
@@ -5,6 +7,8 @@ $crud = new crud();
 
 if(isset($_POST['btn-save']))
 {
+    $id = $_GET['kom_id'];
+    extract($crud->getID_komp($id));
     $cuserid = $userRow['userId'];
     $cnamaCicilan = htmlspecialchars($_POST['txt_namacicilan']);
     $ctglMulai = $_POST['txt_tglMulai'];
@@ -24,7 +28,7 @@ if(isset($_POST['btn-save']))
         {
             $ctglMulai2 = date("Y-m-d", strtotime($ctglMulai));
             $ctglSelesai2 = date("Y-m-d", strtotime($ctglSelesai));
-            if($crud->create($cuserid,$cnamaCicilan,$ctglMulai2,$ctglSelesai2,$cjmlCicilan))
+            if($crud->create($cuserid,$kompId,$cnamaCicilan,$ctglMulai2,$ctglSelesai2,$cjmlCicilan))
              {
                 $autoid = $crud->lastID();
                 $month = 1;
@@ -34,11 +38,15 @@ if(isset($_POST['btn-save']))
                     $ctglMulai2 = $crud->add_month($ctglMulai,$month);
                     $month = $month + 1;
                 }
-                header("Location: add-cicilan.php?inserted");
+                $msg = "<div class='alert alert-info'>
+                    <strong>Success!</strong> Cicilan berhasil ditambahkan!
+                    </div>";
              }
              else
              {
-                header("Location: add-cicilan.php?failure");
+                $msg = "<div class='alert alert-warning'>
+                    <strong>Failed!</strong> Cicilan gagal ditambahkan !
+                    </div>";
              }
         }
         catch(PDOException $e)
@@ -49,9 +57,34 @@ if(isset($_POST['btn-save']))
 }
 ?>
 
+<?php
+if(isset($_GET['kom_id']) == "")
+    {
+        exit("Page not Found");
+    }
+    elseif(empty($_GET['kom_id'])) 
+    { 
+      exit("Page not Found");
+    }
+    elseif(isset($_GET['kom_id']))
+    {
+        $id = $_GET['kom_id'];
+        extract($crud->getID_komp($id)); 
+        if ($namaKomp === NULL)
+        {
+            exit("Page not Found");
+        } 
+        elseif ($userId != $userRow['userId'])
+        {
+            exit("Page not Found");
+        }
+    }
+?>
+
 <div class="clearfix"></div><br />
 
 <div class="container">
+        <h2>Add <?php echo $namaKomp ?></h2>
         <?php
             if(isset($error))
             {
@@ -64,13 +97,9 @@ if(isset($_POST['btn-save']))
                      <?php
                 }
             }
-            else if(isset($_GET['inserted']))
+            else if(isset($msg))
             {
-                 ?>
-                 <div class="alert alert-info">
-                      <strong>SUCCESS!</strong> Cicilan berhasil ditambahkan <a href="view-cicilan.php">HOME</a>!
-                 </div>
-                 <?php
+                 echo $msg;
             }
         ?>
     <div class="col-md-6">          
@@ -118,7 +147,7 @@ if(isset($_POST['btn-save']))
                     <button type="submit" class="btn btn-primary" name="btn-save">
                         <span class="glyphicon glyphicon-plus"></span> Create New Record
                     </button>  
-                    <a href="cicilan.php" class="btn btn-large btn-success"><i class="glyphicon glyphicon-backward"></i> &nbsp; Back to index</a>
+                    <a href="view-cicilan.php?kom_id=<?php echo $kompId ?>" class="btn btn-large btn-success"><i class="glyphicon glyphicon-backward"></i> &nbsp; Back to index</a>
                 </div>
             </div>
 

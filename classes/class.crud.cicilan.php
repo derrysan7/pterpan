@@ -13,13 +13,14 @@ class crud
     $this->db = $db;
  }
  
- public function create($cuserid,$cnamaCicilan,$ctglMulai,$ctglSelesai,$cjmlCicilan)
+ public function create($cuserid,$kompId,$cnamaCicilan,$ctglMulai,$ctglSelesai,$cjmlCicilan)
  {
   try
   {
-   $stmt = $this->db->prepare("INSERT INTO cicilan(userId,tglDibuat,namaCicilan,tglMulai,tglSelesai,jmlCicilan) 
-                                                   VALUES(:cuserid,CURRENT_TIMESTAMP(),:cnamaCicilan,:ctglMulai,:ctglSelesai,:cjmlCicilan)");
+   $stmt = $this->db->prepare("INSERT INTO cicilan(userId,kompId,tglDibuat,namaCicilan,tglMulai,tglSelesai,jmlCicilan) 
+                                                   VALUES(:cuserid,:kompId,CURRENT_TIMESTAMP(),:cnamaCicilan,:ctglMulai,:ctglSelesai,:cjmlCicilan)");
    $stmt->bindparam(":cuserid", $cuserid);
+   $stmt->bindparam(":kompId", $kompId);
    $stmt->bindparam(":cnamaCicilan", $cnamaCicilan);
    $stmt->bindparam(":ctglMulai", $ctglMulai);
    $stmt->bindparam(":ctglSelesai", $ctglSelesai);
@@ -38,6 +39,22 @@ class crud
  public function getID($id)
  {
   $stmt = $this->db->prepare("SELECT * FROM cicilan WHERE cicilanId=:id");
+  $stmt->execute(array(":id"=>$id));
+  $editRow=$stmt->fetch(PDO::FETCH_ASSOC);
+  return $editRow;
+ }
+
+ public function getID_komp($id)
+ {
+  $stmt = $this->db->prepare("SELECT kompId,userId,namaKomp FROM komppengeluaran WHERE kompId=:id");
+  $stmt->execute(array(":id"=>$id));
+  $editRow=$stmt->fetch(PDO::FETCH_ASSOC);
+  return $editRow;
+ }
+
+ public function getID_return($id)
+ {
+  $stmt = $this->db->prepare("SELECT kompId FROM cicilan, detailcicilan WHERE cicilan.cicilanId=detailcicilan.cicilanId AND cicilan.cicilanId = :id");
   $stmt->execute(array(":id"=>$id));
   $editRow=$stmt->fetch(PDO::FETCH_ASSOC);
   return $editRow;
@@ -135,9 +152,11 @@ public function add_month($date_str,$months)
  
  /* paging */
  
- public function dataview($query)
+ public function dataview($kompId,$userId)
  {
-  $stmt = $this->db->prepare($query);
+  $stmt = $this->db->prepare("SELECT * FROM cicilan WHERE userId=:userId AND kompId=:kompId AND flag='0' ORDER BY tglDibuat DESC");
+  $stmt->bindparam(":kompId", $kompId);
+  $stmt->bindparam(":userId", $userId);
   $stmt->execute();
  
   if($stmt->rowCount()>0)

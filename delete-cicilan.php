@@ -8,9 +8,10 @@ if(isset($_POST['btn-del']))
   if ($userRow['userId'] == $userId)
   {
 	 $id_del = $_GET['delete_id'];
+	 extract($crud->getID_return($id_del));
 	 $crud->delete_detail($id_del);
 	 $crud->delete($id_del);
-	 header("Location: delete-cicilan.php?deleted"); 
+	 header("Location: delete-cicilan.php?deleted&return_id=".$kompId); 
   }
   else 
   {
@@ -26,6 +27,27 @@ if(isset($_POST['btn-del']))
 	<?php
 		if(isset($_GET['deleted']))
 		{
+			if(isset($_GET['return_id']) == "")
+			{
+			    exit("Page not Found");
+			}
+			elseif(empty($_GET['return_id'])) 
+			{ 
+			  exit("Page not Found");
+			}
+			elseif(isset($_GET['return_id']))
+			{
+			    $id = $_GET['return_id'];
+			    extract($crud->getID_komp($id)); 
+			    if ($namaKomp === NULL)
+			    {
+			        exit("Page not Found");
+			    } 
+			    elseif ($userId != $userRow['userId'])
+			    {
+			        exit("Page not Found");
+			    }
+			}
 	?>
 	    <div class="alert alert-success">
 	     	<strong>Success!</strong> record was deleted... 
@@ -91,14 +113,14 @@ if(isset($_POST['btn-del']))
 		   	<form method="post">
 		    <input type="hidden" name="id" value="<?php echo $id ?>" />
 		    <button class="btn btn-large btn-primary" type="submit" name="btn-del"><i class="glyphicon glyphicon-trash"></i> &nbsp; YES</button>
-		    <a href="view-cicilan.php" class="btn btn-large btn-success"><i class="glyphicon glyphicon-backward"></i> &nbsp; NO</a>
+		    <a href="view-cicilan.php?kom_id=<?php echo $kompId ?>" class="btn btn-large btn-success"><i class="glyphicon glyphicon-backward"></i> &nbsp; NO</a>
 		    </form>  
 		<?php
 			}
 			else
 			{
 	 	?>
-			    <a href="view-cicilan.php" class="btn btn-large btn-success"><i class="glyphicon glyphicon-backward"></i> &nbsp; Back to index</a>
+			    <a href="view-cicilan.php?kom_id=<?php echo $kompId ?>" class="btn btn-large btn-success"><i class="glyphicon glyphicon-backward"></i> &nbsp; Back to index</a>
 	    <?php
 			}
 		?>

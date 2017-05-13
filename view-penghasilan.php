@@ -3,7 +3,7 @@ include_once "classes/Penghasilan.php";
 include_once "views/header.php";
 $penghasilan = new Penghasilan();
 ?>
-
+    
     <div class="clearfix"></div>
 
     <div class="container">
@@ -23,7 +23,7 @@ $penghasilan = new Penghasilan();
                 <th colspan="2" align="center">Actions</th>
             </tr>
             <?php
-            $query = "SELECT * FROM penghasilan WHERE flag='0' AND userId='1'";
+            $query = "SELECT * FROM penghasilan WHERE flag='0' AND userId='".$userId."'";
             $records_per_page=5;
             $newquery = $penghasilan->paging($query,$records_per_page);
             $penghasilan->dataview($newquery);
