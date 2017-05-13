@@ -1,3 +1,5 @@
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <?php include_once 'views/header.php'; ?>
 <?php
 include_once 'classes/class.crud.cicilan.php';
@@ -37,7 +39,7 @@ if(isset($_POST['btn-update']))
                     $month = $month + 1;
                 }
                 $msg = "<div class='alert alert-info'>
-                    <strong>Success!</strong> Cicilan berhasil diedit <a href='view-cicilan.php'> HOME</a>!
+                    <strong>Success!</strong> Cicilan berhasil diedit!
                     </div>";
              }
              else
@@ -155,7 +157,7 @@ $tglSelesai = date("m/d/Y", strtotime($tglSelesai));
                     <button type="submit" class="btn btn-primary" name="btn-update">
                         <span class="glyphicon glyphicon-edit"></span>  Update this Record
                     </button>  
-                    <a href="view-cicilan.php" class="btn btn-large btn-success"><i class="glyphicon glyphicon-backward"></i> &nbsp; Back to index</a>
+                    <a href="view-cicilan.php?kom_id=<?php echo $kompId ?>" class="btn btn-large btn-success"><i class="glyphicon glyphicon-backward"></i> &nbsp; Back to index</a>
                 </div>
             </div>
 

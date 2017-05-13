@@ -4,7 +4,7 @@ $penghasilan = new Penghasilan();
 
 if(isset($_POST['submit']))
 {
-    $userId = '1';
+    $userId = $userRow['userId'];
     $tglPghs = $_POST['tglPghs'];
     $sumberPghs = $_POST['sumberPghs'];
     $nominalPghs = $_POST['nominalPghs'];
