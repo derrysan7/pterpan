@@ -64,7 +64,7 @@
 </head>
 
 <body>
-
+<?php $date_header_dashboard = date("m-Y");?>
 <nav class="navbar navbar-default">
       <div class="container">
         <div class="navbar-header">
@@ -74,12 +74,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.php">Program Peterpan</a>
+          <a class="navbar-brand" href="index.php?selected_month=<?php echo $date_header_dashboard ?>">Program Peterpan</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
 
-            <li><a href="index.php?selected_month=05-2017">Dashboard</a></li>
+            <li><a href="index.php?selected_month=<?php echo $date_header_dashboard ?>">Dashboard</a></li>
             <li><a href="view-penghasilan.php">Penghasilan</a></li>
             <li><a href="">Pengeluaran</a></li>
             <li><a href="view-cicilan.php">Cicilan</a></li>

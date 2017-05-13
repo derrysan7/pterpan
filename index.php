@@ -23,6 +23,8 @@ if(isset($_GET['selected_month']) == "")
 
     $month_now = substr($date_now,5,2);
     $year_now = substr($date_now,0,4);
+
+    $date_graph_title = $date_object->format("F Y");
 ?>
 <link rel="stylesheet" href="style/css/homeberita.css" type="text/css"/>
     
@@ -38,7 +40,7 @@ if(isset($_GET['selected_month']) == "")
         <script type="text/javascript">
             $(document).ready(function() {               
 
-                $.getJSON('data_penghasilan.php?selected_month=06-2017', function(data) {
+                $.getJSON('data_penghasilan.php?selected_month=<?php echo $_GET['selected_month'] ?>', function(data) {
                     var seriesOptions = [];
                     var seriesLabel = [];
                     var arrayLength = data.length;
@@ -54,7 +56,7 @@ if(isset($_GET['selected_month']) == "")
                             type: 'column'
                         },
                         title: {
-                            text: 'Penghasilan Bulan Ini',
+                            text: null,
                         },
                         xAxis: {
                             categories: seriesLabel
@@ -91,7 +93,7 @@ if(isset($_GET['selected_month']) == "")
         <script type="text/javascript">
             $(document).ready(function() {               
 
-                $.getJSON('data_pengeluaran.php?selected_month=06-2017', function(data) {
+                $.getJSON('data_pengeluaran.php?selected_month=<?php echo $_GET['selected_month'] ?>', function(data) {
                     var seriesOptions = [];
                     var seriesOptions2 = [];
                     var seriesLabel = [];
@@ -111,7 +113,7 @@ if(isset($_GET['selected_month']) == "")
                             type: 'column'
                         },
                         title: {
-                            text: 'Pengeluaran Bulan Ini (Rp)',
+                            text: null,
                         },
                         xAxis: {
                             categories: seriesLabel
@@ -152,7 +154,7 @@ if(isset($_GET['selected_month']) == "")
         <script type="text/javascript">
             $(document).ready(function() {               
 
-                $.getJSON('data_pengeluaran_persen.php?selected_month=06-2017', function(data) {
+                $.getJSON('data_pengeluaran_persen.php?selected_month=<?php echo $_GET['selected_month'] ?>', function(data) {
                     var seriesOptions = [];
                     var seriesOptions2 = [];
                     var seriesLabel = [];
@@ -172,7 +174,7 @@ if(isset($_GET['selected_month']) == "")
                             type: 'column'
                         },
                         title: {
-                            text: 'Pengeluaran Bulan Ini (%)',
+                            text: null,
                         },
                         xAxis: {
                             categories: seriesLabel
@@ -214,13 +216,13 @@ if(isset($_GET['selected_month']) == "")
         <div class="row">
 	        <div class="col-md-6">
 		        <div class="panel panel-default">
-					<div class="panel-heading">Pendapatan May 2017</div>
+					<div class="panel-heading">Pendapatan <?php echo $date_graph_title ?>(Rp)</div>
 					<div class="panel-body" id="container" style="width:100%; height:400px;"></div>
 				</div>
 			</div>
 			<div class="col-md-6">
 				<div class="panel panel-default">
-					<div class="panel-heading">Pengeluaran May 2017(%)</div>
+					<div class="panel-heading">Pengeluaran <?php echo $date_graph_title ?>(%)</div>
 					<div class="panel-body" id="container_peng_persen" style="width:100%; height:400px;"></div>
 				</div>
 			</div>
@@ -229,7 +231,7 @@ if(isset($_GET['selected_month']) == "")
 		<div class="row">
 			<div class="col-md-12">
 				<div class="panel panel-default">
-					<div class="panel-heading">Pengeluaran May 2017(Rp)</div>
+					<div class="panel-heading">Pengeluaran <?php echo $date_graph_title ?>(Rp)</div>
 					<div class="panel-body" id="container_peng_rp" style="width:100%; height:400px;"></div>
 				</div>
 			</div>
@@ -237,7 +239,7 @@ if(isset($_GET['selected_month']) == "")
 		<div class="row">
 	        <div class="col-md-5">
 		        <div class="panel panel-default">
-		        <div class="panel-heading">Laporan Keuangan May 2017</div>
+		        <div class="panel-heading">Laporan Keuangan <?php echo $date_graph_title ?></div>
 
 		        	<div style="padding:1em">
 			        	<h3><strong>Penghasilan</strong></h3>
