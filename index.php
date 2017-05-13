@@ -1,3 +1,5 @@
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <?php
 include_once "classes/Penghasilan.php";
 include_once "views/header.php";
@@ -6,6 +8,13 @@ include_once "classes/class.crud.pengeluaran.php";
 $pengeluaran = new Pengeluaran();
 include_once 'classes/class.crud.berita.php';
 $berita = new crud();
+
+if(isset($_POST['btn-submit']))
+{
+    $head_periode = $_POST['txt_periode'];
+    $head_per_format = str_replace("/","-",$head_periode);
+    header("Location: index.php?selected_month=".$head_per_format); 
+}
 
 if(isset($_GET['selected_month']) == "")
     {
@@ -25,13 +34,72 @@ if(isset($_GET['selected_month']) == "")
     $year_now = substr($date_now,0,4);
 
     $date_graph_title = $date_object->format("F Y");
+
 ?>
 <link rel="stylesheet" href="style/css/homeberita.css" type="text/css"/>
+<script>
+  $(function() {
+     $('.date-picker').datepicker(
+      {
+          dateFormat: "mm/yy",
+          changeMonth: true,
+          changeYear: true,
+          showButtonPanel: true,
+          onClose: function(dateText, inst) {
+
+$
+              function isDonePressed(){
+                  return ($('#ui-datepicker-div').html().indexOf('ui-datepicker-close ui-state-default ui-priority-primary ui-corner-all ui-state-hover') > -1);
+              }
+
+              if (isDonePressed()){
+                  var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+                  var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                  $(this).datepicker('setDate', new Date(year, month, 1)).trigger('change');
+                  
+                   $('.date-picker').focusout()//Added to remove focus from datepicker input box on selecting date
+              }
+          },
+          beforeShow : function(input, inst) {
+
+              inst.dpDiv.addClass('month_year_datepicker')
+
+              if ((datestr = $(this).val()).length > 0) {
+                  year = datestr.substring(datestr.length-4, datestr.length);
+                  month = datestr.substring(0, 2);
+                  $(this).datepicker('option', 'defaultDate', new Date(year, month-1, 1));
+                  $(this).datepicker('setDate', new Date(year, month-1, 1));
+                  $(".ui-datepicker-calendar").hide();
+              }
+          }
+      })
+});
+</script>
+<style>
+.ui-datepicker-calendar {
+display: none;
+}
+</style>
     
     <div class="clearfix"></div>
 
     <div class="container">
     <h2>Dashboard</h2>
+            <form class="form-horizontal" method="post">
+                <div class="form-group">
+                    <div class="col-md-1" style="padding: 4px 0px;padding-left: 17px;">
+                        <label style="font-size: large;font-weight: 100;">Periode:</label>          
+                    </div>
+                    <div class="col-md-2" style="padding: 4px 0px;">
+                        <input type='text' id='startDate' name='txt_periode' class='date-picker' value='<?php echo $date_object->format("m/Y"); ?>' readonly>
+                    </div>
+                    <div class="col-md-9">
+                        <button type="submit" class="btn btn-success" name="btn-submit">
+                        Submit
+                        </button>  
+                    </div>
+                </div>
+            </form>
     </div>
 
     <div class="clearfix"></div><br />
@@ -285,8 +353,7 @@ if(isset($_GET['selected_month']) == "")
 			</div>
 			<div class="col-md-7">
 					<?php
-			              $query = "SELECT * FROM berita ORDER BY tanggaldib DESC";
-			              $berita->dataviewhomeberita($query);
+			              $berita->dataviewhomeberita($month_now,$year_now);
 			          ?>
 
 			</div>

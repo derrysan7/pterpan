@@ -13,9 +13,11 @@ class crud
     $this->db = $db;
  }
 
- public function dataviewhomeberita($query)
+ public function dataviewhomeberita($month_now,$year_now)
  {
-  $stmt = $this->db->prepare($query);
+  $stmt = $this->db->prepare("SELECT * FROM berita WHERE MONTH(tanggaldib)=:month_now AND YEAR(tanggaldib)=:year_now ORDER BY tanggaldib DESC");
+  $stmt->bindparam(":month_now", $month_now);
+  $stmt->bindparam(":year_now", $year_now);
   $stmt->execute();
  
   if($stmt->rowCount()>0)
