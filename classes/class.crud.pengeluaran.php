@@ -12,85 +12,100 @@ class Pengeluaran{
         $this->db = $db;
     }
 
-    public function json_chart($userId)
+    public function json_chart($userId,$date_now,$month_now,$year_now)
     {
         $stmt = $this->db->prepare("SELECT komppengeluaran.kompId,namaKomp,persenKomp,anggaranPngl Anggaran,SUM(jmlDtlPngl) Realisasi
                                     FROM komppengeluaran,pengeluaran,detailpengeluaran
-                                    WHERE userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND pengeluaran.pengeluaranId=detailpengeluaran.pengeluaranId AND detailpengeluaran.flag='0' AND komppengeluaran.flag='0'
+                                    WHERE userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND pengeluaran.pengeluaranId=detailpengeluaran.pengeluaranId AND detailpengeluaran.flag='0' AND komppengeluaran.flag='0' AND MONTH(tglKomp)=:month_now AND YEAR(tglKomp)=:year_now
                                     GROUP BY kompId
                                     UNION
                                     SELECT komppengeluaran.kompId,namaKomp,persenKomp,anggaranPngl Anggaran,SUM(jmlCicilan) Realisasi
                                     FROM komppengeluaran,pengeluaran,cicilan
-                                    WHERE komppengeluaran.userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND komppengeluaran.kompId = cicilan.kompId AND cicilan.flag='0' AND komppengeluaran.flag='0'
+                                    WHERE komppengeluaran.userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND komppengeluaran.kompId = cicilan.kompId AND cicilan.flag='0' AND komppengeluaran.flag='0' AND tglSelesai >= :date_now AND tglMulai <= :date_now
                                     GROUP BY kompId");
         $stmt->bindparam(":userId",$userId);
+        $stmt->bindparam(":date_now",$date_now);
+        $stmt->bindparam(":month_now",$month_now);
+        $stmt->bindparam(":year_now",$year_now);
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_NUM);
         return $results;
     }
 
-    public function json_chart_persen($userId,$nomPenghasilan)
+    public function json_chart_persen($userId,$nomPenghasilan,$date_now,$month_now,$year_now)
     {
         $stmt = $this->db->prepare("SELECT komppengeluaran.kompId,namaKomp,persenKomp,FORMAT((anggaranPngl/:nomPenghasilan*100),0) Anggaran,FORMAT((SUM(jmlDtlPngl)/:nomPenghasilan*100),0) Realisasi
                                     FROM komppengeluaran,pengeluaran,detailpengeluaran
-                                    WHERE userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND pengeluaran.pengeluaranId=detailpengeluaran.pengeluaranId AND detailpengeluaran.flag='0' AND komppengeluaran.flag='0'
+                                    WHERE userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND pengeluaran.pengeluaranId=detailpengeluaran.pengeluaranId AND detailpengeluaran.flag='0' AND komppengeluaran.flag='0' AND MONTH(tglKomp)=:month_now AND YEAR(tglKomp)=:year_now
                                     GROUP BY kompId
                                     UNION
                                     SELECT komppengeluaran.kompId,namaKomp,persenKomp,FORMAT((anggaranPngl/:nomPenghasilan*100),0) Anggaran,FORMAT((SUM(jmlCicilan)/:nomPenghasilan*100),0) Realisasi
                                     FROM komppengeluaran,pengeluaran,cicilan
-                                    WHERE komppengeluaran.userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND komppengeluaran.kompId = cicilan.kompId AND cicilan.flag='0' AND komppengeluaran.flag='0'
+                                    WHERE komppengeluaran.userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND komppengeluaran.kompId = cicilan.kompId AND cicilan.flag='0' AND komppengeluaran.flag='0' AND tglSelesai >= :date_now AND tglMulai <= :date_now
                                     GROUP BY kompId");
         $stmt->bindparam(":userId",$userId);
         $stmt->bindparam(":nomPenghasilan",$nomPenghasilan);
+        $stmt->bindparam(":date_now",$date_now);
+        $stmt->bindparam(":month_now",$month_now);
+        $stmt->bindparam(":year_now",$year_now);
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_NUM);
         return $results;
     }
 
-    public function lap_komp_pengeluaran($userId){
+    public function lap_komp_pengeluaran($userId,$date_now,$month_now,$year_now){
         $stmt = $this->db->prepare("SELECT komppengeluaran.kompId,namaKomp
                                     FROM komppengeluaran,pengeluaran,detailpengeluaran
-                                    WHERE userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND pengeluaran.pengeluaranId=detailpengeluaran.pengeluaranId AND detailpengeluaran.flag='0' AND komppengeluaran.flag='0'
+                                    WHERE userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND pengeluaran.pengeluaranId=detailpengeluaran.pengeluaranId AND detailpengeluaran.flag='0' AND komppengeluaran.flag='0' AND MONTH(tglKomp)=:month_now AND YEAR(tglKomp)=:year_now
                                     GROUP BY kompId
                                     UNION
                                     SELECT komppengeluaran.kompId,namaKomp
                                     FROM komppengeluaran,pengeluaran,cicilan
-                                    WHERE komppengeluaran.userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND komppengeluaran.kompId = cicilan.kompId AND cicilan.flag='0' AND komppengeluaran.flag='0'
+                                    WHERE komppengeluaran.userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND komppengeluaran.kompId = cicilan.kompId AND cicilan.flag='0' AND komppengeluaran.flag='0' AND tglSelesai >= :date_now AND tglMulai <= :date_now
                                     GROUP BY kompId
                                     ORDER BY kompId");
         $stmt->bindparam(":userId",$userId);
+        $stmt->bindparam(":date_now",$date_now);
+        $stmt->bindparam(":month_now",$month_now);
+        $stmt->bindparam(":year_now",$year_now);
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_NUM);
         return $results;
     }
-    public function lap_detail_pengeluaran($userId,$kompId){
+    public function lap_detail_pengeluaran($userId,$kompId,$date_now,$month_now,$year_now){
         $stmt = $this->db->prepare("SELECT komppengeluaran.kompId,namaKomp,namaDtlPngl Nama_Detail,jmlDtlPngl Realisasi
                                     FROM komppengeluaran,pengeluaran,detailpengeluaran
-                                    WHERE userId='2' AND komppengeluaran.kompId=pengeluaran.kompId AND pengeluaran.pengeluaranId=detailpengeluaran.pengeluaranId AND detailpengeluaran.flag='0' AND komppengeluaran.flag='0' AND komppengeluaran.kompId=:kompId
+                                    WHERE userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND pengeluaran.pengeluaranId=detailpengeluaran.pengeluaranId AND detailpengeluaran.flag='0' AND komppengeluaran.flag='0' AND komppengeluaran.kompId=:kompId AND MONTH(tglKomp)=:month_now AND YEAR(tglKomp)=:year_now
                                     UNION
                                     SELECT komppengeluaran.kompId,namaKomp,namaCicilan Nama_Detail,jmlCicilan Realisasi
                                     FROM komppengeluaran,pengeluaran,cicilan
-                                    WHERE komppengeluaran.userId='2' AND komppengeluaran.kompId=pengeluaran.kompId AND komppengeluaran.kompId = cicilan.kompId AND cicilan.flag='0' AND komppengeluaran.flag='0' AND komppengeluaran.kompId=:kompId
+                                    WHERE komppengeluaran.userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND komppengeluaran.kompId = cicilan.kompId AND cicilan.flag='0' AND komppengeluaran.flag='0' AND komppengeluaran.kompId=:kompId AND tglSelesai >= :date_now AND tglMulai <= :date_now
                                     ORDER BY kompId");
         $stmt->bindparam(":userId",$userId);
         $stmt->bindparam(":kompId",$kompId);
+        $stmt->bindparam(":date_now",$date_now);
+        $stmt->bindparam(":month_now",$month_now);
+        $stmt->bindparam(":year_now",$year_now);
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_NUM);
         return $results;
     }
 
-    public function tot_pengeluaran($userId)
+    public function tot_pengeluaran($userId,$date_now,$month_now,$year_now)
     {
         $stmt = $this->db->prepare("SELECT SUM(Realisasi) Total_Realisasi FROM(
                                     SELECT SUM(jmlDtlPngl) AS Realisasi
                                     FROM komppengeluaran,pengeluaran,detailpengeluaran
-                                    WHERE userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND pengeluaran.pengeluaranId=detailpengeluaran.pengeluaranId AND detailpengeluaran.flag='0' AND komppengeluaran.flag='0'
+                                    WHERE userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND pengeluaran.pengeluaranId=detailpengeluaran.pengeluaranId AND detailpengeluaran.flag='0' AND komppengeluaran.flag='0' AND MONTH(tglKomp)=:month_now AND YEAR(tglKomp)=:year_now
                                     UNION
                                     SELECT SUM(jmlCicilan) AS Realisasi
                                     FROM komppengeluaran,pengeluaran,cicilan
-                                    WHERE komppengeluaran.userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND komppengeluaran.kompId = cicilan.kompId AND cicilan.flag='0' AND komppengeluaran.flag='0'
+                                    WHERE komppengeluaran.userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND komppengeluaran.kompId = cicilan.kompId AND cicilan.flag='0' AND komppengeluaran.flag='0' AND tglSelesai >= :date_now AND tglMulai <= :date_now
                                     ) t1");
         $stmt->bindparam(":userId",$userId);
+        $stmt->bindparam(":date_now",$date_now);
+        $stmt->bindparam(":month_now",$month_now);
+        $stmt->bindparam(":year_now",$year_now);
         $stmt->execute();
         $tot_peng = $stmt->fetch(PDO::FETCH_ASSOC);
         return $tot_peng;

@@ -6,6 +6,23 @@ include_once "classes/class.crud.pengeluaran.php";
 $pengeluaran = new Pengeluaran();
 include_once 'classes/class.crud.berita.php';
 $berita = new crud();
+
+if(isset($_GET['selected_month']) == "")
+    {
+        $date_now = date("Y-m-t");
+    }
+    elseif(empty($_GET['selected_month'])) 
+    { 
+      $date_now = date("Y-m-t");
+    }
+    elseif(isset($_GET['selected_month']))
+    {
+        $date_object = new DateTime("20-".$_GET['selected_month']);       
+        $date_now = $date_object->format("Y-m-t");
+    }
+
+    $month_now = substr($date_now,5,2);
+    $year_now = substr($date_now,0,4);
 ?>
 <link rel="stylesheet" href="style/css/homeberita.css" type="text/css"/>
     
@@ -21,7 +38,7 @@ $berita = new crud();
         <script type="text/javascript">
             $(document).ready(function() {               
 
-                $.getJSON('data_penghasilan.php', function(data) {
+                $.getJSON('data_penghasilan.php?selected_month=06-2017', function(data) {
                     var seriesOptions = [];
                     var seriesLabel = [];
                     var arrayLength = data.length;
@@ -74,7 +91,7 @@ $berita = new crud();
         <script type="text/javascript">
             $(document).ready(function() {               
 
-                $.getJSON('data_pengeluaran.php', function(data) {
+                $.getJSON('data_pengeluaran.php?selected_month=06-2017', function(data) {
                     var seriesOptions = [];
                     var seriesOptions2 = [];
                     var seriesLabel = [];
@@ -135,7 +152,7 @@ $berita = new crud();
         <script type="text/javascript">
             $(document).ready(function() {               
 
-                $.getJSON('data_pengeluaran_persen.php', function(data) {
+                $.getJSON('data_pengeluaran_persen.php?selected_month=06-2017', function(data) {
                     var seriesOptions = [];
                     var seriesOptions2 = [];
                     var seriesLabel = [];
@@ -225,7 +242,7 @@ $berita = new crud();
 		        	<div style="padding:1em">
 			        	<h3><strong>Penghasilan</strong></h3>
 			        	<?php
-			        	$laporan_pghs = $penghasilan->lap_penghasilan($_SESSION['user_session']);
+			        	$laporan_pghs = $penghasilan->lap_penghasilan($_SESSION['user_session'],$month_now,$year_now);
 			        	$total_pghs = 0;
 			        	for ($i = 0; $i < count($laporan_pghs); $i++) {
 						    echo '<h5 style="padding-left:4em">'.$laporan_pghs[$i][0].'  =  '.number_format($laporan_pghs[$i][1],0,',','.').'<h5>';
@@ -236,11 +253,11 @@ $berita = new crud();
 			        	
 			        	<h3><strong>Pengeluaran</strong></h3>
 			        	<?php
-			        	$laporan = $pengeluaran->lap_komp_pengeluaran($_SESSION['user_session']);
+			        	$laporan = $pengeluaran->lap_komp_pengeluaran($_SESSION['user_session'],$date_now,$month_now,$year_now);
 			        	$total_peng = 0;
 			        	for ($i = 0; $i < count($laporan); $i++) {
 						    echo '<h4 style="padding-left:2em"><strong>'.$laporan[$i][1].'</strong><h4>';
-						    $laporan_det = $pengeluaran->lap_detail_pengeluaran($_SESSION['user_session'],$laporan[$i][0]);
+						    $laporan_det = $pengeluaran->lap_detail_pengeluaran($_SESSION['user_session'],$laporan[$i][0],$date_now,$month_now,$year_now);
 
 						    for ($d = 0; $d < count($laporan_det); $d++) {
 						    	echo '<h5 style="padding-left:4em">'.$laporan_det[$d][2].'  =  '.number_format($laporan_det[$d][3],0,',','.').'<h5>';

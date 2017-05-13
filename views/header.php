@@ -31,8 +31,6 @@
     <script type="text/javascript" src="style/bootstrap/js/jquery-1.11.3-jquery.min.js"></script>
     <script src="style/bootstrap/js/bootstrap.min.js"></script>
     <!-- <link rel="stylesheet" href="style/css/jquery-ui.css"> -->
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="style/js/jquery-1.12.4.js"></script>
     <script src="style/js/jquery-ui.js"></script>
     <script>
@@ -81,7 +79,7 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
 
-            <li><a href="index.php">Dashboard</a></li>
+            <li><a href="index.php?selected_month=05-2017">Dashboard</a></li>
             <li><a href="view-penghasilan.php">Penghasilan</a></li>
             <li><a href="">Pengeluaran</a></li>
             <li><a href="view-cicilan.php">Cicilan</a></li>
