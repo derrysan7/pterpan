@@ -93,6 +93,9 @@ class Pengeluaran{
 
             if($this->cekPersen($userId,$tglKomp,$persenKomp)){
 
+
+//                $stmt = $this->db-prepare
+
                 $stmt = $this->db->prepare("INSERT INTO komppengeluaran(userId,namaKomp,tipePngl,tglKomp,persenKomp)
                   VALUES(:userId, :namaKomp,:tipePngl,:tglKomp,:persenKomp )");
                 $stmt->bindparam(":userId", $userId);
@@ -392,12 +395,12 @@ WHERE komppengeluaran.userId=:id
 
 
                 if($tipePngl=="detil"){
-                    $linkupdate="pengeluaran";
-                    $panelclr="primary";
+                    $link="pengeluaran";
+                    $linkanggaran="anggaran";
                 }else
                 {
-                    $linkupdate="cicilan";
-                    $panelclr="info";
+                    $link="cicilan";
+                    $linkanggaran="cicilan";
                 }
 
 
@@ -412,6 +415,8 @@ WHERE komppengeluaran.userId=:id
 
                 if($anggaranPngl>$anggaran){
                     $panelclr="danger";
+                }else{
+                    $panelclr="primary";
                 }
 
                 ?>
@@ -457,8 +462,8 @@ WHERE komppengeluaran.userId=:id
 
                         <div class="panel-footer">
                             <div align="center">
-                                <a href="view-anggaran.php?kom_id=<?php print($row['kompId']); ?>" class="btn btn-success btn-xs">Atur Anggaran</a>&nbsp;
-                                <a href="edit-<?php print $linkupdate ?>.php?edit_id=<?php print($row['kompId']); ?>" class="btn btn-warning btn-xs">Ubah</a>&nbsp;
+                                <a href="view-<?php print $linkanggaran ?>.php?kom_id=<?php print($row['kompId']); ?>" class="btn btn-success btn-xs">Atur Anggaran</a>&nbsp;
+                                <a href="edit-pengeluaran.php?edit_id=<?php print($row['kompId']); ?>" class="btn btn-warning btn-xs">Ubah</a>&nbsp;
                                 <a href="delete-pengeluaran.php?delete_id=<?php print($row['kompId']); ?>" class="btn btn-danger btn-xs">Hapus</a>
                             </div>
                         </div>
