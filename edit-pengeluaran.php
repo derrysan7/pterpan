@@ -106,13 +106,13 @@ if ($tipePngl=="cicilan"){
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <div class="col-md-4"></div>
-                        <div class="col-sm-8 input-group checkbox">
-                            <label><input name="tipePngl" type="checkbox" value=true <?php echo $tipe?> >
-                                Cicilan</label>
-                        </div>
-                    </div>
+<!--                    <div class="form-group">-->
+<!--                        <div class="col-md-4"></div>-->
+<!--                        <div class="col-sm-8 input-group checkbox">-->
+<!--                            <label><input name="tipePngl" type="checkbox" value=true --><?php //echo $tipe?><!-- >-->
+<!--                                Cicilan</label>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </fieldset>
 
                 <div class="form-group">
