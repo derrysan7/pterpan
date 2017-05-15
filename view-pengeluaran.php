@@ -55,7 +55,7 @@ if(isset($_POST['btn-periode'])){
             <div class="form form-horizontal">
                 <label class="col-md-1 control-label" for="periode">Periode</label>
                 <div class="col-md-2">
-                    <input class="form-control date-picker" name="periode" readonly required>
+                    <input class="form-control date-picker" name="periode" readonly required value="<?php $dtp=explode("-",$periode); $dtp=$dtp[1]."/".$dtp[0]; echo $dtp?>">
 
                 </div>
                 <button class="btn btn-info" type="submit" name="btn-periode">Submit</button>
@@ -92,7 +92,8 @@ AND komppengeluaran.kompId=pengeluaran.kompId
 AND komppengeluaran.kompId = cicilan.kompId 
 AND cicilan.flag='0' 
 AND komppengeluaran.flag='0' 
-AND tglSelesai >= '2017-09-15'
+AND tglSelesai >= '".$periode."'
+AND tglMulai <= '".$periode."'
 GROUP BY kompId";
         //        $query = "SELECT * FROM kompPengeluaran WHERE flag='0' AND MONTH(tglKomp) = MONTH(CURRENT_DATE) AND userId='".$userRow['userId']."'ORDER BY namaKomp ASC";
         $pengeluaran->dataview($query,$userRow['userId']);
