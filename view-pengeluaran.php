@@ -13,6 +13,19 @@ if (isset($_POST['btn-add'])){
 //        header("Location: index.php");
     }
 }
+if(isset($_GET['periode'])){
+    $periode = explode("/",$_GET['periode']);
+    $periode = $periode[0]."/01/".$periode[1];
+    $periode = date('Y-m-d',strtotime($periode));
+//    die(date('Y-m-d'));
+}else{
+    $periode = date('Y-m-d');
+//    die(date('Y-m-d'));
+}
+
+if(isset($_POST['btn-periode'])){
+    header("Location: view-pengeluaran.php?periode=".$_POST['periode']);
+}
 
 ?>
 
@@ -33,10 +46,23 @@ if (isset($_POST['btn-add'])){
         }
         ?>
 
+        <div class="clearfix"></div>
         <form method="post">
             <button class="btn btn-large btn-info" name="btn-add" type="submit"><i class="glyphicon glyphicon-plus"></i> &nbsp; Add Records </button>
 
+
+            <hr>
+            <div class="form form-horizontal">
+                <label class="col-md-1 control-label" for="periode">Periode</label>
+                <div class="col-md-2">
+                    <input class="form-control date-picker" name="periode" readonly required>
+
+                </div>
+                <button class="btn btn-info" type="submit" name="btn-periode">Submit</button>
+
+            </div>
         </form>
+
     </div>
 
     <div class="clearfix"></div><br />
@@ -45,14 +71,30 @@ if (isset($_POST['btn-add'])){
 
 
 
-            <h4>Sisa saldo Anda bulan ini =  <span style="color: #4bc32b;"><?php echo "Rp &nbsp;".number_format($pengeluaran->currentBalance($userRow['userId']),2,'.',','); ?></span></h4>
+        <h4>Sisa saldo Anda bulan ini =  <span style="color: #4bc32b;"><?php echo "Rp &nbsp;".number_format($pengeluaran->currentBalance($userRow['userId']),2,'.',','); ?></span></h4>
 
         <div class="clearfix"></div>
 
         <?php
-        $query = "SELECT * FROM kompPengeluaran WHERE flag='0' AND MONTH(tglKomp) = MONTH(CURRENT_DATE) AND userId='".$userRow['userId']."'ORDER BY namaKomp ASC";
-        $records_per_page=5;
-        $newquery = $pengeluaran->paging($query,$records_per_page);
+        $query = "SELECT komppengeluaran.kompId,namaKomp,persenKomp,tipePngl,anggaranPngl Anggaran
+FROM komppengeluaran,pengeluaran
+WHERE userId=".$userRow['userId']." 
+AND komppengeluaran.kompId=pengeluaran.kompId 
+AND komppengeluaran.flag='0'
+AND MONTH(komppengeluaran.tglKomp) = MONTH('".$periode."')
+AND YEAR(komppengeluaran.tglKomp) = YEAR('".$periode."')
+GROUP BY kompId
+UNION
+SELECT komppengeluaran.kompId,namaKomp,persenKomp,tipePngl,anggaranPngl Anggaran
+FROM komppengeluaran,pengeluaran,cicilan
+WHERE komppengeluaran.userId=".$userRow['userId']." 
+AND komppengeluaran.kompId=pengeluaran.kompId 
+AND komppengeluaran.kompId = cicilan.kompId 
+AND cicilan.flag='0' 
+AND komppengeluaran.flag='0' 
+AND tglSelesai >= '2017-09-15'
+GROUP BY kompId";
+        //        $query = "SELECT * FROM kompPengeluaran WHERE flag='0' AND MONTH(tglKomp) = MONTH(CURRENT_DATE) AND userId='".$userRow['userId']."'ORDER BY namaKomp ASC";
         $pengeluaran->dataview($query,$userRow['userId']);
         ?>
 
