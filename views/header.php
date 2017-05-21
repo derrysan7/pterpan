@@ -33,6 +33,8 @@
     <!-- <link rel="stylesheet" href="style/css/jquery-ui.css"> -->
     <script src="style/js/jquery-1.12.4.js"></script>
     <script src="style/js/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script>
     $( function() {
       $( "#datepicker" ).datepicker();
