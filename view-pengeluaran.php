@@ -73,31 +73,30 @@ if(isset($_POST['btn-periode'])){
 
         <h4>Sisa saldo Anda bulan ini =  <span style="color: #4bc32b;"><?php echo "Rp &nbsp;".number_format($pengeluaran->currentBalance($userRow['userId']),2,'.',','); ?></span></h4>
 
-        <div class="clearfix"></div>
-
         <?php
-        $query = "SELECT komppengeluaran.kompId,namaKomp,persenKomp,tipePngl,anggaranPngl Anggaran
-FROM komppengeluaran,pengeluaran
-WHERE userId=".$userRow['userId']." 
-AND komppengeluaran.kompId=pengeluaran.kompId 
-AND komppengeluaran.flag='0'
-AND MONTH(komppengeluaran.tglKomp) = MONTH('".$periode."')
-AND YEAR(komppengeluaran.tglKomp) = YEAR('".$periode."')
-GROUP BY kompId
-UNION
-SELECT komppengeluaran.kompId,namaKomp,persenKomp,tipePngl,anggaranPngl Anggaran
-FROM komppengeluaran,pengeluaran,cicilan
-WHERE komppengeluaran.userId=".$userRow['userId']." 
-AND komppengeluaran.kompId=pengeluaran.kompId 
-AND komppengeluaran.kompId = cicilan.kompId 
-AND cicilan.flag='0' 
-AND komppengeluaran.flag='0' 
-AND tglSelesai >= '".$periode."'
-AND tglMulai <= '".$periode."'
-GROUP BY kompId";
+//        $query = "SELECT komppengeluaran.kompId,namaKomp,persenKomp,tipePngl,anggaranPngl Anggaran
+//FROM komppengeluaran,pengeluaran
+//WHERE userId=".$userRow['userId']."
+//AND komppengeluaran.kompId=pengeluaran.kompId
+//AND komppengeluaran.flag='0'
+//AND MONTH(komppengeluaran.tglKomp) = MONTH('".$periode."')
+//AND YEAR(komppengeluaran.tglKomp) = YEAR('".$periode."')
+//GROUP BY kompId
+//UNION
+//SELECT komppengeluaran.kompId,namaKomp,persenKomp,tipePngl,anggaranPngl Anggaran
+//FROM komppengeluaran,pengeluaran,cicilan
+//WHERE komppengeluaran.userId=".$userRow['userId']."
+//AND komppengeluaran.kompId=pengeluaran.kompId
+//AND komppengeluaran.kompId = cicilan.kompId
+//AND cicilan.flag='0'
+//AND komppengeluaran.flag='0'
+//AND tglSelesai >= '".$periode."'
+//AND tglMulai <= '".$periode."'
+//GROUP BY kompId";
         //        $query = "SELECT * FROM kompPengeluaran WHERE flag='0' AND MONTH(tglKomp) = MONTH(CURRENT_DATE) AND userId='".$userRow['userId']."'ORDER BY namaKomp ASC";
-        $pengeluaran->dataview($query,$userRow['userId']);
+        $pengeluaran->dataview($periode,$userRow['userId']);
         ?>
+
 
 
 

@@ -376,11 +376,30 @@ WHERE komppengeluaran.userId=:id
 
     /* paging */
 
-    public function dataview($query,$userId)
+    public function dataview($periode,$userId)
     {
-        $stmt = $this->db->prepare($query);
-        $stmt->execute();
 
+        $stmt = $this->db->prepare("SELECT komppengeluaran.kompId,namaKomp,persenKomp,tipePngl,anggaranPngl Anggaran FROM komppengeluaran,pengeluaran
+WHERE userId='".$userId."'
+    AND komppengeluaran.kompId=pengeluaran.kompId
+    AND komppengeluaran.flag='0'
+    AND MONTH(komppengeluaran.tglKomp) = MONTH('".$periode."')
+AND YEAR(komppengeluaran.tglKomp) = YEAR('".$periode."')
+GROUP BY kompId
+UNION
+SELECT komppengeluaran.kompId,namaKomp,persenKomp,tipePngl,anggaranPngl Anggaran
+FROM komppengeluaran,pengeluaran,cicilan
+WHERE komppengeluaran.userId='".$userId."'
+    AND komppengeluaran.kompId=pengeluaran.kompId
+    AND komppengeluaran.kompId = cicilan.kompId
+    AND cicilan.flag='0'
+    AND komppengeluaran.flag='0'
+    AND tglSelesai >='".$periode."'
+    AND tglMulai <='".$periode."'
+GROUP BY kompId");
+        $stmt->bindparam(":periode",$periode);
+        $stmt->bindparam(":userId",$userId);
+        $stmt->execute();
 
 
         if($stmt->rowCount()>0)
