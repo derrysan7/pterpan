@@ -27,12 +27,12 @@ class crud
       $tanggalbaru = date_create($row['tanggaldib']);
     ?>
             <div class="panel panel-default">
-                <div class="panel-heading custom-berita-panel">
+                <div class="panel-heading custom-berita-panel" style="padding-bottom: 148px;">
                     <div>
-                    <a class="beritalinkcustom" href="detailberita.php?detail_id=<?php print($row['id']); ?>"><h2 style="font-size: 24px;"><?php print($row['judul']); ?></h2></a>
+                    <a class="beritalinkcustom" href="detailberita.php?detail_id=<?php print($row['id']); ?>"><h2 style="font-size: 24px;" ><?php print($row['judul']); ?></h2></a>
                     </div>
-                    <h5 style="font-size: 13px;"> By <?php print($row['namapen']); ?></h5>
-                    <h5 style="font-size: 13px;">Published <?php echo date_format($tanggalbaru,"d/m/Y H:i:s") ?></h5>
+                    <h5 style="font-size: 13px;color:#333;"> By <?php print($row['namapen']); ?></h5>
+                    <h5 style="font-size: 13px;color:#333;">Published <?php echo date_format($tanggalbaru,"d/m/Y H:i:s") ?></h5>
                 </div>
                 <div class="panel-body fixed-panel" >
                     <div class="container-fluid">

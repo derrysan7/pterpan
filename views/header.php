@@ -27,6 +27,8 @@
 <head>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
     <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="style/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <script type="text/javascript" src="style/bootstrap/js/jquery-1.11.3-jquery.min.js"></script>
     <script src="style/bootstrap/js/bootstrap.min.js"></script>
@@ -35,6 +37,7 @@
     <script src="style/js/jquery-ui.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="js/lumino.glyphs.js"></script>
     <script>
     $( function() {
       $( "#datepicker" ).datepicker();
@@ -67,33 +70,36 @@
 
 <body>
 <?php $date_header_dashboard = date("m-Y");?>
-<nav class="navbar navbar-default">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.php?selected_month=<?php echo $date_header_dashboard ?>">Program Peterpan</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-
-            <li><a href="index.php?selected_month=<?php echo $date_header_dashboard ?>">Dashboard</a></li>
-            <li><a href="view-penghasilan.php">Penghasilan</a></li>
-            <li><a href="">Pengeluaran</a></li>
-            <li><a href="view-cicilan.php">Cicilan</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-              
-                <li><a href="" style="display:<?php echo $userinfo ?>;"><span class="glyphicon glyphicon-user"></span>&nbsp;Hi' <?php echo $userRow['userEmail']; ?></a></li>
-                <li><a href="logout.php?logout=true" style="display:<?php echo $userinfo ?>;"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Sign Out</a></li>
-                <li><a href="login.php" style="display:<?php echo $signinbutton ?>;"><span class="glyphicon glyphicon-log-in"></span>&nbsp;Sign In</a></li>
-
-          </ul>
-        </div><!--/.nav-collapse -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.php?selected_month=<?php echo $date_header_dashboard ?>"><span>Keuangan</span>Pterpan</a>
+        <ul class="user-menu">
+          <li class="dropdown pull-right">
+            <a href="#" class="dropdown-toggle" style="display:<?php echo $userinfo ?>;" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> <?php echo $userRow['userEmail']; ?> <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+<!--              <li><a href="#"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Profile</a></li>
+              <li><a href="#"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Settings</a></li> -->
+              <li><a href="logout.php?logout=true" style="display:<?php echo $userinfo ?>;">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
       </div>
-    </nav>
+              
+    </div><!-- /.container-fluid -->
+  </nav>
+  <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+    <ul class="nav menu">
+      <li class="active"><a href="index.php?selected_month=<?php echo $date_header_dashboard ?>">Dashboard</a></li>
+      <li><a href="view-penghasilan.php">Penghasilan</a></li>
+      <li><a href="">Pengeluaran</a></li>
+    </ul>
+  </div><!--/.sidebar-->
+
 
