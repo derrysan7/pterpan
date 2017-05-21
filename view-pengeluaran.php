@@ -71,7 +71,7 @@ if(isset($_POST['btn-periode'])){
 
 
 
-        <h4>Sisa saldo Anda bulan ini =  <span style="color: #4bc32b;"><?php echo "Rp &nbsp;".number_format($pengeluaran->currentBalance($userRow['userId']),2,'.',','); ?></span></h4>
+        <h4>Sisa saldo Anda bulan ini =  <span style="color: #4bc32b;"><?php echo "Rp &nbsp;".number_format($pengeluaran->currentBalance($userRow['userId'],$periode),2,'.',','); ?></span></h4>
 
         <?php
 //        $query = "SELECT komppengeluaran.kompId,namaKomp,persenKomp,tipePngl,anggaranPngl Anggaran

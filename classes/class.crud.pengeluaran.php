@@ -160,12 +160,15 @@ class Pengeluaran{
         }
     }
 
-    public function currentBalance($userId){
+    public function currentBalance($userId,$periode){
         $stmt = $this->db->prepare("SELECT SUM(nominalPghs) uang FROM penghasilan
                                               WHERE MONTH(tglPghs)=MONTH(CURRENT_DATE ) AND 
                                               userId=:id AND 
-                                              flag='0'");
+                                              flag='0' AND 
+                                              MONTH(tglPghs)=MONTH(:periode) AND
+                                              YEAR(tglPghs)=YEAR(:periode)");
         $stmt->bindParam(":id",$userId);
+        $stmt->bindParam(":periode",$periode);
         $stmt->execute();
         $row=$stmt->fetch(PDO::FETCH_ASSOC);
 
