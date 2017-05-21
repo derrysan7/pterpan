@@ -78,9 +78,12 @@ class Penghasilan{
 
     /* paging */
 
-    public function getTotalPenghasilan($userId){
+    public function getTotalPenghasilan($userId,$periode){
         $stmt = $this->db->prepare("SELECT SUM(nominalPghs) total from penghasilan
-                                    WHERE userId=:id AND MONTH(tglPghs)=MONTH(CURRENT_DATE()) AND flag='0';");
+                                    WHERE userId=:id 
+                                    AND MONTH(tglPghs)=MONTH('".$periode."')
+                                    AND YEAR(tglPghs)=YEAR('".$periode."')
+                                    AND flag='0';");
         $stmt->bindParam(":id",$userId);
         $stmt->execute();
         $result=$stmt->fetch(PDO::FETCH_ASSOC);
