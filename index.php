@@ -1,5 +1,6 @@
 <?php
 include_once "classes/Penghasilan.php";
+$page=1;
 include_once "views/header.php";
 $penghasilan = new Penghasilan();
 include_once "classes/class.crud.pengeluaran.php";

@@ -96,9 +96,9 @@
   </nav>
   <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
     <ul class="nav menu">
-      <li class="active"><a href="index.php?selected_month=<?php echo $date_header_dashboard ?>">Dashboard</a></li>
-      <li><a href="view-penghasilan.php">Penghasilan</a></li>
-      <li><a href="">Pengeluaran</a></li>
+      <li class="<?php if ($page == '1'){ echo 'active'; } ?>"><a href="index.php?selected_month=<?php echo $date_header_dashboard ?>">Dashboard</a></li>
+      <li class="<?php if ($page == '2'){ echo 'active'; } ?>"><a href="view-penghasilan.php">Penghasilan</a></li>
+      <li class="<?php if ($page == '3'){ echo 'active'; } ?>"><a href="">Pengeluaran</a></li>
     </ul>
   </div><!--/.sidebar-->
 

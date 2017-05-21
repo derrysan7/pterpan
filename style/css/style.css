@@ -14,7 +14,7 @@ Version 1.0
 /*Global Styles*/
 
 body {
-    background: #f1f4f7;
+   /* background: #f1f4f7;*/
     padding-top: 50px;
     color: #5f6468;
 }
@@ -293,9 +293,6 @@ a.bg-danger:hover {
 
 /*Panels*/
 
-.panel {
-    border: 0;
-}
 
 .panel-heading {
     font-size: 18px;
