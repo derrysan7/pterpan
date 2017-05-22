@@ -24,7 +24,7 @@ if(isset($_POST['submit']))
     }
 }
 ?>
-
+    <link href="style/css/month-picker.css" rel="stylesheet" type="text/css">
     <div class="clearfix"></div>
 
 <?php

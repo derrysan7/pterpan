@@ -17,7 +17,7 @@ if(isset($_POST['btn-periode'])){
     header("Location: view-penghasilan.php?periode=".$_POST['periode']);
 }
 ?>
-    
+    <link href="style/css/month-picker.css" rel="stylesheet" type="text/css">
     <div class="clearfix"></div>
 
     <div class="container">

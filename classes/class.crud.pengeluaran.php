@@ -61,25 +61,27 @@ class Pengeluaran{
         }
     }
 
-    public function cekPersenEdit($userId,$tglKomp,$persenKomp,$kompId){
+    public function cekPersenEdit($userId,$tglKomp,$persenKomp,$kompId)
+    {
 
         $stmt = $this->db->prepare("SELECT SUM(persenKomp) total FROM komppengeluaran 
                                     WHERE MONTH(tglKomp)=MONTH(:tglKomp) AND
                                     userId=:userId AND
                                     flag='0' AND 
                                     kompId != :kompId");
-        $stmt->bindParam(":tglKomp",$tglKomp);
-        $stmt->bindParam(":userId",$userId);
-        $stmt->bindParam(":kompId",$kompId);
+        $stmt->bindParam(":tglKomp", $tglKomp);
+        $stmt->bindParam(":userId", $userId);
+        $stmt->bindParam(":kompId", $kompId);
         $stmt->execute();
-        if ($stmt->rowCount()>0){
-            $results=$stmt->fetch(PDO::FETCH_ASSOC);
-            if(($results['total'] + $persenKomp)>100){
+        if ($stmt->rowCount() > 0) {
+            $results = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (($results['total'] + $persenKomp) > 100) {
                 return false;
-            }else{
+            } else {
                 return true;
             }
-
+        }
+    }
     public function json_chart($userId,$date_now,$month_now,$year_now)
     {
         $stmt = $this->db->prepare("SELECT komppengeluaran.kompId,namaKomp,persenKomp,anggaranPngl Anggaran,SUM(jmlDtlPngl) Realisasi
@@ -177,10 +179,6 @@ class Pengeluaran{
         $stmt->execute();
         $tot_peng = $stmt->fetch(PDO::FETCH_ASSOC);
         return $tot_peng;
-    }
-
-    
-        }
     }
 
     public function create($userId,$namaKomp,$tipePngl,$tglKomp,$persenKomp){

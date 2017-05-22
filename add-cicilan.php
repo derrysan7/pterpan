@@ -1,5 +1,4 @@
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 <?php include_once 'views/header.php'; ?>
 <?php
 include_once 'classes/class.crud.cicilan.php';

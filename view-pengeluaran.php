@@ -28,7 +28,7 @@ if(isset($_POST['btn-periode'])){
 }
 
 ?>
-
+    <link href="style/css/month-picker.css" rel="stylesheet" type="text/css">
     <div class="clearfix"></div>
 
     <div class="container">
