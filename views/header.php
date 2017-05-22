@@ -29,11 +29,11 @@ else
     <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
     <link href="style/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <script type="text/javascript" src="style/bootstrap/js/jquery-1.11.3-jquery.min.js"></script>
-
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
     <script src="style/bootstrap/js/bootstrap.min.js"></script>
+
+<!--    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>-->
+<!--    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>-->
+
     <!-- <link rel="stylesheet" href="style/css/jquery-ui.css"> -->
     <script src="style/js/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -88,20 +88,19 @@ else
 
         </div>
         <div id="navbar" class="navbar-collapse collapse">
+<!--            <ul class="nav navbar-nav">-->
+<!---->
+<!--                <li><a href="index.php">Dashboard</a></li>-->
+<!--                <li><a href="view-penghasilan.php">Penghasilan</a></li>-->
+<!--                <li><a href="view-pengeluaran.php">Pengeluaran</a></li>-->
+<!--                <li><a href="struktur.php">Detail Laporan</a></li>-->
+<!--            </ul>-->
             <ul class="nav navbar-nav">
-
-                <li><a href="index.php">Dashboard</a></li>
-                <li><a href="view-penghasilan.php">Penghasilan</a></li>
-                <li><a href="view-pengeluaran.php">Pengeluaran</a></li>
-                <li><a href="struktur.php">Detail Laporan</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
 
 
             <li><a href="index.php?selected_month=<?php echo $date_header_dashboard ?>">Dashboard</a></li>
             <li><a href="view-penghasilan.php">Penghasilan</a></li>
-            <li><a href="">Pengeluaran</a></li>
-            <li><a href="view-cicilan.php">Cicilan</a></li>
+            <li><a href="view-pengeluaran.php">Pengeluaran</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
               
