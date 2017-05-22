@@ -1,5 +1,6 @@
 <?php
 require_once "classes/Penghasilan.php";
+include_once "views/header.php";
 $penghasilan = new Penghasilan();
 
 if(isset($_POST['submit']))
@@ -19,7 +20,7 @@ if(isset($_POST['submit']))
     }
 }
 ?>
-<?php include_once "views/header.php"; ?>
+
     <div class="clearfix"></div>
 
 <?php
@@ -48,7 +49,8 @@ else if(isset($_GET['failure']))
     <div class="clearfix"></div><br />
 
     <div class="container">
-
+        <h1>Tambah Penghasilan</h1>
+        <hr>
 
         <div class="col-md-6">
             <form class="form-horizontal" method="post">
