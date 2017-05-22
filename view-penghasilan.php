@@ -1,6 +1,6 @@
 <?php
 include_once "classes/Penghasilan.php";
-$page=3;
+$page=2;
 include_once "views/header.php";
 $penghasilan = new Penghasilan();
 
