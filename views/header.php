@@ -34,7 +34,6 @@
     <script src="style/bootstrap/js/bootstrap.min.js"></script>
     <!-- <link rel="stylesheet" href="style/css/jquery-ui.css"> -->
     <script src="style/js/jquery-1.12.4.js"></script>
-    <script src="style/js/jquery-ui.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="js/lumino.glyphs.js"></script>
@@ -98,7 +97,7 @@
     <ul class="nav menu">
       <li class="<?php if ($page == '1'){ echo 'active'; } ?>"><a href="index.php?selected_month=<?php echo $date_header_dashboard ?>"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>Dashboard</a></li>
       <li class="<?php if ($page == '2'){ echo 'active'; } ?>"><a href="view-penghasilan.php"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span>Penghasilan</a></li>
-      <li class="<?php if ($page == '3'){ echo 'active'; } ?>"><a href=""><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>Pengeluaran</a></li>
+      <li class="<?php if ($page == '3'){ echo 'active'; } ?>"><a href="view-pengeluaran.php"><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>Pengeluaran</a></li>
     </ul>
   </div><!--/.sidebar-->
 
