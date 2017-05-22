@@ -272,6 +272,10 @@ class Pengeluaran{
 
 
     public function currentBalance($userId,$periode){
+
+        $date_object = new DateTime($periode);
+        $periode = $date_object->format('Y-m-t');
+
         $stmt = $this->db->prepare("SELECT SUM(nominalPghs) uang FROM penghasilan
                                               WHERE 
                                               userId=:id AND 
@@ -283,20 +287,49 @@ class Pengeluaran{
         $stmt->execute();
         $row=$stmt->fetch(PDO::FETCH_ASSOC);
 
-        $stmt2 = $this->db->prepare("SELECT SUM(jmlDtlPngl) spent 
-FROM komppengeluaran,detailpengeluaran,pengeluaran 
-WHERE komppengeluaran.userId=:id
-	AND MONTH(komppengeluaran.tglKomp)=MONTH(:periode)
-	AND YEAR(komppengeluaran.tglKomp)=YEAR(:periode)
-    AND komppengeluaran.kompId = pengeluaran.kompId
-    AND pengeluaran.pengeluaranId = detailpengeluaran.pengeluaranId
-    AND detailpengeluaran.flag='0'");
-        $stmt2->bindParam(":id",$userId);
-        $stmt2->bindParam(":periode",$periode);
-        $stmt2->execute();
-        $row2=$stmt2->fetch(PDO::FETCH_ASSOC);
+//        $stmt2 = $this->db->prepare("SELECT SUM(jmlDtlPngl) spent
+//FROM komppengeluaran,detailpengeluaran,pengeluaran
+//WHERE komppengeluaran.userId=:id
+//	AND MONTH(komppengeluaran.tglKomp)=MONTH(:periode)
+//	AND YEAR(komppengeluaran.tglKomp)=YEAR(:periode)
+//    AND komppengeluaran.kompId = pengeluaran.kompId
+//    AND pengeluaran.pengeluaranId = detailpengeluaran.pengeluaranId
+//    AND detailpengeluaran.flag='0'");
+//        $stmt2->bindParam(":id",$userId);
+//        $stmt2->bindParam(":periode",$periode);
+//        $stmt2->execute();
+//        $row2=$stmt2->fetch(PDO::FETCH_ASSOC);
 
-        $result = $row['uang'] - $row2['spent'];
+        $stmt = $this->db->prepare("SELECT SUM(Realisasi) Total_Realisasi FROM(
+                                    SELECT SUM(jmlDtlPngl) AS Realisasi
+                                    FROM komppengeluaran,pengeluaran,detailpengeluaran
+                                    WHERE userId=:userId 
+                                      AND komppengeluaran.kompId=pengeluaran.kompId 
+                                      AND pengeluaran.pengeluaranId=detailpengeluaran.pengeluaranId 
+                                      AND detailpengeluaran.flag='0' 
+                                      AND komppengeluaran.flag='0' 
+                                      AND MONTH(tglKomp)= MONTH(:periodebulan) 
+                                      AND YEAR(tglKomp)= YEAR(:periodetahun)
+                                    UNION
+                                    SELECT SUM(jmlCicilan) AS Realisasi
+                                    FROM komppengeluaran,pengeluaran,cicilan
+                                    WHERE komppengeluaran.userId=:userId 
+                                      AND komppengeluaran.kompId=pengeluaran.kompId 
+                                      AND komppengeluaran.kompId = cicilan.kompId 
+                                      AND cicilan.flag='0' 
+                                      AND komppengeluaran.flag='0' 
+                                      AND tglSelesai >= :periode 
+                                      AND tglMulai <= :periode
+                                    ) t1");
+        $stmt->bindparam(":userId",$userId);
+        $stmt->bindparam(":periodebulan",$periode);
+        $stmt->bindparam(":periodetahun",$periode);
+        $stmt->bindparam(":periode",$periode);
+        $stmt->execute();
+        $tot_peng = $stmt->fetch(PDO::FETCH_ASSOC);
+
+
+        $result = $row['uang'] - $tot_peng['Total_Realisasi'];
         return $result;
     }
     public function getID($id){
