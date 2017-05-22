@@ -12,6 +12,7 @@ class Pengeluaran{
         $this->db = $db;
     }
 
+
     public function Pghsisset($userId){
         $stmt = $this->db->prepare("SELECT * FROM penghasilan WHERE flag='0' AND userId=:userId AND MONTH(tglPghs) = MONTH(CURRENT_DATE ())");
         $stmt->bindParam(":userId",$userId);
@@ -78,11 +79,113 @@ class Pengeluaran{
             }else{
                 return true;
             }
+
+    public function json_chart($userId,$date_now,$month_now,$year_now)
+    {
+        $stmt = $this->db->prepare("SELECT komppengeluaran.kompId,namaKomp,persenKomp,anggaranPngl Anggaran,SUM(jmlDtlPngl) Realisasi
+                                    FROM komppengeluaran,pengeluaran,detailpengeluaran
+                                    WHERE userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND pengeluaran.pengeluaranId=detailpengeluaran.pengeluaranId AND detailpengeluaran.flag='0' AND komppengeluaran.flag='0' AND MONTH(tglKomp)=:month_now AND YEAR(tglKomp)=:year_now
+                                    GROUP BY kompId
+                                    UNION
+                                    SELECT komppengeluaran.kompId,namaKomp,persenKomp,anggaranPngl Anggaran,SUM(jmlCicilan) Realisasi
+                                    FROM komppengeluaran,pengeluaran,cicilan
+                                    WHERE komppengeluaran.userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND komppengeluaran.kompId = cicilan.kompId AND cicilan.flag='0' AND komppengeluaran.flag='0' AND tglSelesai >= :date_now AND tglMulai <= :date_now
+                                    GROUP BY kompId");
+        $stmt->bindparam(":userId",$userId);
+        $stmt->bindparam(":date_now",$date_now);
+        $stmt->bindparam(":month_now",$month_now);
+        $stmt->bindparam(":year_now",$year_now);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_NUM);
+        return $results;
+    }
+
+    public function json_chart_persen($userId,$nomPenghasilan,$date_now,$month_now,$year_now)
+    {
+        $stmt = $this->db->prepare("SELECT komppengeluaran.kompId,namaKomp,persenKomp,FORMAT((anggaranPngl/:nomPenghasilan*100),0) Anggaran,FORMAT((SUM(jmlDtlPngl)/:nomPenghasilan*100),0) Realisasi
+                                    FROM komppengeluaran,pengeluaran,detailpengeluaran
+                                    WHERE userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND pengeluaran.pengeluaranId=detailpengeluaran.pengeluaranId AND detailpengeluaran.flag='0' AND komppengeluaran.flag='0' AND MONTH(tglKomp)=:month_now AND YEAR(tglKomp)=:year_now
+                                    GROUP BY kompId
+                                    UNION
+                                    SELECT komppengeluaran.kompId,namaKomp,persenKomp,FORMAT((anggaranPngl/:nomPenghasilan*100),0) Anggaran,FORMAT((SUM(jmlCicilan)/:nomPenghasilan*100),0) Realisasi
+                                    FROM komppengeluaran,pengeluaran,cicilan
+                                    WHERE komppengeluaran.userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND komppengeluaran.kompId = cicilan.kompId AND cicilan.flag='0' AND komppengeluaran.flag='0' AND tglSelesai >= :date_now AND tglMulai <= :date_now
+                                    GROUP BY kompId");
+        $stmt->bindparam(":userId",$userId);
+        $stmt->bindparam(":nomPenghasilan",$nomPenghasilan);
+        $stmt->bindparam(":date_now",$date_now);
+        $stmt->bindparam(":month_now",$month_now);
+        $stmt->bindparam(":year_now",$year_now);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_NUM);
+        return $results;
+    }
+
+    public function lap_komp_pengeluaran($userId,$date_now,$month_now,$year_now){
+        $stmt = $this->db->prepare("SELECT komppengeluaran.kompId,namaKomp
+                                    FROM komppengeluaran,pengeluaran,detailpengeluaran
+                                    WHERE userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND pengeluaran.pengeluaranId=detailpengeluaran.pengeluaranId AND detailpengeluaran.flag='0' AND komppengeluaran.flag='0' AND MONTH(tglKomp)=:month_now AND YEAR(tglKomp)=:year_now
+                                    GROUP BY kompId
+                                    UNION
+                                    SELECT komppengeluaran.kompId,namaKomp
+                                    FROM komppengeluaran,pengeluaran,cicilan
+                                    WHERE komppengeluaran.userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND komppengeluaran.kompId = cicilan.kompId AND cicilan.flag='0' AND komppengeluaran.flag='0' AND tglSelesai >= :date_now AND tglMulai <= :date_now
+                                    GROUP BY kompId
+                                    ORDER BY kompId");
+        $stmt->bindparam(":userId",$userId);
+        $stmt->bindparam(":date_now",$date_now);
+        $stmt->bindparam(":month_now",$month_now);
+        $stmt->bindparam(":year_now",$year_now);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_NUM);
+        return $results;
+    }
+    public function lap_detail_pengeluaran($userId,$kompId,$date_now,$month_now,$year_now){
+        $stmt = $this->db->prepare("SELECT komppengeluaran.kompId,namaKomp,namaDtlPngl Nama_Detail,jmlDtlPngl Realisasi
+                                    FROM komppengeluaran,pengeluaran,detailpengeluaran
+                                    WHERE userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND pengeluaran.pengeluaranId=detailpengeluaran.pengeluaranId AND detailpengeluaran.flag='0' AND komppengeluaran.flag='0' AND komppengeluaran.kompId=:kompId AND MONTH(tglKomp)=:month_now AND YEAR(tglKomp)=:year_now
+                                    UNION
+                                    SELECT komppengeluaran.kompId,namaKomp,namaCicilan Nama_Detail,jmlCicilan Realisasi
+                                    FROM komppengeluaran,pengeluaran,cicilan
+                                    WHERE komppengeluaran.userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND komppengeluaran.kompId = cicilan.kompId AND cicilan.flag='0' AND komppengeluaran.flag='0' AND komppengeluaran.kompId=:kompId AND tglSelesai >= :date_now AND tglMulai <= :date_now
+                                    ORDER BY kompId");
+        $stmt->bindparam(":userId",$userId);
+        $stmt->bindparam(":kompId",$kompId);
+        $stmt->bindparam(":date_now",$date_now);
+        $stmt->bindparam(":month_now",$month_now);
+        $stmt->bindparam(":year_now",$year_now);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_NUM);
+        return $results;
+    }
+
+    public function tot_pengeluaran($userId,$date_now,$month_now,$year_now)
+    {
+        $stmt = $this->db->prepare("SELECT SUM(Realisasi) Total_Realisasi FROM(
+                                    SELECT SUM(jmlDtlPngl) AS Realisasi
+                                    FROM komppengeluaran,pengeluaran,detailpengeluaran
+                                    WHERE userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND pengeluaran.pengeluaranId=detailpengeluaran.pengeluaranId AND detailpengeluaran.flag='0' AND komppengeluaran.flag='0' AND MONTH(tglKomp)=:month_now AND YEAR(tglKomp)=:year_now
+                                    UNION
+                                    SELECT SUM(jmlCicilan) AS Realisasi
+                                    FROM komppengeluaran,pengeluaran,cicilan
+                                    WHERE komppengeluaran.userId=:userId AND komppengeluaran.kompId=pengeluaran.kompId AND komppengeluaran.kompId = cicilan.kompId AND cicilan.flag='0' AND komppengeluaran.flag='0' AND tglSelesai >= :date_now AND tglMulai <= :date_now
+                                    ) t1");
+        $stmt->bindparam(":userId",$userId);
+        $stmt->bindparam(":date_now",$date_now);
+        $stmt->bindparam(":month_now",$month_now);
+        $stmt->bindparam(":year_now",$year_now);
+        $stmt->execute();
+        $tot_peng = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $tot_peng;
+    }
+
+    
         }
     }
 
     public function create($userId,$namaKomp,$tipePngl,$tglKomp,$persenKomp){
         try{
+
 
 
             if ($tipePngl=="true"){
@@ -96,13 +199,16 @@ class Pengeluaran{
 
 //                $stmt = $this->db-prepare
 
+
                 $stmt = $this->db->prepare("INSERT INTO komppengeluaran(userId,namaKomp,tipePngl,tglKomp,persenKomp)
                   VALUES(:userId, :namaKomp,:tipePngl,:tglKomp,:persenKomp )");
                 $stmt->bindparam(":userId", $userId);
+
                 $stmt->bindparam(":namaKomp", $namaKomp);
                 $stmt->bindparam(":tipePngl", $tipe);
                 $stmt->bindparam(":tglKomp", $tglKomp);
                 $stmt->bindparam(":persenKomp", $persenKomp);
+
                 $stmt->execute();
 
                 $getKomp = $this->db->prepare("SELECT kompId,persenKomp FROM komppengeluaran ORDER BY kompId DESC LIMIT 1");
@@ -110,6 +216,7 @@ class Pengeluaran{
                 $currentKomp = $getKomp->fetch(PDO::FETCH_ASSOC);
 
                 $getPenghasilan = $this->db->prepare("SELECT SUM(nominalPghs) total FROM penghasilan WHERE flag='0' AND userId = :userId AND MONTH(tglPghs)=MONTH(CURRENT_DATE()) AND flag='0'");
+
                 $getPenghasilan->bindparam(":userId",$userId);
                 $getPenghasilan->execute();
                 $currentPenghasilan = $getPenghasilan->fetch(PDO::FETCH_ASSOC);
@@ -122,6 +229,7 @@ class Pengeluaran{
                 $stmt2->bindparam(":anggaranPngl", $anggaranPngl);
                 $stmt2->execute();
 
+
                 return true;
 
             }else{
@@ -129,12 +237,15 @@ class Pengeluaran{
             }
 
 
+
+      
         }
         catch(PDOException $e){
             echo $e->getMessage();
             return false;
         }
     }
+
 
     public function createDetail($userId,$pengeluaranId,$namaDtlPngl,$jmlDtlPngl,$tglDtlPngl)
     {
@@ -153,12 +264,14 @@ class Pengeluaran{
             }else{
                 return false;
             }
+
         }
         catch(PDOException $e){
             echo $e->getMessage();
             return false;
         }
     }
+
 
     public function currentBalance($userId,$periode){
         $stmt = $this->db->prepare("SELECT SUM(nominalPghs) uang FROM penghasilan
@@ -188,7 +301,6 @@ WHERE komppengeluaran.userId=:id
         $result = $row['uang'] - $row2['spent'];
         return $result;
     }
-
     public function getID($id){
         $stmt = $this->db->prepare("SELECT * FROM komppengeluaran WHERE kompId=:id");
         $stmt->execute(array(":id"=>$id));
@@ -233,6 +345,7 @@ WHERE komppengeluaran.userId=:id
                                       WHERE komppengeluaran.kompId=pengeluaran.kompId AND 
                                       pengeluaran.pengeluaranId=detailpengeluaran.pengeluaranId AND 
                                       detailpengeluaran.detailPnglId=:id");
+
         $stmt->bindParam(":id",$id);
         $stmt->execute(array(":id"=>$id));
         $editRow=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -242,6 +355,7 @@ WHERE komppengeluaran.userId=:id
             return false;
         }
     }
+
 
     public function update($userId,$id,$namaKomp,$tipePngl,$tglKomp,$persenKomp){
         try{
@@ -268,6 +382,7 @@ WHERE komppengeluaran.userId=:id
             }else{
                 return false;
             }
+
         }
         catch(PDOException $e){
             echo $e->getMessage();
@@ -291,6 +406,7 @@ WHERE komppengeluaran.userId=:id
         }
     }
 
+
     public function updatedetail($userId,$id,$namaDetailPngl,$jmlDtlPngl,$tglDtlPngl){
         try{
             $getPenghasilan = $this->db->prepare("SELECT SUM(nominalPghs) total FROM penghasilan WHERE flag='0' AND userId = :userId AND MONTH(tglPghs)=MONTH(CURRENT_DATE()) AND flag='0'");
@@ -312,6 +428,7 @@ WHERE komppengeluaran.userId=:id
             }else{
                 return false;
             }
+
         }
         catch(PDOException $e){
             echo $e->getMessage();
@@ -324,6 +441,7 @@ WHERE komppengeluaran.userId=:id
     {
         $flag = '1';
         try{
+
             $stmt = $this->db->prepare("SELECT * FROM pengeluaran , komppengeluaran , detailpengeluaran 
                                       WHERE komppengeluaran.kompId=:id AND
                                        pengeluaran.kompId=:id AND
@@ -381,6 +499,7 @@ WHERE komppengeluaran.userId=:id
 
     /* paging */
 
+
     public function dataview($periode,$userId)
     {
 
@@ -405,6 +524,7 @@ GROUP BY kompId");
         $stmt->bindparam(":periode",$periode);
         $stmt->bindparam(":userId",$userId);
         $stmt->execute();
+
 
 
         if($stmt->rowCount()>0)
@@ -453,6 +573,7 @@ GROUP BY kompId");
                                 <?php print(strtoupper($row['namaKomp'])); ?>
                             </div>
                             <div class="col-md-4" style="text-align: right;">
+
                                 <strong><?php print($row['persenKomp']."%");  ?></strong>
                             </div>
                             <!--                            </div>-->
@@ -477,18 +598,18 @@ GROUP BY kompId");
                                 }else{
                                     echo "-";
                                 }
-
-
                                 ?>
                             </div>
 
                         </div>
+
 
                         <div class="panel-footer">
                             <div align="center">
                                 <a href="view-<?php print $linkanggaran ?>.php?kom_id=<?php print($row['kompId']); ?>" class="btn btn-success btn-xs">Atur Anggaran</a>&nbsp;
                                 <a href="edit-pengeluaran.php?edit_id=<?php print($row['kompId']); ?>" class="btn btn-warning btn-xs">Ubah</a>&nbsp;
                                 <a href="delete-pengeluaran.php?delete_id=<?php print($row['kompId']); ?>" class="btn btn-danger btn-xs">Hapus</a>
+
                             </div>
                         </div>
                     </div>
@@ -608,11 +729,14 @@ GROUP BY kompId");
     {
         $stmt = $this->db->prepare($query);
         $stmt->execute();
+
         $counter = 0;
+
         if($stmt->rowCount()>0)
         {
             while($row=$stmt->fetch(PDO::FETCH_ASSOC))
             {
+
                 $counter++;
                 ?>
 
@@ -627,6 +751,7 @@ GROUP BY kompId");
                     </td>
                     <td align="center"><a href="delete-detail.php?delete_id=<?php print($row['detailPnglId']); ?>"><i class="glyphicon glyphicon-remove-circle"></i></a></td>
                 </tr>
+
 
 
                 <?php

@@ -17,12 +17,14 @@ if(isset($_POST['btn-periode'])){
     header("Location: view-penghasilan.php?periode=".$_POST['periode']);
 }
 ?>
-
+    
     <div class="clearfix"></div>
 
     <div class="container">
+
         <h1>Daftar Penghasilan</h1>
         <hr>
+
         <a href="add-penghasilan.php" class="btn btn-large btn-info"><i class="glyphicon glyphicon-plus"></i> &nbsp; Add Records</a>
         <hr>
         <form method="post">
@@ -50,11 +52,13 @@ if(isset($_POST['btn-periode'])){
                 <th colspan="2" align="center">Actions</th>
             </tr>
             <?php
+
             $query = "SELECT * FROM penghasilan WHERE flag='0' AND 
                         MONTH(tglPghs)=MONTH('".$periode."') AND
                         YEAR(tglPghs)=YEAR('".$periode."') AND
                         userId='".$userRow['userId']."'
                         ORDER BY tglPghs DESC";
+
             $records_per_page=5;
             $newquery = $penghasilan->paging($query,$records_per_page);
             $penghasilan->dataview($newquery);

@@ -12,6 +12,51 @@ class crud
     $db = $database->dbConnection();
     $this->db = $db;
  }
+
+ public function dataviewhomeberita($month_now,$year_now)
+ {
+  $stmt = $this->db->prepare("SELECT * FROM berita WHERE MONTH(tanggaldib)=:month_now AND YEAR(tanggaldib)=:year_now ORDER BY tanggaldib DESC");
+  $stmt->bindparam(":month_now", $month_now);
+  $stmt->bindparam(":year_now", $year_now);
+  $stmt->execute();
+ 
+  if($stmt->rowCount()>0)
+  {
+   while($row=$stmt->fetch(PDO::FETCH_ASSOC))
+   {
+      $tanggalbaru = date_create($row['tanggaldib']);
+    ?>
+            <div class="panel panel-default">
+                <div class="panel-heading custom-berita-panel">
+                    <div>
+                    <a class="beritalinkcustom" href="detailberita.php?detail_id=<?php print($row['id']); ?>"><h2 style="font-size: 24px;"><?php print($row['judul']); ?></h2></a>
+                    </div>
+                    <h5 style="font-size: 13px;"> By <?php print($row['namapen']); ?></h5>
+                    <h5 style="font-size: 13px;">Published <?php echo date_format($tanggalbaru,"d/m/Y H:i:s") ?></h5>
+                </div>
+                <div class="panel-body fixed-panel" >
+                    <div class="container-fluid">
+                        <div class="row">
+                          <div class="col-md-3">
+                                <img class="imgberitacustom" src="user_images_berita/<?php echo ($row['gambar']) ?>" style="" />
+                          </div>
+                          <div class="col-md-9 module fadecustom"><p> <?php print($row['deskripsi']); ?></p>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <?php
+   }
+  }
+  else
+  {
+   ?>
+            
+            <p>Nothing here...</p>
+            <?php
+  } 
+ }
  
  public function create($buserid,$bjudul,$bdeskripsi,$userpic,$bnamapen)
  {
@@ -99,198 +144,6 @@ class crud
                 </td>
                 <td align="center">
                 <a href="delete-berita.php?delete_id=<?php print($row['id']); ?>"><i class="glyphicon glyphicon-remove-circle"></i></a>
-                </td>
-                </tr>
-                <?php
-   }
-  }
-  else
-  {
-   ?>
-            <tr>
-            <td>Nothing here...</td>
-            </tr>
-            <?php
-  }
-  
- }
-
- public function create_carousel($bjudul,$bdeskripsi,$userpic)
- {
-  try
-  {
-   $stmt = $this->db->prepare("INSERT INTO berita_carousel(judul,deskripsi,gambar) 
-                                                   VALUES(:bjudul,:bdeskripsi,:bgambar)");
-   $stmt->bindparam(":bjudul", $bjudul);
-   $stmt->bindparam(":bdeskripsi", $bdeskripsi);
-   $stmt->bindparam(":bgambar", $userpic);
-   $stmt->execute();
-   return true;
-  }
-  catch(PDOException $e)
-  {
-   echo $e->getMessage(); 
-   return false;
-  }
-  
- }
- 
- public function getID_carousel($id)
- {
-  $stmt = $this->db->prepare("SELECT * FROM berita_carousel WHERE id=:id");
-  $stmt->execute(array(":id"=>$id));
-  $editRow=$stmt->fetch(PDO::FETCH_ASSOC);
-  return $editRow;
- }
- 
- public function update_carousel($id,$bjudul,$bdeskripsi,$userpic)
- {
-  try
-  {
-   $stmt=$this->db->prepare("UPDATE berita_carousel SET judul=:bjudul,  
-                                              deskripsi=:bdeskripsi,
-                                              gambar=:bgambar
-             WHERE id=:id ");
-   $stmt->bindparam(":id",$id);
-   $stmt->bindparam(":bjudul", $bjudul);
-   $stmt->bindparam(":bdeskripsi", $bdeskripsi);
-   $stmt->bindparam(":bgambar", $userpic);
-   $stmt->execute();
-   
-   return true; 
-  }
-  catch(PDOException $e)
-  {
-   echo $e->getMessage(); 
-   return false;
-  }
- }
- 
- public function delete_carousel($id)
- {
-  $stmt = $this->db->prepare("DELETE FROM berita_carousel WHERE id=:id");
-  $stmt->bindparam(":id",$id);
-  $stmt->execute();
-  return true;
- }
- 
- /* paging */
- 
- public function dataview_carousel($query)
- {
-  $stmt = $this->db->prepare($query);
-  $stmt->execute();
- 
-  if($stmt->rowCount()>0)
-  {
-   while($row=$stmt->fetch(PDO::FETCH_ASSOC))
-   {
-    
-    ?>
-                <tr>
-                <td><?php print($row['id']); ?></td>
-                <td><?php print($row['judul']); ?></td>
-                <td><?php print($row['deskripsi']); ?></td>
-                <td><?php print($row['gambar']); ?></td>
-                <td align="center">
-                <a href="edit-berita-carousel.php?edit_id=<?php print($row['id']); ?>"><i class="glyphicon glyphicon-edit"></i></a>
-                </td>
-                <td align="center">
-                <a href="delete-berita-carousel.php?delete_id=<?php print($row['id']); ?>"><i class="glyphicon glyphicon-remove-circle"></i></a>
-                </td>
-                </tr>
-                <?php
-   }
-  }
-  else
-  {
-   ?>
-            <tr>
-            <td>Nothing here...</td>
-            </tr>
-            <?php
-  }
-  
- }
-
-  public function create_sidelink($burl,$userpic)
- {
-  try
-  {
-   $stmt = $this->db->prepare("INSERT INTO berita_sidelink(url,gambar) 
-                                                   VALUES(:burl,:bgambar)");
-   $stmt->bindparam(":burl", $burl);
-   $stmt->bindparam(":bgambar", $userpic);
-   $stmt->execute();
-   return true;
-  }
-  catch(PDOException $e)
-  {
-   echo $e->getMessage(); 
-   return false;
-  }
-  
- }
- 
- public function getID_sidelink($id)
- {
-  $stmt = $this->db->prepare("SELECT * FROM berita_sidelink WHERE id=:id");
-  $stmt->execute(array(":id"=>$id));
-  $editRow=$stmt->fetch(PDO::FETCH_ASSOC);
-  return $editRow;
- }
- 
- public function update_sidelink($id,$burl,$userpic)
- {
-  try
-  {
-   $stmt=$this->db->prepare("UPDATE berita_sidelink SET url=:burl,  
-                                              gambar=:bgambar
-             WHERE id=:id ");
-   $stmt->bindparam(":id",$id);
-   $stmt->bindparam(":burl", $burl);
-   $stmt->bindparam(":bgambar", $userpic);
-   $stmt->execute();
-   
-   return true; 
-  }
-  catch(PDOException $e)
-  {
-   echo $e->getMessage(); 
-   return false;
-  }
- }
- 
- public function delete_sidelink($id)
- {
-  $stmt = $this->db->prepare("DELETE FROM berita_sidelink WHERE id=:id");
-  $stmt->bindparam(":id",$id);
-  $stmt->execute();
-  return true;
- }
- 
- /* paging */
- 
- public function dataview_sidelink($query)
- {
-  $stmt = $this->db->prepare($query);
-  $stmt->execute();
- 
-  if($stmt->rowCount()>0)
-  {
-   while($row=$stmt->fetch(PDO::FETCH_ASSOC))
-   {
-    
-    ?>
-                <tr>
-                <td><?php print($row['id']); ?></td>
-                <td><?php print($row['url']); ?></td>
-                <td><?php print($row['gambar']); ?></td>
-                <td align="center">
-                <a href="edit-berita-sidelink.php?edit_id=<?php print($row['id']); ?>"><i class="glyphicon glyphicon-edit"></i></a>
-                </td>
-                <td align="center">
-                <a href="delete-berita-sidelink.php?delete_id=<?php print($row['id']); ?>"><i class="glyphicon glyphicon-remove-circle"></i></a>
                 </td>
                 </tr>
                 <?php

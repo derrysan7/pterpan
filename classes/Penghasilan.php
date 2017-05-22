@@ -13,6 +13,38 @@ class Penghasilan{
         $this->db = $db;
     }
 
+    public function tot_penghasilan($userId,$month_now,$year_now)
+    {
+        $stmt = $this->db->prepare("SELECT SUM(nominalPghs) nomPenghasilan FROM penghasilan WHERE userId=:userId AND flag='0' AND MONTH(tglPghs)=:month_now AND YEAR(tglPghs)=:year_now");
+        $stmt->bindparam(":userId",$userId);
+        $stmt->bindparam(":month_now",$month_now);
+        $stmt->bindparam(":year_now",$year_now);
+        $stmt->execute();
+        $tot_peng = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $tot_peng;
+    }
+
+    public function lap_penghasilan($userId,$month_now,$year_now){
+        $stmt = $this->db->prepare("SELECT sumberPghs,nominalPghs FROM penghasilan WHERE userId=:userId AND flag='0' AND MONTH(tglPghs)=:month_now AND YEAR(tglPghs)=:year_now");
+        $stmt->bindparam(":userId",$userId);
+        $stmt->bindparam(":month_now",$month_now);
+        $stmt->bindparam(":year_now",$year_now);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_NUM);
+        return $results;
+    }
+
+    public function json_chart($userId,$month_now,$year_now)
+    {
+        $stmt = $this->db->prepare("SELECT sumberPghs,nominalPghs FROM penghasilan WHERE flag='0' AND userId=:userId AND MONTH(tglPghs)=:month_now AND YEAR(tglPghs)=:year_now");
+        $stmt->bindparam(":userId",$userId);
+        $stmt->bindparam(":month_now",$month_now);
+        $stmt->bindparam(":year_now",$year_now);
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_NUM);
+        return $results;
+    }
+
     public function create($userId,$sumberPghs, $tglPghs, $nominalPghs){
         try{
             $stmt = $this->db->prepare("INSERT INTO penghasilan(userId,sumberPghs,tglPghs,nominalPghs)

@@ -168,17 +168,17 @@ if(isset($_POST['btn-save']))
 
           <div class="form-group">
             <h5>No. Handphone</h5>
-            <input type='number' onkeypress="return isNumberKey(event)" name='txt_unohp' class='form-control' min="0" max="99999999999999999999" value="<?php if(isset($error)){echo $unohp;}?>" required>
+            <input type='text' onkeypress="return isNumberKey(event)" name='txt_unohp' class='form-control' maxlength="20" value="<?php if(isset($error)){echo $unohp;}?>" required>
           </div>
 
           <div class="form-group">
             <h5>No. NPWP</h5>
-            <input type='number' onkeypress="return isNumberKey(event)" name='txt_unpwp' class='form-control' min="0" max="999999999999999" value="<?php if(isset($error)){echo $unpwp;}?>" required>
+            <input type='text' onkeypress="return isNumberKey(event)" name='txt_unpwp' class='form-control' maxlength="15" value="<?php if(isset($error)){echo $unpwp;}?>" required>
           </div>
 
           <div class="form-group">
             <h5>No. KTP</h5>
-            <input type='number' onkeypress="return isNumberKey(event)" name='txt_uktp' class='form-control' min="0" max="99999999999999999" value="<?php if(isset($error)){echo $uktp;}?>" required>
+            <input type='text' onkeypress="return isNumberKey(event)" name='txt_uktp' class='form-control' maxlength="17" value="<?php if(isset($error)){echo $uktp;}?>" required>
           </div>
 
           <div class="form-group">

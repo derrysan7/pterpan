@@ -2,10 +2,10 @@
 session_start();
 require_once("classes/class.user.php");
 $login = new USER();
-
+$date_index_login = date("m-Y");
 if($login->is_loggedin()!="")
 {
-	$login->redirect('index.php');
+	$login->redirect("index.php?selected_month=".$date_index_login);
 }
 
 if(isset($_POST['btn-login']))

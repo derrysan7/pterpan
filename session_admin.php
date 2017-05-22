@@ -14,5 +14,6 @@
 
       if(!$session->is_loggedin() or $userRow['NamaPermission'] != "isAdmin")
       {
-      	$session->redirect('index.php');
+      	$date_index_login = date("m-Y");
+      	$session->redirect("index.php?selected_month=".$date_index_login);
       } 

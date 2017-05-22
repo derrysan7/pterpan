@@ -208,7 +208,6 @@ class USER
 		                <td><?php print($row['status']); ?></td>
 		                <td><?php print($row['jumlah_tang']); ?></td>
 		                <td align="center">
-		                <!--<a href="?user_id=<?php print($row['userId']); ?>" type="submit" class="btn btn-primary btn-block <?php echo $buttonstatus; ?>" name="btn-verify" role="button"><?php echo $buttontext; ?></a>-->
 		                <button type="submit" class="btn btn-primary btn-block <?php echo $buttonstatus; ?>" value="<?php echo $row['userId']; ?>" name="btn-verify"><?php echo $buttontext; ?></button>
 		                </td>
 		                </tr>

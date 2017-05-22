@@ -68,11 +68,26 @@ if(isset($_POST['btn-update']))
         exit("Edit Error! Wrong Author");
     }
 }
-
-if(isset($_GET['edit_id']))
+if(isset($_GET['edit_id']) == "")
 {
-	$id = $_GET['edit_id'];
-	extract($crud->getID($id)); 
+    exit("Page not Found");
+}
+elseif(empty($_GET['edit_id'])) 
+{ 
+  exit("Page not Found");
+}
+elseif(isset($_GET['edit_id']))
+{
+    $id = $_GET['edit_id'];
+    extract($crud->getID($id)); 
+    if ($judul === NULL)
+    {
+        exit("Page not Found");
+    } 
+    elseif ($userId != $userRow['userId'])
+    {
+        exit("Page not Found");
+    }
 }
 
 ?>
@@ -106,13 +121,13 @@ if(isset($_GET['edit_id']))
   
      <form method="post" enctype="multipart/form-data"> 
 
-            <div class="col-xs-8">
+            <div class="col-md-8">
                 <label>Gambar (JPEG, JPG, PNG, GIF)</label>
                 <p><img src="user_images_berita/<?php echo $gambar; ?>" height="150" width="150" /></p>          
                 <input class="input-group" type="file" name="user_image" accept="image/*" />
             </div>
 
-            <div class="col-xs-8">
+            <div class="col-md-8">
                 <label>Judul</label>          
                 <input type='text' name='txt_judul' class='form-control' value="<?php echo $judul ?>" maxlength="80" required>
             </div>
@@ -123,12 +138,12 @@ if(isset($_GET['edit_id']))
             </div>
             
 
-            <div class="col-xs-8" style="display: none;">
+            <div class="col-md-8" style="display: none;">
                 <br>
                 <input type='hidden' name='txt_namapen' class='form-control' value="<?php echo $namapen ?>" readonly>
             </div>
             <br>
-            <div class="col-xs-8">
+            <div class="col-md-8">
                 <button type="submit" class="btn btn-primary" name="btn-update">
                 <span class="glyphicon glyphicon-edit"></span>  Update this Record
                 </button>

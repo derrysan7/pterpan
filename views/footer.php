@@ -1,5 +1,5 @@
 <footer>
-  <div class="col-md-12">
+  <div class="col-md-12" style="padding-bottom: 20px;">
     <hr>
     ©<?php echo date("Y")." Derry-Edwin"; ?>
   </div>

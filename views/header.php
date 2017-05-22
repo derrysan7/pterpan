@@ -21,8 +21,6 @@ else
 }
 
 
-
-
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -31,21 +29,42 @@ else
     <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
     <link href="style/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <script type="text/javascript" src="style/bootstrap/js/jquery-1.11.3-jquery.min.js"></script>
-    <link href="style/css/font-face.css" rel="stylesheet" type="text/css">
+
     <link href="style/css/month-picker.css" rel="stylesheet" type="text/css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
-    <link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
-    <script src="js/tinymce/tinymce.min.js"></script>
-    <script>tinymce.init({ selector:'textarea',
-            plugins: "table advlist link image",
-            setup: function (editor) {
-                editor.on('change', function () {
-                    editor.save();
-                });
-            }
+    <script src="style/bootstrap/js/bootstrap.min.js"></script>
+    <!-- <link rel="stylesheet" href="style/css/jquery-ui.css"> -->
+    <script src="style/js/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script>
+    $( function() {
+      $( "#datepicker" ).datepicker();
+    } );
+    $( function() {
+      $( "#datepicker2" ).datepicker();
+    } );
+    </script>
 
-        });</script>
+    <script src="js/highcharts.js"></script>
+
+    <script>
+        function isNumberKey(evt){
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+
+        function isNumberKey2(evt){
+            var charCode = (evt.which) ? evt.which : event.Keycode
+            if (charCode == 32)
+              return false;
+            return true;
+        }
+    </script>
+
     <link rel="stylesheet" href="style/css/style.css" type="text/css"  />
     <script type="text/javascript" src="style/jquery/relCopy.jquery.js"></script>
     <script type="text/javascript" src="style/js/app.js"></script>
@@ -54,17 +73,19 @@ else
 </head>
 
 <body>
-
+<?php $date_header_dashboard = date("m-Y");?>
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="index.php">Program Peterpan</a>
+
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.php?selected_month=<?php echo $date_header_dashboard ?>">Program Peterpan</a>
+
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -75,6 +96,15 @@ else
                 <li><a href="struktur.php">Detail Laporan</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+
+
+            <li><a href="index.php?selected_month=<?php echo $date_header_dashboard ?>">Dashboard</a></li>
+            <li><a href="view-penghasilan.php">Penghasilan</a></li>
+            <li><a href="">Pengeluaran</a></li>
+            <li><a href="view-cicilan.php">Cicilan</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+              
 
                 <li><a href="" style="display:<?php echo $userinfo ?>;"><span class="glyphicon glyphicon-user"></span>&nbsp;Hi' <?php echo $userRow['userEmail']; ?></a></li>
                 <li><a href="logout.php?logout=true" style="display:<?php echo $userinfo ?>;"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Sign Out</a></li>
