@@ -1,5 +1,6 @@
 <?php
 require_once "classes/class.crud.pengeluaran.php";
+$page=3;
 include_once "views/header.php";
 $pengeluaran = new Pengeluaran();
 
@@ -35,50 +36,50 @@ if(isset($_POST['submit']))
 
 
 ?>
+    <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+        <div class="clearfix"></div>
 
-    <div class="clearfix"></div>
 
 
+        <div class="clearfix"></div><br />
 
-    <div class="clearfix"></div><br />
+        <div class="container">
+            <h1>Edit Anggaran <?php echo $namaKomp?></h1>
+            <hr>
+            <?php
+            if (isset($msg)){
+                echo $msg;
+            }
+            ?>
+            <div class="col-md-6">
+                <form class="form-horizontal" method="post">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="anggaranPngl">Nominal Pengeluaran</label>
+                        <div class="col-sm-8 input-group">
+                            <span class="input-group-addon">Rp</span>
+                            <input class="form-control" name="anggaranPngl" type="number" placeholder="Contoh: 250000"
+                                   value="<?php echo $anggaranPngl ?>" required>
 
-    <div class="container">
-        <h1>Edit Anggaran <?php echo $namaKomp?></h1>
-        <hr>
-        <?php
-        if (isset($msg)){
-            echo $msg;
-        }
-        ?>
-        <div class="col-md-6">
-            <form class="form-horizontal" method="post">
-                <div class="form-group">
-                    <label class="col-sm-4 control-label" for="anggaranPngl">Nominal Pengeluaran</label>
-                    <div class="col-sm-8 input-group">
-                        <span class="input-group-addon">Rp</span>
-                        <input class="form-control" name="anggaranPngl" type="number" placeholder="Contoh: 250000"
-                               value="<?php echo $anggaranPngl ?>" required>
-
-                        </span>
+                            </span>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-8 input-group">
-                        <!--                        <a href="#" class="btn btn-info copy" rel=".grouped">Tambah Komponen</a> &nbsp;-->
-                        <button class="btn btn-primary" name="submit" type="submit">
-                            <span class="glyphicon glyphicon-plus"></span> &nbsp; Simpan
-                        </button>
-                        <!--                        <input type="submit" class="btn btn-primary" name="submit" value="Simpan">--> &nbsp;
-                        <a href="view-anggaran.php?kom_id=<?php echo $kompId ?>" class="btn btn-success"><i class="glyphicon glyphicon-backward"></i> &nbsp; Kembali</a>
+                    <div class="form-group">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-8 input-group">
+                            <!--                        <a href="#" class="btn btn-info copy" rel=".grouped">Tambah Komponen</a> &nbsp;-->
+                            <button class="btn btn-primary" name="submit" type="submit">
+                                <span class="glyphicon glyphicon-plus"></span> &nbsp; Simpan
+                            </button>
+                            <!--                        <input type="submit" class="btn btn-primary" name="submit" value="Simpan">--> &nbsp;
+                            <a href="view-anggaran.php?kom_id=<?php echo $kompId ?>" class="btn btn-success"><i class="glyphicon glyphicon-backward"></i> &nbsp; Kembali</a>
+                        </div>
                     </div>
-                </div>
 
-            </form>
+                </form>
+            </div>
+
         </div>
-
-
     </div>
 
 <?php include_once 'views/footer.php'; ?>
