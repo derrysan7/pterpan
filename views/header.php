@@ -100,5 +100,3 @@
       <li class="<?php if ($page == '3'){ echo 'active'; } ?>"><a href="view-pengeluaran.php"><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>Pengeluaran</a></li>
     </ul>
   </div><!--/.sidebar-->
-
-
