@@ -249,7 +249,7 @@ class Pengeluaran{
     {
         try {
 
-            if (($this->currentBalance($userId))-$jmlDtlPngl>=0){
+            if (($this->currentBalance($userId,$tglDtlPngl))-$jmlDtlPngl>=0){
 
                 $stmt = $this->db->prepare("INSERT INTO detailpengeluaran(pengeluaranId,namaDtlPngl,jmlDtlPngl,tglDtlPngl)
                   VALUES(:pengeluaranId,:namaDtlPngl,:jmlDtlPngl,:tglDtlPngl)");
