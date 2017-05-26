@@ -1,4 +1,4 @@
-<?php include_once 'views/header_admin.php'; ?>
+<?php $page=1; include_once 'views/header_admin.php'; ?>
 <?php
 
 if(isset($_POST['btn-verify']))

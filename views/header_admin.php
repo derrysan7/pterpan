@@ -58,13 +58,13 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.php">Admin Control Panel</a>
+      <a class="navbar-brand" href="indexadmin.php">Admin Control Panel</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li><a href="indexadmin.php">Daftar User</a></li>
-        <li><a href="berita.php">Berita</a></li>
-        <li><a href="notifikasi.php">Notifikasi</a></li>
+        <li class="<?php if ($page == '1'){ echo 'active'; } ?>"><a href="indexadmin.php">Daftar User</a></li>
+        <li class="<?php if ($page == '2'){ echo 'active'; } ?>"><a href="berita.php">Berita</a></li>
+        <li class="<?php if ($page == '3'){ echo 'active'; } ?>"><a href="notifikasi.php">Notifikasi</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
           

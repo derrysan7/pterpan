@@ -1,4 +1,4 @@
-<?php include_once 'views/header_admin.php'; ?>
+<?php $page=3; include_once 'views/header_admin.php'; ?>
 <?php
 
 if(isset($_POST['btn-notif-cicilan']))
