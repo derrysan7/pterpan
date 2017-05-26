@@ -81,7 +81,7 @@
         <a class="navbar-brand" href="index.php?selected_month=<?php echo $date_header_dashboard ?>"><span>Keuangan</span>Pterpan</a>
         <ul class="user-menu">
           <li class="dropdown pull-right">
-            <a href="#" class="dropdown-toggle" style="display:<?php echo $userinfo ?>;" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> <?php echo $userRow['userEmail']; ?> <span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" style="display:<?php echo $userinfo ?>;" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg><span class="glyphicon glyphicon-user"></span> <?php echo $userRow['userEmail']; ?> <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
 <!--              <li><a href="#"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Profile</a></li>
               <li><a href="#"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Settings</a></li> -->
