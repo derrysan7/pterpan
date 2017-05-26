@@ -1,4 +1,5 @@
 <?php
+$page=1;
 include_once "views/header.php";
 include_once 'classes/class.crud.berita.php';
 $berita = new crud();
