@@ -6,7 +6,14 @@ $session = new USER();
 // if user session is not active(not loggedin) this page will help 'home.php and profile.php' to redirect to login page
 // put this file within secured pages that users (users can't access without login)
 
-if(!$session->is_loggedin())
+$userId = $_SESSION['user_session'];
+      
+$stmt = $session->runQuery("SELECT * FROM users WHERE userId=:userId");
+$stmt->execute(array(":userId"=>$userId));
+
+$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
+
+if(!$session->is_loggedin() or $userRow['NamaPermission'] != "isNormalUser")
 {
     // session no set redirects to login page
     $session->redirect('login.php');

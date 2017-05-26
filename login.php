@@ -5,7 +5,8 @@ $login = new USER();
 $date_index_login = date("m-Y");
 if($login->is_loggedin()!="")
 {
-	$login->redirect("index.php?selected_month=".$date_index_login);
+	// $login->redirect("index.php?selected_month=".$date_index_login);
+    $login->redirect("indexadmin.php");
 }
 
 if(isset($_POST['btn-login']))
