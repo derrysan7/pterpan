@@ -1,6 +1,6 @@
 <?php
 require_once "classes/Penghasilan.php";
-$page=3;
+$page=2;
 include_once "views/header.php";
 $penghasilan = new Penghasilan();
 
@@ -59,7 +59,7 @@ if(isset($_POST['submit']))
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="tglPghs">Tanggal penghasilan</label>
                         <div class="col-sm-8 input-group">
-                            <input class="form-control" id="datepicker" name="tglPghs" type="date" required>
+                            <input class="form-control" type="date" name="tglPghs" required>
                             <span class="input-group-addon">
           <span class="glyphicon glyphicon-calendar"></span>
         </span>

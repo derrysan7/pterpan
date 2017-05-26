@@ -19,7 +19,7 @@ if(isset($_POST['submit']))
     $tglKomp = $tglFormat;
 
 
-    if($pengeluaran->update($userRow['userId'],$kompId,$namaKomp,$tipePngl,$tglKomp,$persenKomp))
+    if($pengeluaran->update($userRow['userId'],$kompId,$namaKomp,$tglKomp,$persenKomp))
     {
         $msg= "<div class='alert alert-info'><strong>Berhasil!</strong> Data pengeluaran berhasil diperbaharui. <a href='view-pengeluaran.php'>Lihat daftar pengeluaran</a>!</div>";
     }

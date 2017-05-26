@@ -48,7 +48,7 @@ if(isset($_GET['edit_id']))
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="tglPghs">Tanggal penghasilan</label>
                         <div class="col-sm-8 input-group">
-                            <input class="form-control" id="datepicker" name="tglPghs" type="date" value="<?php echo $tglPghs?>" required>
+                            <input class="form-control"  name="tglPghs" type="date" value="<?php echo $tglPghs?>" required>
                             <span class="input-group-addon">
           <span class="glyphicon glyphicon-calendar"></span>
         </span>

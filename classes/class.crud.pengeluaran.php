@@ -388,23 +388,17 @@ class Pengeluaran{
     }
 
 
-    public function update($userId,$id,$namaKomp,$tipePngl,$tglKomp,$persenKomp){
+    public function update($userId,$id,$namaKomp,$tglKomp,$persenKomp){
         try{
-            if ($tipePngl == "true") {
-                $tipe = "cicilan";
-            } else {
-                $tipe = "detil";
-            }
 
             if($this->cekPersenEdit($userId,$tglKomp,$persenKomp,$id)){
 
 
                 $stmt = $this->db->prepare("UPDATE komppengeluaran SET namaKomp=:namaKomp,
-        persenKomp=:persenKomp,tipePngl=:tipePngl,tglKomp=:tglKomp
+        persenKomp=:persenKomp,tglKomp=:tglKomp
         WHERE kompId=:id ");
                 $stmt->bindparam(":namaKomp", $namaKomp);
                 $stmt->bindparam(":persenKomp", $persenKomp);
-                $stmt->bindparam(":tipePngl", $tipe);
                 $stmt->bindparam(":tglKomp", $tglKomp);
                 $stmt->bindparam(":id", $id);
                 $stmt->execute();
