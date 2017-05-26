@@ -24,7 +24,7 @@ if(isset($_POST['submit']))
 
     if($pengeluaran->updateanggaran($pengeluaranId,$anggaranPngl))
     {
-        $msg= "<div class='alert alert-info'><strong>Berhasil!</strong> Data pengeluaran harian berhasil diperbaharui. <a href='view-anggaran.php?kom_id=$kompId'>Kembali</a>!</div>";
+        $msg= "<div class='alert alert-info'><strong>Berhasil!</strong> Data pengeluaran harian berhasil diperbaharui. <a href='view-cicilan.php?kom_id=$kompId'>Kembali</a>!</div>";
     }
     else
     {
@@ -72,7 +72,7 @@ if(isset($_POST['submit']))
                                 <span class="glyphicon glyphicon-plus"></span> &nbsp; Simpan
                             </button>
                             <!--                        <input type="submit" class="btn btn-primary" name="submit" value="Simpan">--> &nbsp;
-                            <a href="view-anggaran.php?kom_id=<?php echo $kompId ?>" class="btn btn-success"><i class="glyphicon glyphicon-backward"></i> &nbsp; Kembali</a>
+                            <a href="view-cicilan.php?kom_id=<?php echo $kompId ?>" class="btn btn-success"><i class="glyphicon glyphicon-backward"></i> &nbsp; Kembali</a>
                         </div>
                     </div>
 

@@ -46,7 +46,10 @@ class crud
 
  public function getID_komp($id)
  {
-  $stmt = $this->db->prepare("SELECT kompId,userId,namaKomp FROM komppengeluaran WHERE kompId=:id");
+  $stmt = $this->db->prepare("SELECT komppengeluaran.kompId,userId,namaKomp,anggaranPngl,pengeluaranId 
+                              FROM komppengeluaran,pengeluaran 
+                              WHERE komppengeluaran.kompId=pengeluaran.kompId 
+                              AND komppengeluaran.kompId=:id");
   $stmt->execute(array(":id"=>$id));
   $editRow=$stmt->fetch(PDO::FETCH_ASSOC);
   return $editRow;

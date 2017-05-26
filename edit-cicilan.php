@@ -1,6 +1,6 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<?php include_once 'views/header.php'; ?>
+<?php $page=3; include_once 'views/header.php'; ?>
 <?php
 include_once 'classes/class.crud.cicilan.php';
 $crud = new crud();
@@ -83,86 +83,86 @@ elseif(isset($_GET['edit_id']))
 $tglMulai = date("m/d/Y", strtotime($tglMulai));
 $tglSelesai = date("m/d/Y", strtotime($tglSelesai));
 ?>
+<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+    <div class="clearfix"></div>
 
-<div class="clearfix"></div>
+        <div class="container">
+            <?php
+                if(isset($msg))
+                {
+                 echo $msg;
+                }
+            ?>
+        </div>
+
+    <div class="clearfix"></div><br />
 
     <div class="container">
-        <?php
-            if(isset($msg))
-            {
-             echo $msg;
-            }
-        ?>
-    </div>
-
-<div class="clearfix"></div><br />
-
-<div class="container">
-        <?php
-            if(isset($error))
-            {
-                foreach($error as $error)
+            <?php
+                if(isset($error))
                 {
-                     ?>
-                     <div class="alert alert-danger">
-                        <i class="glyphicon glyphicon-warning-sign"></i> &nbsp; <?php echo $error; ?>
-                     </div>
-                     <?php
+                    foreach($error as $error)
+                    {
+                         ?>
+                         <div class="alert alert-danger">
+                            <i class="glyphicon glyphicon-warning-sign"></i> &nbsp; <?php echo $error; ?>
+                         </div>
+                         <?php
+                    }
                 }
-            }
-            
-        ?>
-    <div class="col-md-6">          
-        <form class="form-horizontal" method="post">
-            <div class="form-group">
-                <div class="col-sm-4">
-                    <label>Nama Cicilan</label>          
+                
+            ?>
+        <div class="col-md-6">          
+            <form class="form-horizontal" method="post">
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <label>Nama Cicilan</label>          
+                    </div>
+                    <div class="col-sm-8">
+                        <input type='text' name='txt_namacicilan' class='form-control' maxlength="80" value="<?php echo $namaCicilan ?>" required>
+                    </div>
                 </div>
-                <div class="col-sm-8">
-                    <input type='text' name='txt_namacicilan' class='form-control' maxlength="80" value="<?php echo $namaCicilan ?>" required>
-                </div>
-            </div>
 
-            <div class="form-group">
-                <div class="col-sm-4">
-                    <label>Tanggal Mulai</label>          
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <label>Tanggal Mulai</label>          
+                    </div>
+                    <div class="col-sm-8">
+                        <input id='datepicker' type='text' name='txt_tglMulai' class='form-control' value="<?php echo $tglMulai ?>" readonly='true' required>
+                    </div>
                 </div>
-                <div class="col-sm-8">
-                    <input id='datepicker' type='text' name='txt_tglMulai' class='form-control' value="<?php echo $tglMulai ?>" readonly='true' required>
-                </div>
-            </div>
 
-            <div class="form-group">
-                <div class="col-sm-4">
-                    <label>Tanggal Selesai</label>          
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <label>Tanggal Selesai</label>          
+                    </div>
+                    <div class="col-sm-8">
+                        <input id='datepicker2' type='text' name='txt_tglSelesai' class='form-control' value="<?php echo $tglSelesai ?>" readonly='true' required>
+                    </div>
                 </div>
-                <div class="col-sm-8">
-                    <input id='datepicker2' type='text' name='txt_tglSelesai' class='form-control' value="<?php echo $tglSelesai ?>" readonly='true' required>
-                </div>
-            </div>
 
-            <div class="form-group">
-                <div class="col-sm-4">
-                    <label>Jumlah Cicilan / bln</label>          
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <label>Jumlah Cicilan / bln</label>          
+                    </div>
+                    <div class="col-sm-8">
+                        <input type='text' name='txt_jmlCicilan' class='form-control' maxlength="30" onkeypress="return isNumberKey(event)" value="<?php echo $jmlCicilan ?>" required>
+                    </div>
                 </div>
-                <div class="col-sm-8">
-                    <input type='text' name='txt_jmlCicilan' class='form-control' maxlength="30" onkeypress="return isNumberKey(event)" value="<?php echo $jmlCicilan ?>" required>
-                </div>
-            </div>
 
-            <div class="form-group">
-                <div class="col-sm-4">
+                <div class="form-group">
+                    <div class="col-sm-4">
+                    </div>
+                    <div class="col-sm-8">
+                        <button type="submit" class="btn btn-primary" name="btn-update">
+                            <span class="glyphicon glyphicon-edit"></span>  Update this Record
+                        </button>  
+                        <a href="view-cicilan.php?kom_id=<?php echo $kompId ?>" class="btn btn-large btn-success"><i class="glyphicon glyphicon-backward"></i> &nbsp; Back to index</a>
+                    </div>
                 </div>
-                <div class="col-sm-8">
-                    <button type="submit" class="btn btn-primary" name="btn-update">
-                        <span class="glyphicon glyphicon-edit"></span>  Update this Record
-                    </button>  
-                    <a href="view-cicilan.php?kom_id=<?php echo $kompId ?>" class="btn btn-large btn-success"><i class="glyphicon glyphicon-backward"></i> &nbsp; Back to index</a>
-                </div>
-            </div>
 
-        </form>
-    </div>     
+            </form>
+        </div>     
+    </div>
 </div>
-
 <?php include_once 'views/footer.php'; ?>
