@@ -1,4 +1,5 @@
 <?php
+include_once "views/header.php";
 require_once "classes/Penghasilan.php";
 $page=2;
 $penghasilan = new Penghasilan();
@@ -21,17 +22,40 @@ if(isset($_POST['submit']))
         </div>";
     }
 }
-if(isset($_GET['edit_id']))
-{
-    $id = $_GET['edit_id'];
-    extract($penghasilan->getID($id));
-}
+
+
+$notfound="<div class='alert alert-danger'><span>Page not found!</span></div>"
+//if(isset($_GET['edit_id']))
+//{
+//    $id = $_GET['edit_id'];
+//    extract($penghasilan->getID($id));
+//}
 ?>
 
-<?php include_once "views/header.php"; ?>
+
 
     <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
         <div class="container">
+
+            <?php
+            if(empty($_GET['edit_id'])){
+                exit($notfound);
+
+//    header("Location: edit-penghasilan.php?not_found");
+            }elseif (isset($_GET['edit_id'])){
+                $id = $_GET['edit_id'];
+                extract($penghasilan->getID($id));
+                if($sumberPghs===null){
+                    exit($notfound);
+
+//        header("Location: edit-penghasilan.php?not_found");
+                }elseif ($userId != $userRow['userId']){
+                    exit($notfound);
+
+//        header("Location: edit-penghasilan.php?not_found");
+                }
+            }
+            ?>
             <h1>Ubah Data Penghasilan</h1>
             <hr>
             <?php

@@ -9,6 +9,7 @@ if(isset($_POST['btn-del']))
     $penghasilan->delete($id);
     header("Location: delete-penghasilan.php?deleted");
 }
+$notfound="<div class='alert alert-danger'><span>Page not found!</span></div>"
 
 ?>
 
@@ -17,7 +18,25 @@ if(isset($_POST['btn-del']))
         <div class="clearfix"></div>
 
         <div class="container">
+            <?php
+            if(empty($_GET['delete_id'])){
+                exit($notfound);
 
+//    header("Location: edit-penghasilan.php?not_found");
+            }elseif (isset($_GET['delete_id'])){
+                $id = $_GET['delete_id'];
+                extract($penghasilan->getID($id));
+                if($sumberPghs===null){
+                    exit($notfound);
+
+//        header("Location: edit-penghasilan.php?not_found");
+                }elseif ($userId != $userRow['userId']){
+                    exit($notfound);
+
+//        header("Location: edit-penghasilan.php?not_found");
+                }
+            }
+            ?>
             <?php
             if(isset($_GET['deleted']))
             {
