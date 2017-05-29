@@ -99,6 +99,7 @@ $tglSelesai = date("m/d/Y", strtotime($tglSelesai));
     <div class="clearfix"></div><br />
 
     <div class="container">
+        <h2>Edit Cicilan <?php echo $namaCicilan ?></h2>
             <?php
                 if(isset($error))
                 {
