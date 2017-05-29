@@ -46,7 +46,7 @@ class crud
 
  public function getID_komp($id)
  {
-  $stmt = $this->db->prepare("SELECT komppengeluaran.kompId,userId,namaKomp,anggaranPngl,pengeluaranId 
+  $stmt = $this->db->prepare("SELECT komppengeluaran.kompId,userId,namaKomp,anggaranPngl,pengeluaranId,tipePngl 
                               FROM komppengeluaran,pengeluaran 
                               WHERE komppengeluaran.kompId=pengeluaran.kompId 
                               AND komppengeluaran.kompId=:id");

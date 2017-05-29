@@ -3,6 +3,7 @@
 <?php
 include_once 'classes/class.crud.cicilan.php';
 $crud = new crud();
+$notfound="<div class='alert alert-danger'><span>Page not found!</span></div>";
 
 if(isset($_POST['btn-save']))
 {
@@ -56,14 +57,16 @@ if(isset($_POST['btn-save']))
 }
 ?>
 
+
+<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 <?php
 if(isset($_GET['kom_id']) == "")
     {
-        exit("Page not Found");
+        exit($notfound);
     }
     elseif(empty($_GET['kom_id'])) 
     { 
-      exit("Page not Found");
+      exit($notfound);
     }
     elseif(isset($_GET['kom_id']))
     {
@@ -71,16 +74,18 @@ if(isset($_GET['kom_id']) == "")
         extract($crud->getID_komp($id)); 
         if ($namaKomp === NULL)
         {
-            exit("Page not Found");
-        } 
+            exit($notfound);
+        }
+        elseif($tipePngl == "detil")
+        {
+            exit($notfound);
+        }  
         elseif ($userId != $userRow['userId'])
         {
-            exit("Page not Found");
+            exit($notfound);
         }
     }
 ?>
-
-<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
     <div class="clearfix"></div><br />
 
     <div class="container">

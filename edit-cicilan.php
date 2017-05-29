@@ -4,6 +4,7 @@
 <?php
 include_once 'classes/class.crud.cicilan.php';
 $crud = new crud();
+$notfound="<div class='alert alert-danger'><span>Page not found!</span></div>";
 
 if(isset($_POST['btn-update']))
 {
@@ -56,14 +57,16 @@ if(isset($_POST['btn-update']))
     }   
 }
 
-
+?>
+<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+<?php
 if(isset($_GET['edit_id']) == "")
 {
-    exit("Page not Found");
+    exit($notfound);
 }
 elseif(empty($_GET['edit_id'])) 
 { 
-  exit("Page not Found");
+  exit($notfound);
 }
 elseif(isset($_GET['edit_id']))
 {
@@ -71,19 +74,17 @@ elseif(isset($_GET['edit_id']))
     extract($crud->getID($id)); 
     if ($namaCicilan === NULL)
     {
-        exit("Page not Found");
+        exit($notfound);
     } 
     elseif ($userId != $userRow['userId'])
     {
-        exit("Page not Found");
+        exit($notfound);
     }
 }
-
 
 $tglMulai = date("m/d/Y", strtotime($tglMulai));
 $tglSelesai = date("m/d/Y", strtotime($tglSelesai));
 ?>
-<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
     <div class="clearfix"></div>
 
         <div class="container">
