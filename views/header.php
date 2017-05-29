@@ -64,7 +64,7 @@
         }
     </script>
     <link rel="stylesheet" href="style/css/style.css" type="text/css"  />
-    <title>Peterpan</title>
+    <title>Piggybank</title>
 </head>
 
 <body>
@@ -78,7 +78,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="index.php?selected_month=<?php echo $date_header_dashboard ?>"><span>Keuangan</span>Pterpan</a>
+        <a class="navbar-brand" href="index.php?selected_month=<?php echo $date_header_dashboard ?>"><span>Piggy</span>Bank</a>
         <ul class="user-menu">
           <li class="dropdown pull-right">
             <a href="#" class="dropdown-toggle" style="display:<?php echo $userinfo ?>;" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg><span class="glyphicon glyphicon-user"></span> <?php echo $userRow['userEmail']; ?> <span class="caret"></span></a>
