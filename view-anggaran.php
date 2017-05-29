@@ -7,14 +7,16 @@ $pengeluaran = new Pengeluaran();
 
 
 if(empty($_GET['kom_id'])){
-    exit("Page not found!");
+    $notFound="<div class='alert alert-danger'><span>Page not found!</span></div>";
 }elseif (isset($_GET['kom_id'])){
     $id = $_GET['kom_id'];
     extract($pengeluaran->getAnggaranID($id));
     if ($namaKomp === null) {
-        exit("Page not found!");
+        $notFound="<div class='alert alert-danger'><span>Page not found!</span></div>";
     } elseif ($userId != $userRow['userId']) {
-        exit("Page not found!");
+        $notFound="<div class='alert alert-danger'><span>Page not found!</span></div>";
+    } elseif ($tipePngl=="cicilan"){
+        $notFound="<div class='alert alert-danger'><span>Page not found!</span></div>";
     }
 
 }
@@ -36,6 +38,11 @@ $periodePngl = new DateTime($tglKomp);
         <div class="clearfix"></div>
 
         <div class="container">
+            <?php
+            if($notFound){
+                exit($notFound);
+            }
+            ?>
             <h1>Anggaran <?php echo ucwords($namaKomp); ?></h1>
             <hr>
             <h6>Summary :</h6>

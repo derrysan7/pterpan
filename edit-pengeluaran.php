@@ -32,23 +32,37 @@ if(isset($_POST['submit']))
     }
 }
 
-if(empty($_GET['edit_id'])){
-    exit("Page not found!");
-}elseif (isset($_GET['edit_id'])){
-    $id = $_GET['edit_id'];
-    extract($pengeluaran->getID($id));
-    if($namaKomp===null){
-        exit("Page not found!");
-    }elseif ($userId != $userRow['userId']){
-        exit("Page not found!");
-    }
-}
+//if(empty($_GET['edit_id'])){
+//    exit("Page not found!");
+//}elseif (isset($_GET['edit_id'])){
+//    $id = $_GET['edit_id'];
+//    extract($pengeluaran->getID($id));
+//    if($namaKomp===null){
+//        exit("Page not found!");
+//    }elseif ($userId != $userRow['userId']){
+//        exit("Page not found!");
+//    }
+//}
 
 //if(isset($_GET['edit_id']))
 //{
 //    $id = $_GET['edit_id'];
 //    extract($pengeluaran->getID($id));
 //}
+
+            if(empty($_GET['edit_id'])){
+                $notfound="<div class='alert alert-danger'><span>Page not found!</span></div>";
+            }elseif (isset($_GET['edit_id'])){
+                $id = $_GET['edit_id'];
+                extract($pengeluaran->getID($id));
+                if($namaKomp===null){
+                    $notfound="<div class='alert alert-danger'><span>Page not found!</span></div>";
+                }elseif ($userId != $userRow['userId']){
+                    $notfound="<div class='alert alert-danger'><span>Page not found!</span></div>";
+                }
+            }
+
+
 
 if ($tipePngl=="cicilan"){
     $tipe="checked";
@@ -60,7 +74,13 @@ if ($tipePngl=="cicilan"){
 
 
     <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+        <?php
+        if (isset($notfound)){
+            exit($notfound);
+        }
+        ?>
         <div class="container">
+
             <h1>Ubah Data Komponen Pengeluaran</h1>
             <hr>
             <?php
@@ -87,7 +107,7 @@ if ($tipePngl=="cicilan"){
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="persenKomp">Batas Anggaran</label>
                             <div class="col-sm-8 input-group">
-                                <input class="form-control" name="persenKomp" type="number" value="<?php echo $persenKomp ?>" placeholder="Contoh: 10" required>
+                                <input class="form-control" name="persenKomp" value="<?php echo $persenKomp ?>" placeholder="Contoh: 10" onkeypress="return isNumberKey(event)" required>
                                 <span class="input-group-addon">%</span>
                                 </span>
                             </div>

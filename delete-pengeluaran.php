@@ -40,9 +40,9 @@ if(isset($_POST['btn-del']))
             {
                 $id = $_GET['delete_id'];
                 extract($pengeluaran->getID($id));
-                if ($userId != $userRow['userId'] OR $namaKomp === NULL OR isset($_GET['delete_id']) == "")
+                if ($userId != $userRow['userId'] OR isset($_GET['delete_id']) == "" OR $namaKomp == null)
                 {
-                    exit("Page not Found");
+                    exit("<div class='alert alert-danger'><span>Page not found!</span></div>");
                 }
                 ?>
                 <div class="alert alert-danger">
@@ -52,7 +52,7 @@ if(isset($_POST['btn-del']))
             }
             else
             {
-                exit("Page not found");
+                exit("<div class='alert alert-danger'><span>Page not found!</span></div>");
             }
             ?>
         </div>

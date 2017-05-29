@@ -5,15 +5,15 @@ include_once "views/header.php";
 $pengeluaran = new Pengeluaran();
 
 if(empty($_GET['edit_id'])){
-    exit("Page not found!");
+    $notFound="<div class='alert alert-danger'><span>Page not found!</span></div>";
 }elseif (isset($_GET['edit_id'])){
     $id = $_GET['edit_id'];
     extract($pengeluaran->getdetaileditID($id));
     if ($namaKomp === null) {
-        exit("Page not found!");
+        $notFound="<div class='alert alert-danger'><span>Page not found!</span></div>";
     }
     elseif ($userId != $userRow['userId']) {
-        exit("Page not found!");
+        $notFound="<div class='alert alert-danger'><span>Page not found!</span></div>";
     }
 }
 
@@ -46,6 +46,13 @@ if(isset($_POST['submit']))
         <div class="clearfix"></div><br />
 
         <div class="container">
+
+            <?php
+            if(isset($notFound)){
+                exit($notFound);
+            }
+            ?>
+
             <h1>Edit Pengeluaran Harian <?php echo $namaKomp?></h1>
             <hr>
             <?php
@@ -72,7 +79,7 @@ if(isset($_POST['submit']))
                         <label class="col-sm-4 control-label" for="jmlDtlPngl">Nominal Pengeluaran</label>
                         <div class="col-sm-8 input-group">
                             <span class="input-group-addon">Rp</span>
-                            <input class="form-control" name="jmlDtlPngl" type="number" placeholder="Contoh: 250000"
+                            <input class="form-control" name="jmlDtlPngl" placeholder="Contoh: 250000" onkeypress="return isNumberKey(event)"
                                    value="<?php echo $jmlDtlPngl ?>" required>
 
                             </span>

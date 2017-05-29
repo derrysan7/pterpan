@@ -85,7 +85,7 @@ if(isset($_POST['submit']))
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="persenKomp">Batas Anggaran</label>
                             <div class="col-sm-8 input-group">
-                                <input class="form-control" name="persenKomp" type="number" placeholder="Contoh: 10" required>
+                                <input class="form-control" name="persenKomp" placeholder="Contoh: 10" onkeypress="return isNumberKey(event)" required>
                                 <span class="input-group-addon">%</span>
                                 </span>
                             </div>

@@ -6,15 +6,15 @@ include_once "views/header.php";
 $pengeluaran = new Pengeluaran();
 
 if(empty($_GET['delete_id'])){
-    exit("Page not found!");
+    $notFound="<div class='alert alert-danger'><span>Page not found!</span></div>";
 }elseif (isset($_GET['delete_id'])){
     $id = $_GET['delete_id'];
     extract($pengeluaran->getdetaileditID($id));
     if ($namaKomp === null) {
-        exit("Page not found!");
+        $notFound="<div class='alert alert-danger'><span>Page not found!</span></div>";
     }
     elseif ($userId != $userRow['userId']) {
-        exit("Page not found!");
+        $notFound="<div class='alert alert-danger'><span>Page not found!</span></div>";
     }
 }
 
@@ -34,6 +34,11 @@ if(isset($_POST['btn-del']))
         <div class="container">
 
             <?php
+
+            if (isset($notFound)){
+                exit($notFound);
+            }
+
             if(isset($_GET['deleted']))
             {
                 ?>

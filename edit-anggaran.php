@@ -5,15 +5,15 @@ include_once "views/header.php";
 $pengeluaran = new Pengeluaran();
 
 if(empty($_GET['pngl_id'])){
-    exit("Page not found!");
+    $notFound = "<div class='alert alert-danger'><span>Page not found!</span></div>";
 }elseif (isset($_GET['pngl_id'])){
     $id = $_GET['pngl_id'];
     extract($pengeluaran->getanggaraneditID($id));
     if ($namaKomp === null) {
-        exit("Page not found!");
+        $notFound = "<div class='alert alert-danger'><span>Page not found!</span></div>";
     }
     elseif ($userId != $userRow['userId']) {
-        exit("Page not found!");
+        $notFound = "<div class='alert alert-danger'><span>Page not found!</span></div>";
     }
 }
 
@@ -39,11 +39,14 @@ if(isset($_POST['submit']))
     <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
         <div class="clearfix"></div>
 
-
-
         <div class="clearfix"></div><br />
 
         <div class="container">
+            <?php
+            if (isset($notFound)){
+                exit($notFound);
+            }
+            ?>
             <h1>Edit Anggaran <?php echo $namaKomp?></h1>
             <hr>
             <?php
@@ -57,7 +60,7 @@ if(isset($_POST['submit']))
                         <label class="col-sm-4 control-label" for="anggaranPngl">Nominal Pengeluaran</label>
                         <div class="col-sm-8 input-group">
                             <span class="input-group-addon">Rp</span>
-                            <input class="form-control" name="anggaranPngl" type="number" placeholder="Contoh: 250000"
+                            <input class="form-control" name="anggaranPngl" placeholder="Contoh: 250000" onkeypress="return isNumberKey(event)"
                                    value="<?php echo $anggaranPngl ?>" required>
 
                             </span>

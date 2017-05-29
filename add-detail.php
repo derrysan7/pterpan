@@ -5,14 +5,16 @@ include_once "views/header.php";
 $pengeluaran = new Pengeluaran();
 
 if(empty($_GET['anggaran_id'])){
-    exit("Page not found!");
+    $notFound="<div class='alert alert-danger'><span>Page not found!</span></div>";
 }elseif (isset($_GET['anggaran_id'])){
     $id = $_GET['anggaran_id'];
     extract($pengeluaran->getdetailID($id));
     if ($namaKomp === null) {
-        exit("Page not found!");
+        $notFound="<div class='alert alert-danger'><span>Page not found!</span></div>";
     } elseif ($userId != $userRow['userId']) {
-        exit("Page not found!");
+        $notFound="<div class='alert alert-danger'><span>Page not found!</span></div>";
+    } elseif ($tipePngl=="cicilan"){
+        $notFound="<div class='alert alert-danger'><span>Page not found!</span></div>";
     }
 }
 
@@ -66,6 +68,11 @@ if(isset($_POST['submit']))
         <div class="clearfix"></div><br />
 
         <div class="container">
+            <?php
+            if (isset($notFound)){
+                exit($notFound);
+            }
+            ?>
             <h1>Tambah Pengeluaran Harian <?php echo ucfirst($namaKomp)?></h1>
             <hr>
 
@@ -87,7 +94,7 @@ if(isset($_POST['submit']))
                         <label class="col-sm-4 control-label" for="jmlDtlPngl">Nominal Pengeluaran</label>
                         <div class="col-sm-8 input-group">
                             <span class="input-group-addon">Rp</span>
-                            <input class="form-control" name="jmlDtlPngl" type="number" placeholder="Contoh: 250000" required>
+                            <input class="form-control" name="jmlDtlPngl"  placeholder="Contoh: 250000" onkeypress="return isNumberKey(event)" required>
 
                             </span>
                         </div>
