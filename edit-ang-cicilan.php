@@ -3,19 +3,7 @@ require_once "classes/class.crud.pengeluaran.php";
 $page=3;
 include_once "views/header.php";
 $pengeluaran = new Pengeluaran();
-
-if(empty($_GET['pngl_id'])){
-    exit("Page not found!");
-}elseif (isset($_GET['pngl_id'])){
-    $id = $_GET['pngl_id'];
-    extract($pengeluaran->getanggaraneditID($id));
-    if ($namaKomp === null) {
-        exit("Page not found!");
-    }
-    elseif ($userId != $userRow['userId']) {
-        exit("Page not found!");
-    }
-}
+$notfound="<div class='alert alert-danger'><span>Page not found!</span></div>";
 
 if(isset($_POST['submit']))
 {
@@ -37,6 +25,24 @@ if(isset($_POST['submit']))
 
 ?>
     <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+    <?php
+        if(empty($_GET['pngl_id'])){
+            exit($notfound);
+        }elseif (isset($_GET['pngl_id'])){
+            $id = $_GET['pngl_id'];
+            extract($pengeluaran->getanggaraneditID($id));
+            if ($namaKomp === null) {
+                exit($notfound);
+            }
+            elseif($tipePngl == "detil")
+            {
+                exit($notfound);
+            } 
+            elseif ($userId != $userRow['userId']) {
+                exit($notfound);
+            }
+        }
+    ?>
         <div class="clearfix"></div>
 
 
