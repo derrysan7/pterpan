@@ -3,6 +3,7 @@ require_once 'classes/class.crud.cicilan.php';
 $page=3;
 include_once 'views/header.php';
 $crud = new crud();
+$notfound="<div class='alert alert-danger'><span>Page not found!</span></div>";
 
 if(isset($_POST['btn-del']))
 {
@@ -30,11 +31,11 @@ if(isset($_POST['btn-del']))
 			{
 				if(isset($_GET['return_id']) == "")
 				{
-				    exit("Page not Found");
+				    exit($notfound);
 				}
 				elseif(empty($_GET['return_id'])) 
 				{ 
-				  exit("Page not Found");
+				  exit($notfound);
 				}
 				elseif(isset($_GET['return_id']))
 				{
@@ -42,11 +43,11 @@ if(isset($_POST['btn-del']))
 				    extract($crud->getID_komp($id)); 
 				    if ($namaKomp === NULL)
 				    {
-				        exit("Page not Found");
+				        exit($notfound);
 				    } 
 				    elseif ($userId != $userRow['userId'])
 				    {
-				        exit("Page not Found");
+				        exit($notfound);
 				    }
 				}
 		?>
@@ -61,7 +62,7 @@ if(isset($_POST['btn-del']))
 	    		extract($crud->getID($id));
 	    		if ($userId != $userRow['userId'] OR $namaCicilan === NULL OR isset($_GET['delete_id']) == "")
 			    {
-			        exit("Page not Found");
+			        exit($notfound);
 			    }
 		?>
 		    <div class="alert alert-danger">
@@ -71,7 +72,7 @@ if(isset($_POST['btn-del']))
 			}
 			else
 			{
-				exit("Page not found");
+				exit($notfound);
 			}
 		?> 
 	</div>
