@@ -2,7 +2,7 @@
   require_once ("session_admin.php");
 	require_once ("classes/class.user.php");
 	$auth_user = new USER();
-  //error_reporting(0);
+  error_reporting(0);
 
   if ($_SESSION['user_session']!=""){
       $userId = $_SESSION['user_session'];
