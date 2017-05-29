@@ -94,7 +94,7 @@ $notfound="<div class='alert alert-danger'><span>Page not found!</span></div>"
                         <label class="col-sm-4 control-label" for="nominalPghs">Nominal penghasilan</label>
                         <div class="col-sm-8 input-group">
                             <span class="input-group-addon">Rp</span>
-                            <input class="form-control" name="nominalPghs" type="number"
+                            <input class="form-control" name="nominalPghs" onkeypress="return isNumberKey(event)"
                                    placeholder="Contoh: 2500000" pattern="\d*" value="<?php echo $nominalPghs?>" required>
                         </div>
                     </div>
