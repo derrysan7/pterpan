@@ -594,7 +594,7 @@ GROUP BY kompId");
                     <div class="panel panel-<?php print $panelclr;?>">
                         <div class="panel-heading col-md-12">
                             <!--                            <div class="row">-->
-                            <div class="col-md-8">
+                            <div class="col-md-8" <?php if(strlen($row['namaKomp'])>10){echo "style='font-size:12px;'";} ?>">
                                 <?php print(strtoupper($row['namaKomp'])); ?>
                             </div>
                             <div class="col-md-4" style="text-align: right;">
