@@ -82,7 +82,7 @@ if(isset($_POST['btn-save']))
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Peterpan : Register</title>
+<title>Piggybank : Register</title>
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
 <link href="style/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="style/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
@@ -113,7 +113,7 @@ if(isset($_POST['btn-save']))
           
     <form class="form-signin" method="post" id="login-form">
         
-      <h2 class="form-signin-heading">Register Peterpan</h2><hr />
+      <h2 class="form-signin-heading">Register Piggybank</h2><hr />
           <?php
             if(isset($error))
             {
@@ -207,7 +207,6 @@ if(isset($_POST['btn-save']))
           <br/>
 
               <label>Sudah Punya Akun? <a href="login.php">Login</a></label> <br>
-              <label><a href="index.php">Kembali ke Beranda</a></label>
     </form>
 
   </div>

@@ -29,7 +29,7 @@ if(isset($_POST['btn-login']))
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Peterpan : Login</title>
+<title>Piggybank : Login</title>
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
 <link href="style/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="style/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
@@ -44,7 +44,7 @@ if(isset($_POST['btn-login']))
         
        <form class="form-signin" method="post" id="login-form">
       
-        <h2 class="form-signin-heading">Log In to Peterpan</h2><hr />
+        <h2 class="form-signin-heading">Log In to Piggybank</h2><hr />
         <?php
             if(isset($_GET['inactive']))
             {
@@ -86,7 +86,6 @@ if(isset($_POST['btn-login']))
       	<br />
         <br/>
             <label>Belum Punya Akun? <a href="register.php">Register</a></label> <br>
-            <label><a href="index.php">Kembali ke Beranda</a></label>
       </form>
 
     </div>
