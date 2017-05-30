@@ -1,4 +1,5 @@
 <?php
+include_once 'views/header.php';
 require_once "classes/Penghasilan.php";
 $page=2;
 $penghasilan = new Penghasilan();
@@ -9,34 +10,15 @@ if(isset($_POST['btn-del']))
     $penghasilan->delete($id);
     header("Location: delete-penghasilan.php?deleted");
 }
-$notfound="<div class='alert alert-danger'><span>Page not found!</span></div>"
+
 
 ?>
 
-<?php include_once 'views/header.php'; ?>
+
     <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
         <div class="clearfix"></div>
 
         <div class="container">
-            <?php
-            if(empty($_GET['delete_id'])){
-                exit($notfound);
-
-//    header("Location: edit-penghasilan.php?not_found");
-            }elseif (isset($_GET['delete_id'])){
-                $id = $_GET['delete_id'];
-                extract($penghasilan->getID($id));
-                if($sumberPghs===null){
-                    exit($notfound);
-
-//        header("Location: edit-penghasilan.php?not_found");
-                }elseif ($userId != $userRow['userId']){
-                    exit($notfound);
-
-//        header("Location: edit-penghasilan.php?not_found");
-                }
-            }
-            ?>
             <?php
             if(isset($_GET['deleted']))
             {
@@ -46,13 +28,23 @@ $notfound="<div class='alert alert-danger'><span>Page not found!</span></div>"
                 </div>
                 <?php
             }
-            else
+            elseif(isset($_GET['delete_id']) && !empty($_GET['delete_id']))
             {
+                $id = $_GET['delete_id'];
+                extract($penghasilan->getID($id));
+                if ($userId != $userRow['userId'] OR $sumberPghs === NULL OR isset($_GET['delete_id']) == "")
+                {
+                    exit("Page not Found");
+                }
                 ?>
                 <div class="alert alert-danger">
-                    <strong>Sure !</strong> to remove the following record ?
+                    <strong>Warning !</strong> remove the following record ?
                 </div>
                 <?php
+            }
+            else
+            {
+                exit("Page not found");
             }
             ?>
         </div>

@@ -5,24 +5,14 @@ include_once "views/header.php";
 
 $pengeluaran = new Pengeluaran();
 
-if(empty($_GET['delete_id'])){
-    $notFound="<div class='alert alert-danger'><span>Page not found!</span></div>";
-}elseif (isset($_GET['delete_id'])){
-    $id = $_GET['delete_id'];
-    extract($pengeluaran->getdetaileditID($id));
-    if ($namaKomp === null) {
-        $notFound="<div class='alert alert-danger'><span>Page not found!</span></div>";
-    }
-    elseif ($userId != $userRow['userId']) {
-        $notFound="<div class='alert alert-danger'><span>Page not found!</span></div>";
-    }
-}
+
 
 if(isset($_POST['btn-del']))
 {
     $id = $_GET['delete_id'];
     $pengeluaran->deletedetail($id);
-    header("Location: delete-detail.php?delete_id=".$id."&deleted");
+    extract($pengeluaran->getdetaileditID($id));
+    header("Location: delete-detail.php?deleted&return_id=".$kompId);
 }
 
 ?>
@@ -32,28 +22,37 @@ if(isset($_POST['btn-del']))
         <div class="clearfix"></div>
 
         <div class="container">
-
             <?php
-
-            if (isset($notFound)){
-                exit($notFound);
-            }
-
             if(isset($_GET['deleted']))
             {
+                if (isset($_GET['return_id'])){
+                    $rid=$_GET['return_id'];
+                    extract($pengeluaran->getdetaileditID($rid));
+                }
                 ?>
                 <div class="alert alert-success">
                     <strong>Success!</strong> record was deleted...
                 </div>
                 <?php
             }
-            else
+            elseif(isset($_GET['delete_id']) && !empty($_GET['delete_id']))
             {
+                $id = $_GET['delete_id'];
+                extract($pengeluaran->getdetaileditID($id));
+//                $balik = $kompId;
+                if ($userId != $userRow['userId'] OR $namaKomp === NULL OR isset($_GET['delete_id']) == "")
+                {
+                    exit("Page not Found");
+                }
                 ?>
                 <div class="alert alert-danger">
-                    <strong>Perhatian !</strong> Apakah anda yakin akan menghapus data di bawah ini?
+                    <strong>Warning !</strong> remove the following record ?
                 </div>
                 <?php
+            }
+            else
+            {
+                exit("<div class='alert alert-danger'><span>Page not found!</span></div>");
             }
             ?>
         </div>
@@ -95,7 +94,7 @@ if(isset($_POST['btn-del']))
         <div class="container">
             <p>
                 <?php
-                if(!(isset($_GET['delete_id']) && isset($_GET['deleted'])))
+                if((isset($_GET['delete_id'])))
                 {
                 ?>
             <form method="post">
@@ -108,7 +107,7 @@ if(isset($_POST['btn-del']))
             else
             {
                 ?>
-                <a href="view-anggaran.php?kom_id=<?php echo $kompId?>" class="btn btn-large btn-success"><i class="glyphicon glyphicon-backward"></i> &nbsp; Back to index</a>
+                <a href="view-pengeluaran.php" class="btn btn-large btn-success"><i class="glyphicon glyphicon-backward"></i> &nbsp; Back to index</a>
                 <?php
             }
             ?>
